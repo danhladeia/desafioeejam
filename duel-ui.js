@@ -1,7 +1,7 @@
 // Telas do Modo Duelo: acesso, configuração, sorteio animado, placar e resultado final.
 import {
   DUEL_TURNS, DUEL_CLASSES, createDuel, drawTurn, redrawStudents, commitTurn, standings, leaders, isFinished,
-  saveDuel, loadDuel, clearDuel, parseNames, loadBraga, saveBraga, loadEnabledGames, saveEnabledGames,
+  saveDuel, loadDuel, clearDuel, parseNames, loadNames, saveNames, clearNames, loadEnabledGames, saveEnabledGames,
 } from './duel.js';
 import { ROSTER } from './roster.js';
 import { newSeal } from './new-art.js';
@@ -33,7 +33,8 @@ export function createDuelUI(api) {
   let observer = null;
   let rankingBusy = false;
 
-  const rosterOf = (id) => (id === 'm' ? loadBraga() : ROSTER[id]);
+  // Nomes editados no jogo valem mais que a lista inicial da turma.
+  const rosterOf = (id) => { const saved = loadNames(id); return saved && saved.length ? saved : ROSTER[id]; };
   const clearTimers = () => { timers.forEach(clearTimeout); timers = []; animations.forEach((a) => a.cancel()); animations = []; observer?.disconnect(); observer = null; rankingBusy = false; };
   const show = (name, html, cls = 'duel') => {
     clearTimers(); api.show(name, html, cls);
@@ -73,8 +74,8 @@ export function createDuelUI(api) {
 
   /* ---------- Configuração ---------- */
   function setup() {
-    const counts = { a: ROSTER.a.length, b: ROSTER.b.length, m: loadBraga().length };
-    const cards = DUEL_CLASSES.map((c, i) => `<div class="class-card" style="--c:${COLORS[c.id]};--i:${i}"><div><b>${esc(c.name)}</b><small>${counts[c.id] ? `${counts[c.id]} alunos no sorteio` : 'Nenhum aluno ainda'}</small></div>${c.id === 'm' ? `<button class="secondary small" data-action="duel-names">${counts.m ? 'Editar nomes' : 'Adicionar nomes'}</button>` : ''}</div>`).join('');
+    const counts = Object.fromEntries(DUEL_CLASSES.map((c) => [c.id, rosterOf(c.id).length]));
+    const cards = DUEL_CLASSES.map((c, i) => `<div class="class-card" style="--c:${COLORS[c.id]};--i:${i}"><div><b>${esc(c.name)}</b><small>${counts[c.id] ? `${counts[c.id]} alunos no sorteio` : 'Nenhum aluno ainda'}</small></div><button class="secondary small" data-action="duel-names" data-class="${c.id}">Editar nomes</button></div>`).join('');
     let resume = '';
     if (duel) {
       const done = isFinished(duel);
@@ -89,7 +90,7 @@ export function createDuelUI(api) {
       <section class="duel-config">${resume}<h2>Quantas rodadas?</h2>
         <div class="chips" role="group" aria-label="Número de rodadas">${DUEL_TURNS.map((n) => `<button class="chip ${n === turnsChoice ? 'on' : ''}" data-action="duel-turns" data-n="${n}" aria-pressed="${n === turnsChoice}">${n}</button>`).join('')}</div>
         <p class="hint" id="duel-eta"></p>
-        <button class="primary" data-action="duel-start" ${counts.m && enabledGames.length ? '' : 'disabled'}>Começar duelo ${uiIcon('next')}</button>
+        <button class="primary" data-action="duel-start" ${Object.values(counts).every(Boolean) && enabledGames.length ? '' : 'disabled'}>Começar duelo ${uiIcon('next')}</button>
         <button class="text-button" data-action="duel-wipe">Apagar dados do duelo</button></section></div>`);
     eta();
   }
@@ -110,21 +111,29 @@ export function createDuelUI(api) {
     setup();
   }
 
-  function editNames() {
+  function editNames(classId = 'm') {
+    const info = DUEL_CLASSES.find((c) => c.id === classId) ?? DUEL_CLASSES[2];
     modal.oncancel = null;
-    modal.innerHTML = `<h2>Alunos do 9º M. Braga</h2><p>Um nome por linha, só o primeiro nome. Se houver dois iguais, acrescente a inicial do sobrenome, como João P.</p>
-      <textarea id="braga-names" rows="9" spellcheck="false" aria-label="Nomes dos alunos">${esc(loadBraga().join('\n'))}</textarea>
+    modal.innerHTML = `<h2>Alunos do ${esc(info.name)}</h2><p>Um nome por linha, <b>só o primeiro nome</b>. Para incluir um aluno, escreva em uma linha nova. Para tirar, apague a linha. Se houver dois iguais, acrescente a inicial do sobrenome, como João P.</p>
+      <textarea id="braga-names" rows="9" spellcheck="false" aria-label="Nomes dos alunos">${esc(rosterOf(info.id).join('\n'))}</textarea>
       <p class="form-error" id="braga-error" role="alert"></p>
-      <div class="actions"><button class="secondary" id="braga-cancel">Cancelar</button><button class="primary" id="braga-save">Salvar nomes</button></div>`;
+      <div class="actions"><button class="secondary" id="braga-cancel">Cancelar</button><button class="secondary" id="braga-reset">Lista inicial</button><button class="primary" id="braga-save">Salvar nomes</button></div>`;
     modal.showModal();
     $('#braga-cancel').onclick = () => modal.close();
+    $('#braga-reset').onclick = async () => {
+      clearNames(info.id);
+      modal.close();
+      setup();
+    };
     $('#braga-save').onclick = () => {
-      const { names, duplicates, long, tooMany } = parseNames($('#braga-names').value);
-      const problem = duplicates.length ? `Nome repetido: ${duplicates.join(', ')}. Acrescente a inicial do sobrenome.`
-        : long.length ? `Nome muito longo: ${long[0]}. Use até 24 letras.`
-          : tooMany ? 'Use no máximo 60 alunos.' : '';
+      const { names, duplicates, long, full, tooMany } = parseNames($('#braga-names').value);
+      const problem = !names.length ? 'Deixe ao menos um aluno na lista.'
+        : full.length ? `Use só o primeiro nome: ${full[0]}. Se houver dois iguais, use a inicial do sobrenome (João P.).`
+          : duplicates.length ? `Nome repetido: ${duplicates.join(', ')}. Acrescente a inicial do sobrenome.`
+            : long.length ? `Nome muito longo: ${long[0]}. Use até 24 letras.`
+              : tooMany ? 'Use no máximo 60 alunos.' : '';
       if (problem) { $('#braga-error').textContent = problem; return; }
-      saveBraga(names);
+      if (!saveNames(info.id, names)) { $('#braga-error').textContent = 'Não foi possível guardar. Verifique o armazenamento do navegador.'; return; }
       modal.close();
       setup();
     };
@@ -149,8 +158,8 @@ export function createDuelUI(api) {
   }
 
   async function wipe() {
-    if (!(await api.ask('Apagar dados do duelo?', 'Remove o duelo salvo e os nomes do 9º M. Braga deste aparelho.'))) return;
-    clearDuel(); saveBraga([]); duel = null; restoreError = ''; setup();
+    if (!(await api.ask('Apagar dados do duelo?', 'Remove o duelo salvo e as edições de nomes das turmas deste aparelho.'))) return;
+    clearDuel(); clearNames(); duel = null; restoreError = ''; setup();
   }
 
   /* ---------- Sorteio animado ---------- */
@@ -350,7 +359,7 @@ export function createDuelUI(api) {
     if (a === 'duel-turns') { turnsChoice = +b.dataset.n; app().querySelectorAll('.chip').forEach((c) => { const on = +c.dataset.n === turnsChoice; c.classList.toggle('on', on); c.setAttribute('aria-pressed', on); }); eta(); }
     else if (a === 'duel-game') toggleGame(b.dataset.id);
     else if (a === 'duel-setup') setup();
-    else if (a === 'duel-names') editNames();
+    else if (a === 'duel-names') editNames(b.dataset.class || 'm');
     else if (a === 'duel-start') start();
     else if (a === 'duel-resume') resume();
     else if (a === 'duel-wipe') wipe();

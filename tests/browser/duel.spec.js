@@ -12,7 +12,7 @@ async function unlock(page) {
   await expect(page.locator('.duel-setup')).toBeVisible();
 }
 async function addBraga(page, names = NAMES) {
-  await page.locator('[data-action="duel-names"]').click();
+  await page.locator('[data-action="duel-names"][data-class="m"]').click();
   await page.locator('#braga-names').fill(names); await page.locator('#braga-save').click();
 }
 async function singleGame(page, id = 'turbo') {
@@ -62,7 +62,8 @@ test('token protege configuração e jogos são escolhidos antes do primeiro sor
   await expect(page.locator('#token-error')).toHaveText(/Token incorreto/);
   await page.locator('#token').fill('  PROFDANH '); await page.locator('#token-form').evaluate((f) => f.requestSubmit());
   await expect(page.locator('.class-card')).toHaveCount(3);
-  await expect(page.locator('[data-action="duel-start"]')).toBeDisabled();
+  await expect(page.getByText('7 alunos no sorteio')).toBeVisible(); // lista inicial do M. Braga
+  await expect(page.locator('[data-action="duel-start"]')).toBeEnabled();
   await addBraga(page); await singleGame(page, 'rope');
   await page.locator('.duel-game-option.on').click();
   await expect(page.locator('#duel-games-error')).toHaveText(/ao menos um/);
@@ -216,3 +217,44 @@ for (const size of [{ width: 1920, height: 1080 }, { width: 1280, height: 800 },
   });
 }
 
+
+test('editar nomes de qualquer turma: inserir, remover, recusar nome completo e voltar à lista inicial', async ({ page }) => {
+  await page.setViewportSize({ width: 1280, height: 800 });
+  await page.goto('/'); await page.waitForTimeout(2300); await unlock(page);
+  const count = (n) => expect(page.getByText(`${n} alunos no sorteio`)).toBeVisible();
+  const open = (id) => page.locator(`[data-action="duel-names"][data-class="${id}"]`).click();
+  const names = () => page.locator('#braga-names').inputValue();
+  await count(25);
+  // 9º A: remove dois alunos (faltaram) e inclui um novo.
+  await open('a');
+  const original = (await names()).split('\n');
+  expect(original).toHaveLength(25);
+  await page.locator('#braga-names').fill([...original.slice(2), 'Zeca'].join('\n'));
+  await page.locator('#braga-save').click();
+  await count(24);
+  // O 9º B continua igual.
+  await expect(page.getByText('22 alunos no sorteio')).toBeVisible();
+  // Nome completo é recusado, com a mensagem pedindo o primeiro nome.
+  await open('a');
+  await expect(page.locator('#braga-names')).toContainText('Zeca');
+  await page.locator('#braga-names').fill('Ana\nMaria da Silva');
+  await page.locator('#braga-save').click();
+  await expect(page.locator('#braga-error')).toContainText('só o primeiro nome');
+  await page.locator('#braga-names').fill('Ana\nAna');
+  await page.locator('#braga-save').click();
+  await expect(page.locator('#braga-error')).toContainText('Nome repetido');
+  await page.locator('#braga-names').fill('');
+  await page.locator('#braga-save').click();
+  await expect(page.locator('#braga-error')).toContainText('ao menos um aluno');
+  // A inicial do sobrenome é aceita.
+  await page.locator('#braga-names').fill('Ana C.\nAna S.\nBia');
+  await page.locator('#braga-save').click();
+  await count(3);
+  // A edição sobrevive a recarregar a página, e "Lista inicial" volta ao original.
+  await page.reload(); await page.waitForTimeout(2300); await unlock(page);
+  await count(3);
+  await open('a'); await page.locator('#braga-reset').click();
+  await count(25);
+  // O M. Braga já vem com a lista inicial de primeiros nomes.
+  await open('m'); expect((await names()).split('\n')).toEqual(['Davi', 'João', 'Júllya', 'Melissa', 'Miguel', 'Paula', 'Ruan']);
+});

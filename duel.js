@@ -15,6 +15,9 @@ const pairKey = (pair) => [...pair].sort().join('-');
 const same = (a, b) => JSON.stringify(a) === JSON.stringify(b);
 const validId = (id) => typeof id === 'string' && /^[a-z0-9_-]+$/i.test(id) && !['__proto__', 'constructor', 'prototype'].includes(id);
 
+/** Aceita só o primeiro nome, com a inicial do sobrenome quando há repetição: João ou João P. */
+export const isFirstName = (name) => /^[^\s.]+( \p{L}\.)?$/u.test(name);
+
 export function parseNames(text) {
   const names = String(text ?? '').split(/\r?\n/).map((n) => n.replace(/\s+/g, ' ').trim()).filter(Boolean);
   const seen = new Set(), duplicates = [];
@@ -23,7 +26,7 @@ export function parseNames(text) {
     if (seen.has(k) && !duplicates.includes(n)) duplicates.push(n);
     seen.add(k);
   }
-  return { names, duplicates, long: names.filter((n) => n.length > MAX_NAME), tooMany: names.length > MAX_STUDENTS };
+  return { names, duplicates, long: names.filter((n) => n.length > MAX_NAME), full: names.filter((n) => !isFirstName(n)), tooMany: names.length > MAX_STUDENTS };
 }
 export function createDuel({ turns, classes, games }) {
   if (!DUEL_TURNS.includes(turns)) throw new Error('Escolha 5, 10, 15 ou 20 rodadas.');
@@ -31,10 +34,11 @@ export function createDuel({ turns, classes, games }) {
   if (!Array.isArray(games) || !games.length || games.some((g) => !validId(g)) || new Set(games).size !== games.length) throw new Error('Selecione ao menos um jogo válido, sem repetições.');
   const clean = classes.map((c) => {
     if (!Array.isArray(c.students) || c.students.some((s) => typeof s !== 'string')) throw new Error(`${c.name}: lista de alunos inválida.`);
-    const { names, duplicates, long, tooMany } = parseNames(c.students.join('\n'));
+    const { names, duplicates, long, full, tooMany } = parseNames(c.students.join('\n'));
     if (!names.length) throw new Error(`${c.name}: informe ao menos um aluno.`);
     if (duplicates.length) throw new Error(`${c.name}: nome repetido (${duplicates.join(', ')}). Acrescente a inicial do sobrenome.`);
     if (long.length) throw new Error(`${c.name}: nome muito longo (${long[0]}).`);
+    if (full.length) throw new Error(`${c.name}: use só o primeiro nome (${full[0]}).`);
     if (tooMany) throw new Error(`${c.name}: no máximo ${MAX_STUDENTS} alunos.`);
     return { id: c.id, name: c.name, students: names };
   });
@@ -203,8 +207,20 @@ export function loadDuel() {
   catch (e) { throw new Error(`O duelo salvo foi preservado, mas não pode continuar: ${e.message} Confira o backup ou escolha explicitamente um novo duelo.`); }
 }
 export function clearDuel() { try { localStorage.removeItem(DUEL_KEY); } catch { /* sem armazenamento */ } }
-export function loadBraga() { const list = read(BRAGA_KEY); return Array.isArray(list) ? list.filter((n) => typeof n === 'string') : []; }
-export const saveBraga = (names) => write(BRAGA_KEY, names);
+const namesKey = (id) => (id === 'm' ? BRAGA_KEY : `eejam-names-v1-${id}`);
+/** Lista salva para a turma, ou null quando vale a lista inicial. */
+export function loadNames(id) {
+  if (!validId(id)) return null;
+  const list = read(namesKey(id));
+  return Array.isArray(list) ? list.filter((n) => typeof n === 'string') : null;
+}
+export const saveNames = (id, names) => validId(id) && write(namesKey(id), names);
+/** Volta uma turma (ou todas) à lista inicial. */
+export function clearNames(id) {
+  for (const key of (id ? [id] : ['a', 'b', 'm'])) { try { localStorage.removeItem(namesKey(key)); } catch { /* sem armazenamento */ } }
+}
+export function loadBraga() { return loadNames('m') ?? []; }
+export const saveBraga = (names) => saveNames('m', names);
 export function loadEnabledGames(available) {
   const saved = read(GAMES_KEY);
   return Array.isArray(saved) ? [...new Set(saved.filter((id) => available.includes(id)))] : [...available];

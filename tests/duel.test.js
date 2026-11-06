@@ -274,3 +274,20 @@ test('versão 2 recusa divergências no placar, final, usados e recusas', () => 
   pending.current.refused[0].push(pending.current.sides[0].student);
   assert.equal(validateDuel(pending), false);
 });
+
+test('só o primeiro nome é aceito: nomes completos são recusados, inicial do sobrenome vale', async () => {
+  const { isFirstName, parseNames, createDuel } = await import('../duel.js');
+  for (const ok of ['Ana', 'João', 'Júllya', 'João P.', 'Natanael S.']) assert.equal(isFirstName(ok), true, ok);
+  for (const bad of ['Ana Clara', 'João Pedro Pereira', 'Maria da Silva', 'João Pe.', 'A. B.']) assert.equal(isFirstName(bad), false, bad);
+  assert.deepEqual(parseNames('Ana\nJoão P.\nMelissa Souza Nobre\nPaula Mayane').full, ['Melissa Souza Nobre', 'Paula Mayane']);
+  const classes = (m) => [{ id: 'a', name: '9º A', students: ['Ana'] }, { id: 'b', name: '9º B', students: ['Bia'] }, { id: 'm', name: '9º M', students: m }];
+  assert.throws(() => createDuel({ turns: 5, games: ['g1'], classes: classes(['Davi', 'Melissa Souza Nobre']) }), /use só o primeiro nome \(Melissa Souza Nobre\)/);
+  assert.doesNotThrow(() => createDuel({ turns: 5, games: ['g1'], classes: classes(['Davi', 'João P.', 'João S.']) }));
+});
+
+test('a lista inicial do M. Braga tem só primeiros nomes, sem repetição', async () => {
+  const { ROSTER } = await import('../roster.js');
+  const { isFirstName } = await import('../duel.js');
+  assert.ok(ROSTER.m.length >= 7);
+  for (const id of ['a', 'b', 'm']) { assert.ok(ROSTER[id].every(isFirstName), id); assert.equal(new Set(ROSTER[id]).size, ROSTER[id].length); }
+});
