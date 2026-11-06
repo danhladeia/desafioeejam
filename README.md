@@ -1,5 +1,9 @@
 # Duelo do Futuro — EEJAM 2027
 
+## Educação Física — 7º ano
+
+O botão **EDF • 7º ano** abre a Trilha de Cartas EDF, com 27 perguntas das três unidades do caderno DED Express enviado e seis cartas complementares sobre jogos de tabuleiro. Há seleção de temas, revisão das respostas, imagens extraídas do PDF, modo solo e duelo livre, trilha animada, progressão de nível e desempate temático. As partidas EDF não alteram o campeonato. Instruções e referências estão em [MODO_EDF_7_ANO.md](MODO_EDF_7_ANO.md).
+
 ## Atualização de campeonato e partidas
 
 **Começar campeonato** permite cadastrar de 2 a 64 equipes com nomes e listas de participantes, ou escolher o modo individual. O novo **Jogar solo** salva as melhores marcas por jogo e dificuldade. Veja as regras atuais e os detalhes da atualização em [ATUALIZACAO_JOGOS.md](ATUALIZACAO_JOGOS.md).

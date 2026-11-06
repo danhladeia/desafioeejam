@@ -4,6 +4,9 @@ import { setupSecretRace, setupSyllables, setupMistake } from './wordgames.js';
 import { setupBalance } from './mathgames.js';
 import { learningBank } from './learning.js';
 import { appendUiIcon } from './ui-art.js';
+import { EDF_GAME } from './edf-content.js';
+import { setupEdfCards } from './edf-game.js';
+import { createEdfTheme } from './edf-theme.js';
 
 /** Durations are suggestions in seconds; the host owns the match clock. */
 export const GAMES = [
@@ -158,13 +161,16 @@ export function searchPath(a, b, size = 7) {
 }
 
 /** Each instance owns its DOM, listeners, logical clock, timeouts and random streams. */
-export function createGame({ id, el, side = 'left', seed = 0, difficulty = 'normal', solo = false, onScore = () => {}, onFinish = () => {}, onEffect } = {}) {
+export function createGame({ id, el, side = 'left', seed = 0, difficulty = 'normal', solo = false, edfTopics, subject, onScore = () => {}, onFinish = () => {}, onEffect } = {}) {
   if (!el || typeof el.appendChild !== 'function') throw new TypeError('createGame precisa de um elemento el.');
-  if (!GAMES.some(game => game.id === id)) throw new RangeError(`Jogo desconhecido: ${id}`);
+  const definition = id === 'edf' ? EDF_GAME : GAMES.find(game => game.id === id);
+  if (!definition) throw new RangeError(`Jogo desconhecido: ${id}`);
   const doc = el.ownerDocument;
   const view = doc.defaultView ?? globalThis;
   const now = () => view.performance?.now() ?? Date.now();
-  const initialLevel = levelOf(difficulty);
+  const theme = subject === 'edf' || id === 'edf' ? createEdfTheme(edfTopics) : null;
+  const wordsForGame = () => theme ? theme.words : wordBank();
+  const initialLevel = theme && difficulty === 'normal' ? 1 : levelOf(difficulty);
   let level = initialLevel, completed = 0, wrong = 0, points = 0, totalBonus = 0;
   const challengeRng = seededRandom(`${seed}:${id}:challenges:${initialLevel}`);
   const layoutRng = seededRandom(`${seed}:${id}:layout:${side}:${initialLevel}`);
@@ -194,9 +200,10 @@ export function createGame({ id, el, side = 'left', seed = 0, difficulty = 'norm
   const root = node('section', `game game-${id}`);
   root.dataset.game = id;
   root.dataset.side = String(side);
+  if (theme) {root.dataset.subject='edf';root.dataset.topics=theme.key}
   root.style.touchAction = 'none';
   root.style.userSelect = 'none';
-  root.setAttribute('aria-label', GAMES.find(game => game.id === id).title);
+  root.setAttribute('aria-label', definition.title);
   const prompt = node('div', 'prompt');
   const progress = node('div', 'game-progress');
   const progression = node('div', 'game-progression');
@@ -336,7 +343,7 @@ export function createGame({ id, el, side = 'left', seed = 0, difficulty = 'norm
     let current, answered = 0, correct = 0;
     function render() {
       nextChallenge();
-      if (!readers.has(level)) readers.set(level, deckReader(learningBank(level, seededRandom(`${seed}:${id}:bank:${level}`))));
+      if (!readers.has(level)) readers.set(level, deckReader(theme ? theme.questions(level) : learningBank(level, seededRandom(`${seed}:${id}:bank:${level}`))));
       current = readers.get(level)();
       prompt.textContent = current.question;
       progress.textContent = id === 'rope' ? `${correct} acertos · ${answered} respostas` : `${answered} desafios respondidos`;
@@ -363,7 +370,7 @@ export function createGame({ id, el, side = 'left', seed = 0, difficulty = 'norm
   }
 
   function setupRota() {
-    const categories = ['Aprender', 'Criar projetos', 'Conviver'];
+    const categories = theme ? theme.classification.categories : ['Aprender', 'Criar projetos', 'Conviver'];
     function categoryIndex(value) {
       if (typeof value === 'number' && value >= 0 && value < 3) return value;
       const text = normalizeWord(value);
@@ -373,7 +380,7 @@ export function createGame({ id, el, side = 'left', seed = 0, difficulty = 'norm
       return -1;
     }
     const adapted = rows(ACTIVITIES).map(item => ({ text: String(item?.text ?? item?.activity ?? item?.title ?? item?.name ?? ''), category: categoryIndex(item?.category ?? item?.type ?? item?.answer), explanation: item?.explanation })).filter(item => item.text && item.category >= 0);
-    const read = deckReader(adapted.length ? adapted : FALLBACK_ACTIVITIES);
+    const read = deckReader(theme ? theme.classification.activities : adapted.length ? adapted : FALLBACK_ACTIVITIES);
     let current, total = 0;
     function render() {
       nextChallenge();
@@ -384,7 +391,7 @@ export function createGame({ id, el, side = 'left', seed = 0, difficulty = 'norm
       const answers = node('div', 'answers');
       const options = categories.map((text, index) => ({ text, index }));
       const scaffolds = ['estudar e compreender', 'planejar e produzir', 'ouvir e cooperar'];
-      (level === 3 ? shuffle(options, challengeRng) : options).forEach(({ text, index }) => answers.append(button(level === 3 ? text : `${text} · ${scaffolds[index]}`, 'rota', index)));
+      (level === 3 ? shuffle(options, challengeRng) : options).forEach(({ text, index }) => answers.append(button(theme || level === 3 ? text : `${text} · ${scaffolds[index]}`, 'rota', index)));
       stage.append(answers);
       helper.textContent = level < 3 ? 'Use os exemplos das categorias e observe o propósito da atividade.' : 'Categorias mudam de posição. Identifique o objetivo principal sem as pistas.';
     }
@@ -427,7 +434,13 @@ export function createGame({ id, el, side = 'left', seed = 0, difficulty = 'norm
         icon.setAttribute('aria-hidden', 'true');
         Object.assign(icon.style, { display: 'block', width: '100%', height: '100%', pointerEvents: 'none', backgroundImage: 'url("./assets/visual/concepts/toque-turbo-targets-bonuses-traps-v1.png")', backgroundSize: '500% 200%', backgroundPosition: `${iconIndex % 5 * 25}% ${Math.floor(iconIndex / 5) * 100}%`, backgroundRepeat: 'no-repeat' });
         target.append(icon); target.dataset.icon = String(iconIndex);
-        target.setAttribute('aria-label', `${labels[iconIndex]}: ${kind === 'trap' ? 'armadilha, não pontua' : '1.000 pontos + rapidez'}`);
+        if(theme){
+          const item=theme.targets[index%theme.targets.length],trap=kind==='trap';
+          Object.assign(icon.style,{backgroundImage:`url("${item.image}")`,backgroundSize:'contain',backgroundPosition:'center',height:'70%'});
+          const label=node('small','edf-target-label',trap?'DESCUIDO':item.label);target.append(label);if(trap)appendUiIcon(target,'error');
+          target.setAttribute('aria-label',`${trap?'Descuido: não toque':item.label+': alvo positivo'}`);
+        }
+        if(!theme)target.setAttribute('aria-label', `${labels[iconIndex]}: ${kind === 'trap' ? 'armadilha, não pontua' : '1.000 pontos + rapidez'}`);
         const position = positions[index % positions.length];
         Object.assign(target.style, { position: 'absolute', left: `${5 + (position % 3) * 32}%`, top: `${5 + Math.floor(position / 3) * 31}%`, width: `${level === 1 ? 26 : 23}%`, height: '25%', padding: '3px', touchAction: 'none' });
         if (kind === 'trap') target.style.backgroundColor = '#b91c1c';
@@ -458,8 +471,8 @@ export function createGame({ id, el, side = 'left', seed = 0, difficulty = 'norm
 
   function setupMemory() {
     const pairs = level < 3 ? 6 : 8;
-    const itemNames = ['Livro aberto', 'Caderno e lápis', 'Mochila', 'Computador', 'Microscópio', 'Globo', 'Calculadora', 'Régua e esquadro', 'Paleta e pincel', 'Lâmpada', 'Capelo', 'Livros', 'Escola', 'Tubos de ensaio', 'Agenda', 'Fones'];
-    const symbols = shuffle(Array.from({ length: 16 }, (_, i) => i), challengeRng).slice(0, pairs);
+    const itemNames = theme ? theme.words.map(w=>w.display) : ['Livro aberto', 'Caderno e lápis', 'Mochila', 'Computador', 'Microscópio', 'Globo', 'Calculadora', 'Régua e esquadro', 'Paleta e pincel', 'Lâmpada', 'Capelo', 'Livros', 'Escola', 'Tubos de ensaio', 'Agenda', 'Fones'];
+    const symbols = shuffle(Array.from({ length: theme ? theme.words.length : 16 }, (_, i) => i), challengeRng).slice(0, pairs);
     const cards = shuffle(symbols.flatMap((symbol, pair) => [{ symbol, pair }, { symbol, pair }]), layoutRng);
     const grid = node('div', 'memory-grid');
     Object.assign(grid.style, { display: 'grid', gridTemplateColumns: 'repeat(4, minmax(0, 1fr))', gap: '8px' });
@@ -487,6 +500,7 @@ export function createGame({ id, el, side = 'left', seed = 0, difficulty = 'norm
       art.setAttribute('aria-hidden', 'true');
       art.style.backgroundPosition = `${cards[index].symbol % 4 * 100 / 3}% ${Math.floor(cards[index].symbol / 4) * 100 / 3}%`;
       target.replaceChildren(art);
+      if(theme){const item=theme.words[cards[index].symbol];Object.assign(art.style,{backgroundImage:`url("assets/visual/edf/${item.image}.png")`,backgroundSize:'contain',backgroundPosition:'center',width:'100%',height:'70%'});target.append(node('small','edf-memory-label',item.display))}
       target.setAttribute('aria-label', `Carta ${index + 1}: ${itemNames[cards[index].symbol]}`);
       target.classList.add('chosen', 'flipped');
       if (first === null) { first = index; return; }
@@ -517,7 +531,7 @@ export function createGame({ id, el, side = 'left', seed = 0, difficulty = 'norm
   }
 
   function pairedWordReader() {
-    const bank = wordBank();
+    const bank = wordsForGame();
     const filtered = bank.filter(({ word }) => level === 1 ? word.length <= 5 : level === 3 ? word.length >= 6 && word.length <= 9 : word.length >= 4 && word.length <= 7);
     // Dedicated stream: choosing a different solution must not alter later challenges.
     const wordRng = seededRandom(`${seed}:${id}:paired-words:${level}`);
@@ -650,7 +664,7 @@ export function createGame({ id, el, side = 'left', seed = 0, difficulty = 'norm
   function setupSearch() {
     nextChallenge();
     const size = level === 3 ? 8 : 7;
-    const bank = shuffle(wordBank().filter(item => item.word.length <= size), challengeRng);
+    const bank = shuffle(wordsForGame().filter(item => item.word.length <= size), challengeRng);
     const entries = bank.slice(0, level === 1 ? 4 : level === 3 ? 6 : 5);
     // A board is a shared challenge, including its direction mix. Side-specific
     // layout randomness must not give one player easier word orientations.
@@ -742,13 +756,14 @@ export function createGame({ id, el, side = 'left', seed = 0, difficulty = 'norm
   }
 
   const ctx = {
-    id, side, seed, solo, get level() { return level; }, doc, view, root, stage, prompt, progress, helper, node, button, listen, active, later, score, finish, feedback,
+    id, side, seed, solo, theme, get level() { return level; }, doc, view, root, stage, prompt, progress, helper, node, button, listen, active, later, score, finish, feedback,
     awardSolved, awardWrong, nextChallenge, blockChallenge, unblockChallenge, solveTime,
-    challengeRng, layoutRng, shuffle, seededRandom, normalizeWord, wordBank,
+    challengeRng, layoutRng, shuffle, seededRandom, normalizeWord, wordBank:wordsForGame,
     setAct: fn => { act = fn; }, setCancel: fn => { cancelSelection = fn; }, onDestroy: fn => { destroyHooks.push(fn); },
   };
 
   switch (id) {
+    case 'edf': setupEdfCards(ctx, edfTopics); break;
     case 'turbo': setupTurbo(); break;
     case 'rope': setupQuiz(); break;
     case 'rota': setupRota(); break;

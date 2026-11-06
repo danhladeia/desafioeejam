@@ -113,7 +113,8 @@ export function scatter(count, geo, rng) {
 export function setupJigsaw(ctx) {
   const { node, doc, root, stage, prompt, progress, helper, level, challengeRng, layoutRng, active, score, finish, listen } = ctx;
   const [cols, rows] = GRID[level] ?? GRID[2];
-  const picture = PICTURES[Math.floor(challengeRng() * PICTURES.length)];
+  const pictures = ctx.theme ? ctx.theme.pictures : PICTURES;
+  const picture = pictures[Math.floor(challengeRng() * pictures.length)];
   const geo = geometry(cols, rows, picture);
   const edges = buildEdges(cols, rows, challengeRng);
   const total = cols * rows;
@@ -133,6 +134,7 @@ export function setupJigsaw(ctx) {
   ghostImage.draggable = false;
   ghostImage.style.opacity = level === 3 ? '0.12' : '0.24';
   ghost.append(ghostImage);
+  if(picture.background)ghost.style.background=picture.background;
   area.append(ghost);
 
   const spots = scatter(total, geo, layoutRng);
@@ -154,6 +156,7 @@ export function setupJigsaw(ctx) {
     svg.setAttribute('aria-label', `Peça ${i + 1} de ${total}`);
     svg.dataset.i = String(i);
     svg.innerHTML = `<defs><clipPath id="${clip}"><path d="${path}"/></clipPath></defs>`
+      + (picture.background?`<rect x="0" y="0" width="${f(geo.bw)}" height="${f(geo.bh)}" fill="${picture.background}" clip-path="url(#${clip})" pointer-events="none"/>`:'')
       + `<image href="${picture.src}" x="0" y="0" width="${f(geo.bw)}" height="${f(geo.bh)}" preserveAspectRatio="none" clip-path="url(#${clip})" pointer-events="none"/>`
       + `<path class="jigsaw-outline" d="${path}" fill="none" stroke="rgba(255,255,255,.85)" stroke-width="1.4" stroke-linejoin="round" pointer-events="none"/>`
       + `<path class="jigsaw-hit" d="${path}" fill="transparent" stroke="none" pointer-events="fill"/>`;

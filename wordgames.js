@@ -19,7 +19,7 @@ export function raceWords(ctx, count = 9) {
   const { level, seed, wordBank, shuffle, seededRandom } = ctx;
   const bank = wordBank();
   const fits = bank.filter(({ word }) => (level === 1 ? word.length <= 5 : level === 3 ? word.length >= 6 && word.length <= 9 : word.length >= 4 && word.length <= 7));
-  return shuffle(fits.length >= count ? fits : bank, seededRandom(`${seed}:secret-race:${level}`)).slice(0, count);
+  return shuffle(ctx.theme ? fits.length ? fits : bank : fits.length >= count ? fits : bank, seededRandom(`${seed}:secret-race:${level}`)).slice(0, count);
 }
 
 export function setupSecretRace(ctx) {
@@ -28,7 +28,7 @@ export function setupSecretRace(ctx) {
   const other = 1 - me;
   // Solo instances never share outcomes, even with the same seed and side.
   // Competitive instances retain the shared seed/level key for both players.
-  const key = solo ? Symbol(`${seed}:${level}:solo`) : `${seed}:${level}`;
+  const key = solo ? Symbol(`${seed}:${level}:solo`) : `${seed}:${level}${ctx.theme?':edf:'+ctx.theme.key:''}`;
   let race = races.get(key);
   if (!race) { race = { words: raceWords(ctx), wins: [0, 0], outcomes: [], closeFns: [null, null], refs: 0 }; races.set(key, race); }
   race.refs++;
@@ -137,7 +137,7 @@ export function syllablePool(level) {
 
 export function setupSyllables(ctx) {
   const { node, stage, prompt, progress, helper, challengeRng, shuffle, active, awardSolved, awardWrong, feedback } = ctx;
-  const deckOf = () => shuffle(syllablePool(ctx.level), challengeRng);
+  const deckOf = () => shuffle(ctx.theme ? ctx.theme.syllables.filter(w=>ctx.level===1?w.syllables.length===2:ctx.level===2?w.syllables.length===3:w.syllables.length>=4) : syllablePool(ctx.level), challengeRng);
   let deck = [], deckLevel;
   let cursor = 0;
   let current; let tiles; let slotsOf; let solved = 0; let busy = false;
@@ -150,7 +150,7 @@ export function setupSyllables(ctx) {
     const syllables = current.syllables.map((text, id) => ({ id, text }));
     if (ctx.level === 3) {
       // Uma sílaba a mais, de outra palavra, para exigir atenção.
-      const stray = shuffle(SYLLABLE_WORDS.filter((w) => w.word !== current.word).flatMap((w) => w.syllables), challengeRng).find((s) => !current.syllables.includes(s));
+      const stray = shuffle((ctx.theme?ctx.theme.syllables:SYLLABLE_WORDS).filter((w) => w.word !== current.word).flatMap((w) => w.syllables), challengeRng).find((s) => !current.syllables.includes(s));
       if (stray) syllables.push({ id: syllables.length, text: stray });
     }
     let mixed = shuffle(syllables, challengeRng);
@@ -159,7 +159,7 @@ export function setupSyllables(ctx) {
     slotsOf = Array(current.syllables.length).fill(null);
     busy = false;
     prompt.textContent = current.hint;
-    prompt.prepend(spriteNode(prompt.ownerDocument,syllableClue(current.word)));
+    if(ctx.theme){const image=node('img','edf-syllable-clue');image.src=`assets/visual/edf/${current.image}.png`;image.alt='Ilustração do conteúdo de Educação Física';prompt.prepend(image)}else prompt.prepend(spriteNode(prompt.ownerDocument,syllableClue(current.word)));
     helper.textContent = 'Arraste as sílabas para os espaços, na ordem certa. Ou toque para encaixar.';
     stage.replaceChildren();
     slotsEl = node('div', 'syl-slots');
@@ -245,7 +245,7 @@ export function setupMistake(ctx) {
   let deck = []; let deckLevel; let cursor = 0; let current; let found = 0; let tried = 0;
   const next = () => {
     if (deckLevel !== ctx.level || cursor >= deck.length) {
-      deck = shuffle(MISTAKES.filter(m => m.level === ctx.level), challengeRng); deckLevel = ctx.level; cursor = 0;
+      deck = shuffle((ctx.theme?ctx.theme.mistakes:MISTAKES).filter(m => m.level === ctx.level), challengeRng); deckLevel = ctx.level; cursor = 0;
     }
     return deck[cursor++];
   };

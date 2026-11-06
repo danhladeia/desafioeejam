@@ -39,8 +39,8 @@ export function setupBalance(ctx) {
     ctx.nextChallenge();
     round = balanceRound(ctx.level, challengeRng, shuffle);
     inPan = []; busy = false;
-    prompt.textContent = `Equilibre a balança: some ${round.target}`;
-    helper.textContent = 'Arraste os pesos para o prato da direita. Quando a soma for igual, a balança fica reta.';
+    prompt.textContent = ctx.theme ? `Planeje o circuito: complete ${round.target} minutos` : `Equilibre a balança: some ${round.target}`;
+    helper.textContent = ctx.theme ? 'Cada bloco representa minutos de uma estação do circuito. Combine os tempos até chegar ao total planejado.' : 'Arraste os pesos para o prato da direita. Quando a soma for igual, a balança fica reta.';
     stage.replaceChildren();
     const scale = node('div', 'balance');
     beam = node('div', 'bal-beam');
@@ -64,12 +64,13 @@ export function setupBalance(ctx) {
       const chip = node('div', 'weight', tile.value);
       applySprite(chip,['weight-blue','weight-orange','weight-purple','weight-green'][tile.id%4]);
       chip.dataset.tile = String(tile.id);
+      if(ctx.theme){chip.setAttribute('aria-label',`${tile.value} minutos de uma estação`);chip.append(node('small','edf-minute-label','min'))}
       (inPan.includes(tile.id) ? pan : tray).append(chip);
     }
     const diff = sum - round.target;
     const angle = sum === 0 ? -14 : Math.max(-14, Math.min(14, (diff / round.target) * 30));
     beam.style.setProperty('--a', `${angle}deg`);
-    sumEl.textContent = `Prato da direita: ${sum}`;
+    sumEl.textContent = ctx.theme ? `Tempo planejado: ${sum} de ${round.target} minutos` : `Prato da direita: ${sum}`;
     progress.textContent = `${solved} balanças equilibradas`;
     return sum;
   }
