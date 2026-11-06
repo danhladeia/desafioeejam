@@ -1,0 +1,9 @@
+/* Load after play.css. The host owns solo/duel arena sizing. */
+.game-puzzle .game-stage{overflow:visible;justify-content:center}
+.game-puzzle .jigsaw-area{flex:none;box-sizing:content-box;max-width:100%;padding:0;border:0;isolation:isolate}
+.game-puzzle .jigsaw-ghost{box-sizing:content-box;border:0;border-radius:0;outline:1px dashed #ffffff80;outline-offset:2px;pointer-events:none}
+.game-puzzle .jigsaw-ghost img{width:100%;height:100%;object-fit:fill}
+.game-puzzle .jigsaw-piece{max-width:none;max-height:none;overflow:visible;touch-action:none}
+.game-puzzle .jigsaw-piece.placed .jigsaw-outline{stroke:none}
+.game-puzzle .jigsaw-piece.placed .jigsaw-hit{pointer-events:none}
+.game-puzzle .jigsaw-area[data-complete="true"] .jigsaw-piece{visibility:hidden}

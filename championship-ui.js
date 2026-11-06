@@ -1,0 +1,19 @@
+import {createTournament,createTeamTournament} from './core.js';
+import {uiIcon} from './ui-art.js';
+export function championshipSetup({shell,$,button,esc,prefs,ask,toast,saveTournament,onCreated,prefSave,hasTournament}){
+ shell(`<div class="page-heading"><h1>Monte seu campeonato.</h1><p>Cadastre equipes e seus integrantes, ou jogue individualmente.</p></div><form id="setup-form" class="setup-panel"><div class="roster-mode"><label><input type="radio" name="roster-mode" value="teams" checked> Por equipes</label><label><input type="radio" name="roster-mode" value="individual"> Individual</label></div><label>Nome da bateria<input id="title" maxlength="50" value="Duelo EEJAM 2027" required></label><label>Dificuldade inicial<select id="level"><option value="normal">Desafio • 14–15 anos</option><option value="hard">Avançado</option></select></label><div id="team-editor" class="team-editor"></div><div class="setup-info" id="team-tools">${button(uiIcon('teams')+' Adicionar equipe','add-team')}<p>De 2 a 64 equipes. Cada equipe precisa de nome e ao menos um participante.</p></div><label id="individual-field" hidden>Participantes — um apelido por linha<textarea id="names" rows="7" placeholder="Um participante por linha"></textarea></label><div class="actions">${button('Voltar','home')}<button type="submit" class="primary">${uiIcon('shuffle')} Sortear confrontos</button></div></form>`);
+ $('#level').value=prefs.difficulty;
+ let sequence=0;
+ function addTeam(){const container=$('#team-editor');if(container.children.length>=64)return toast('Limite de 64 equipes.');const row=document.createElement('section');row.className='team-row';row.innerHTML=`<label>Nome da equipe<input class="team-name" maxlength="50" placeholder="Equipe ${++sequence}"></label><label>Participantes — um por linha<textarea class="team-members" rows="3" placeholder="Apelidos dos integrantes"></textarea></label><button class="remove-team" type="button">${uiIcon('trash')} Remover equipe</button>`;row.querySelector('.remove-team').onclick=()=>{if(container.children.length<=2)return toast('Mantenha ao menos duas equipes.');row.remove()};container.append(row)}
+ addTeam();addTeam();
+ $('[data-action="add-team"]').onclick=e=>{e.preventDefault();addTeam()};
+ const mode=()=>$('input[name="roster-mode"]:checked').value;
+ document.querySelectorAll('input[name="roster-mode"]').forEach(input=>input.onchange=()=>{const teams=mode()==='teams';$('#team-editor').hidden=!teams;$('#team-tools').hidden=!teams;$('#individual-field').hidden=teams;$('#names').required=!teams});
+ $('#setup-form').onsubmit=async e=>{e.preventDefault();let tournament;try{
+  if(mode()==='teams'){const teams=[...$('#team-editor').children].map(row=>({name:row.querySelector('.team-name').value.trim(),members:row.querySelector('.team-members').value.split(/\r?\n/).map(s=>s.trim()).filter(Boolean)}));tournament=createTeamTournament(teams,$('#title').value.trim())}
+  else tournament=createTournament($('#names').value.split(/\r?\n/).map(s=>s.trim()).filter(Boolean),$('#title').value.trim());
+ }catch(error){const messages={'team.name must be a nonempty trimmed string':'Informe o nome de todas as equipes.','Team names must be unique':'Cada equipe precisa ter um nome diferente.','A team needs at least one member':'Cadastre ao menos um participante em cada equipe.','Team member names must be at most 40 characters':'Use apelidos de até 40 caracteres para os participantes.','Member names must be unique within a team':'Há participantes repetidos na mesma equipe. Use uma inicial do sobrenome para diferenciar.'};return toast(messages[error.message]||error.message)}
+ if(hasTournament()&&!await ask('Substituir campeonato?','Exporte um backup para guardar a bateria atual.'))return;
+ try{await saveTournament(tournament);prefs.difficulty=$('#level').value;prefSave();onCreated(tournament)}catch(error){toast('Não foi possível salvar o campeonato: '+error.message)}
+ };
+}

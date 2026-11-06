@@ -1,0 +1,123 @@
+/* Jogos novos: quebra-cabeça de encaixe, palavra secreta, sílabas, caça-erro e balança. */
+
+/* Textos e respostas na escala da tela: rem em vez de pixels fixos */
+.game .prompt{font-size:2rem;line-height:1.35}
+.game .answers{gap:1rem}
+.game .answer{min-height:8rem;padding:1rem 1.4rem;font-size:2.1rem;border-radius:1.4rem}
+.game-rope .answer{font-size:2.8rem;min-height:9rem}
+.game .helper{font-size:1.5rem}
+
+/* Quebra-cabeça */
+.jigsaw-area{position:relative;width:100%;margin:.4rem auto 0;touch-action:none;user-select:none}
+.jigsaw-ghost{position:absolute;overflow:hidden;border:.22rem dashed #ffffff80;border-radius:.6rem;background:#0d1650}
+.jigsaw-ghost img{display:block;width:100%;height:100%;object-fit:fill;pointer-events:none}
+.jigsaw-piece{position:absolute;display:block;height:auto;overflow:visible;cursor:grab;touch-action:none;filter:drop-shadow(0 .25rem .3rem #060c3399);transition:filter .15s}
+.jigsaw-piece.lifted{cursor:grabbing;filter:drop-shadow(0 .9rem .8rem #060c33b3)}
+.jigsaw-piece.placed{filter:none;pointer-events:none;transition:left .12s,top .12s}
+.game-puzzle .prompt{min-height:0;padding:.6rem;margin-bottom:.4rem;font-size:1.7rem}
+.game-puzzle .game-progress{margin:.3rem}
+
+/* Palavra Secreta: alfabeto inteiro */
+.alphabet{display:grid;grid-template-columns:repeat(9,minmax(0,1fr));gap:.45rem;margin-top:.4rem}
+.alphabet .letter{min-width:0;min-height:4rem;padding:.1rem;font-size:1.9rem;border-radius:1rem}
+.alphabet .letter:disabled{opacity:.45}
+.alphabet .letter.wrong{background:#883a4b}
+.game-secret .word-slots{margin:.8rem 0}
+
+/* Caça-palavras */
+.search-cell{user-select:none;cursor:pointer;border-radius:.7rem;transition:background .1s}
+
+/* Sílabas Soltas */
+.syl-slots{display:flex;gap:1rem;justify-content:center;margin:1rem 0}
+.syl-slot{display:grid;place-items:center;width:11rem;height:8rem;border:.28rem dashed #ffffff99;border-radius:1.4rem;background:#ffffff14}
+.syl-slots.ok .syl-slot{border-color:#30c48d;background:#30c48d40}
+.syl-slots.bad{animation:nope .35s}
+.syl-tray{display:flex;flex-wrap:wrap;gap:1rem;justify-content:center;min-height:9rem;padding:1rem;border-radius:1.6rem;background:#00000033}
+.syl-chip{display:grid;place-items:center;min-width:9rem;height:6.6rem;padding:0 1.6rem;border:.28rem solid #101a5c;border-radius:1.4rem;background:#fff4d6;color:#101a5c;font-size:3.2rem;font-weight:700;box-shadow:0 .4rem 0 #101a5c;cursor:grab;touch-action:none;user-select:none}
+.syl-chip.placed{box-shadow:none;min-width:0;width:100%;height:100%}
+.syl-chip.dragging{cursor:grabbing;box-shadow:0 1rem 1.2rem #0009}
+
+/* Caça-Erro */
+.mistake-line{display:flex;flex-wrap:wrap;gap:1rem;justify-content:center;align-items:center;margin:1.4rem 0}
+.mistake-word{min-height:5.8rem;padding:.4rem 1.5rem;border:.28rem solid #101a5c;border-radius:1.4rem;background:#fff;color:#101a5c;font-size:2.7rem;font-weight:700;box-shadow:0 .4rem 0 #101a5c}
+.mistake-word.correct{background:#30c48d;color:#fff}
+.mistake-word.wrong{background:#e8707e;color:#fff}
+.mistake-word:disabled{opacity:.7}
+
+/* Balança dos Números */
+.balance{position:relative;height:15.5rem;width:100%;margin:.6rem auto 0}
+.bal-post{position:absolute;left:50%;bottom:0;width:1.8rem;height:11.5rem;margin-left:-.9rem;border:.25rem solid #101a5c;border-radius:1rem;background:#ffc93d}
+.bal-post::after{content:'';position:absolute;left:50%;bottom:-.9rem;width:9rem;height:1.6rem;margin-left:-4.5rem;border:.25rem solid #101a5c;border-radius:1rem;background:#2b3b86}
+.bal-beam{--a:-14deg;position:absolute;left:8rem;right:8rem;top:2.2rem;height:1.5rem;border:.25rem solid #101a5c;border-radius:1rem;background:#ffd84f;transform:rotate(var(--a));transition:transform .6s cubic-bezier(.3,1.5,.5,1)}
+.bal-beam::after{content:'';position:absolute;left:50%;top:50%;width:2.2rem;height:2.2rem;margin:-1.1rem 0 0 -1.1rem;border:.25rem solid #101a5c;border-radius:50%;background:#ffc93d}
+.bal-beam.level{box-shadow:0 0 2rem .4rem #30c48d}
+.bal-pan{position:absolute;top:100%;width:13rem;min-height:7rem;padding:2.4rem .8rem .8rem;display:flex;flex-wrap:wrap;gap:.4rem;justify-content:center;align-content:flex-start;border:.25rem solid #101a5c;border-radius:0 0 7rem 7rem/0 0 3.4rem 3.4rem;background:#f08a24;transform:rotate(calc(var(--a)*-1));transform-origin:50% 0;transition:transform .6s cubic-bezier(.3,1.5,.5,1)}
+.bal-pan::before{content:'';position:absolute;left:50%;top:-.1rem;width:0;height:2.2rem;border-left:.22rem solid #101a5c}
+.bal-left{left:-6.5rem}.bal-right{right:-6.5rem}
+.bal-pan.pan-drop{outline:.25rem dashed #ffffffaa;outline-offset:.3rem}
+.weight{display:inline-grid;place-items:center;min-width:5.6rem;height:5rem;padding:0 .8rem;border:.25rem solid #101a5c;border-radius:1rem;background:#2f6fe8;color:#fff;font-size:2.6rem;font-weight:700;box-shadow:0 .3rem 0 #101a5c;cursor:grab;touch-action:none;user-select:none}
+.weight.fixed{background:#7a49d6;font-size:3rem;min-width:7rem;height:5.6rem;cursor:default}
+.weight.dragging{cursor:grabbing;box-shadow:0 .9rem 1rem #0009}
+.bal-pan .weight{min-width:4.6rem;height:4.2rem;font-size:2.2rem}
+.bal-sum{margin-top:.4rem;text-align:center;font-size:1.7rem;font-weight:700;color:var(--yellow,#ffd63d)}
+.bal-tray{display:flex;flex-wrap:wrap;gap:.9rem;justify-content:center;min-height:7rem;margin-top:.6rem;padding:.9rem;border-radius:1.6rem;background:#00000033}
+
+/* Seletor de jogos com mais de 11 cartões */
+.catalog .game-grid{grid-template-columns:repeat(7,1fr)}
+.catalog .game-card img,.catalog .surprise img{height:12rem}
+.catalog .game-card .sub,.catalog .surprise .sub{font-size:1.2rem;min-height:3rem}
+
+/* Ajuste de altura: a grade do caça-palavras ocupa o que sobra na arena. */
+.game-search{display:flex;flex-direction:column;height:100%}
+.game-search .game-stage{flex:1 1 0;min-height:0;display:flex;flex-direction:column;align-items:center;gap:.6rem}
+.game-search .word-slots{margin:.2rem 0;gap:.5rem!important}
+.game-search .word-slots .letter{min-width:0;min-height:0;padding:.3rem .9rem;font-size:1.5rem}
+.game-search .search-grid{flex:1 1 0;min-height:0;width:auto!important;max-width:100%;aspect-ratio:1 / 1}
+.game-search .prompt{min-height:0;padding:.6rem;margin-bottom:.3rem;font-size:1.7rem}
+.game-search .game-progress{margin:.2rem}
+.search-cell{font-size:min(2.6rem,4.2vh)}
+
+/* Balança um pouco mais baixa para caber em telas 16:9 */
+.balance{height:13.6rem}
+.bal-post{height:9.6rem}
+.bal-beam{top:1.8rem}
+.bal-tray{min-height:6.2rem;padding:.7rem}
+.game-balanca .prompt{min-height:0;padding:.6rem;margin-bottom:.3rem;font-size:1.7rem}
+
+/* Forca das Palavras (jogo antigo): teclado em sete colunas */
+.game-forca .answers{grid-template-columns:repeat(7,minmax(0,1fr))!important}
+.game-forca .answers .letter{min-width:0;min-height:4.4rem}
+
+.game-secret .prompt{min-height:0;padding:.6rem;margin-bottom:.3rem;font-size:1.7rem}
+.game-secret .word-slots{margin:.4rem 0}
+
+/* Quebra-cabeça: a área de trabalho ocupa a altura que sobra e mantém a proporção. */
+.game-puzzle{display:flex;flex-direction:column;height:100%}
+.game-puzzle .game-stage{flex:1 1 0;min-height:0;display:flex;flex-direction:column;align-items:center}
+.game-puzzle .jigsaw-area{flex:1 1 0;min-height:0;width:auto;max-width:100%;margin:.3rem 0 0}
+
+.catalog .surprise b{font-size:1.45rem;white-space:nowrap}
+
+/* Acertos definem a disputa; rapidez desempata pelos pontos. */
+.game-progression{flex:none;text-align:center;font-size:1.15rem;line-height:1.3;color:#cbd8ff;margin:.15rem 0}
+.game-score-feedback{flex:none;min-height:1.35em;text-align:center;font-size:1.15rem;line-height:1.3;color:#ffe291;font-weight:700;margin:.15rem 0}
+.game-score-feedback:empty{min-height:0;margin:0}
+.game-balanca .helper{font-size:1.15rem;line-height:1.3;min-height:0;margin:.3rem 0}
+.game-balanca .game-progress{margin:.25rem 0}
+.game-search .helper{flex:none;font-size:1.15rem;line-height:1.25;margin:.3rem 0}
+.game-search .search-grid{grid-auto-rows:minmax(0,1fr)}
+.game-search .search-cell{font-size:min(2.4rem,3.7vh)}
+
+/* Atlas raster 1254 × 1254, dezesseis itens escolares em grade 4 × 4. */
+.memory-grid .memory-card{display:grid;place-items:center;padding:.25rem;min-height:0!important;aspect-ratio:1.2;background:#183c79;border:.18rem solid #8aafe8;border-radius:1rem;overflow:hidden}
+.memory-card .memory-back,.memory-card .memory-item{display:block;width:100%;height:100%;pointer-events:none;background-repeat:no-repeat}
+.memory-card .memory-back{background-image:url('./assets/visual/memory/memory-card-back-v1.png');background-position:center;background-size:contain}
+.memory-card .memory-item{aspect-ratio:1;background-image:url('./assets/visual/memory/memory-school-items-atlas-v1.png');background-size:400% 400%;width:auto;max-width:100%;height:100%}
+.memory-card.flipped{background:#f4edda}
+.memory-card.matched{border-color:#74e6b4;opacity:1}
+.game-memory .memory-grid{width:min(100%,46rem);margin:auto}
+@media(max-height:850px){
+ .game-progression,.game-score-feedback{font-size:1rem}
+ .game-memory .memory-grid{max-width:37rem}
+ .game-search .word-slots .letter{font-size:1.2rem;padding:.2rem .6rem}
+}

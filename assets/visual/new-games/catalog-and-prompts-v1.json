@@ -1,0 +1,82 @@
+{
+  "generator": "Built-in image generation",
+  "style": "3D cartoon EEJAM; blue/orange/yellow/purple/green; transparent PNG",
+  "scope": "Art assets for the new games found in games.js. Existing gameplay code not modified.",
+  "sheets": [
+    {
+      "file": "new-games-seals-3d-v1.png",
+      "layout": "3 emblems horizontally",
+      "games": [
+        "balanca",
+        "silabas",
+        "erro"
+      ],
+      "prompt": "Use case: stylized-concept\nAsset type: single transparent PNG atlas of three new game-selection emblems.\nReference image 1: the existing Memória EEJAM emblem defines the exact family resemblance: chunky rounded 3D cartoon objects, navy edges, bright glossy materials, deep blue curved ribbon carrying large white lettering.\nCreate exactly THREE distinct isolated emblems, one of each, horizontally aligned in one wide sheet.\n1: a blue and golden mathematical balance scale with colorful number weights, a few subtle plus/equal motifs, deep blue ribbon with exact Portuguese text \"BALANÇA DOS NÚMEROS\" on two legible lines.\n2: three floating chunky syllable blocks spelling \"ES\" \"CO\" \"LA\" with a small open book and assembly arrow, orange ribbon with exact text \"SÍLABAS SOLTAS\".\n3: large purple and gold magnifying glass inspecting a white word card, pencil, green check mark and a small red error mark, deep blue ribbon with exact text \"CAÇA-ERRO\".\nConsistent silhouette size, dense self-contained logos that remain recognizable at thumbnail size. Educational party game for teenagers 14–15, high-quality modeled 3D cartoon, soft bevels, blue #2167DA, orange #E76C2D, yellow #FFE06A, purple #5236B8, green #30C48D, navy outlines.\nThe full emblem including ribbon of each must be isolated with generous transparent gutters and outer margins. Exactly three emblems, no additional titles, no framing panels, no backdrop, no scene, no watermark. Actual alpha transparency everywhere outside the silhouettes. No shadows or glow filling the gaps. One single wide PNG for easy cutting."
+    },
+    {
+      "file": "balanca-dos-numeros-assets-v1.png",
+      "layout": "4 columns x 3 rows",
+      "items": [
+        "Balança completa",
+        "Base e suporte",
+        "Viga horizontal",
+        "Prato com correntes",
+        "Peso azul",
+        "Peso laranja",
+        "Peso roxo",
+        "Peso verde",
+        "Bandeja",
+        "Placa do alvo",
+        "Igualdade e acerto",
+        "Retornar peso"
+      ],
+      "prompt": "Use case: stylized-concept\nAsset type: transparent PNG modular sprite atlas for the existing game \"Balança dos Números\", Duelo do Futuro EEJAM.\nActual mechanics: players drag numbered weights from a tray onto the right pan until their sum equals a target on the left; the beam rotates and levels on success. Numbers will be rendered dynamically by software. Therefore ALL weight faces and labels in this sheet must be BLANK.\nCreate exactly 12 isolated usable assets in a regular four-column, three-row grid:\nRow1: (1) complete blue-and-gold balance scale with two empty pans, perfectly level, front-on view; (2) standalone blue pedestal and upright pole with golden top pivot, front-on, no beam or pans; (3) standalone horizontal blue/gold beam with central round pivot, front-on, no pedestal or pans; (4) one empty golden balance pan with its two hanging chains, front-on.\nRow2: (5) squat blue weight with top handle and large blank cream number plate; (6) squat orange weight same silhouette and blank cream plate; (7) squat purple weight same silhouette and blank cream plate; (8) squat green weight same silhouette and blank cream plate.\nRow3: (9) long empty shallow navy tray with blue rim to store weights, front-on; (10) empty wide blue/gold target-number plaque with plain cream center; (11) green equality token with a white equals sign and small success spark; (12) orange curved return arrow with a small gentle drag-hand symbol.\nKeep all component pieces fully visible and independently separated; no assembly overlap between cells. Matching proportions for beam, pole and pan. Friendly refined 3D cartoon toy materials, crisp navy edging, school blue, orange, gold, purple and green. Educational game for 14–15 year olds. Bold, functional silhouettes, soft highlights, no photographic textures.\nCritical: one PNG atlas with actual transparent alpha background, regular 4x3 grid, large transparent gutters and outer padding, each object within 75% of its cell, no backdrop, no panels, no scenery, no watermark, no title, no text or numerals. Blank weight faces and plaque are vital for dynamic numbers."
+    },
+    {
+      "file": "silabas-soltas-assets-v1.png",
+      "layout": "4 columns x 4 rows",
+      "items": [
+        "Bloco azul",
+        "Bloco laranja",
+        "Bloco roxo",
+        "Bloco verde",
+        "Espaço de encaixe",
+        "Livro",
+        "Cartão de dica",
+        "Gesto de arrastar",
+        "Escola",
+        "Caderno",
+        "Mochila",
+        "Computador",
+        "Biblioteca",
+        "Calculadora",
+        "Avançar e conferir",
+        "Devolver à bandeja"
+      ],
+      "prompt": "Use case: stylized-concept\nAsset type: transparent PNG modular sprite atlas for the existing Portuguese game \"Sílabas Soltas\", Duelo do Futuro EEJAM.\nActual mechanics: students drag syllable blocks into ordered slots to build the word suggested by a clue. Text and syllables are dynamic and must be rendered by the software; keep all tile faces BLANK.\nExactly 16 isolated assets, regular 4x4 grid, equal cells:\nRow1: blue horizontal rounded syllable tile with blank cream face; orange horizontal rounded syllable tile with blank cream face; purple horizontal rounded syllable tile with blank cream face; green horizontal rounded correctly-placed tile with blank cream face. These four tiles are front-facing, same shape and size.\nRow2: single empty navy recessed syllable slot with dotted blue rim and transparent exterior; open illustrated book; small lightbulb attached to a blank cream clue card; hand illustrating one gentle drag movement with a short curved arrow.\nRow3: small friendly school building; orange notebook and pencil; blue school backpack; blue laptop.\nRow4: miniature library bookshelf full of books; scientific calculator; blue/orange rightward assembly arrow with a small green check; purple curved return-to-tray arrow.\nStyle: polished rounded 3D cartoon game assets, smooth modeled materials, bright clear highlights, crisp navy contours, consistent view and lighting, appealing to teenagers 14–15. School blue #2167DA, orange #E76C2D, gold #FFE06A, purple #5236B8 and green #30C48D. Functional clean silhouettes visible on a large touchscreen.\nComposition: exactly 16 separate objects in four equal rows of four, generous empty transparent space between all objects, no overlaps, full silhouettes and 10% safe outer padding. Actual alpha transparency outside the objects. One PNG sheet, no backdrop or colored panels, no titles, no numbers, no text, no logos, no watermarks, no words baked into tiles."
+    },
+    {
+      "file": "caca-erro-assets-v1.png",
+      "layout": "4 columns x 4 rows",
+      "items": [
+        "Lupa",
+        "Lápis",
+        "Livro",
+        "Prancheta",
+        "Palavra normal",
+        "Palavra selecionada",
+        "Palavra correta",
+        "Tentativa incorreta",
+        "Faixa de frase",
+        "Cartão de correção",
+        "Sublinhado de erro",
+        "Contorno de seleção",
+        "Dica",
+        "Toque leve",
+        "Efeito de acerto",
+        "Próxima frase"
+      ],
+      "prompt": "Use case: stylized-concept\nAsset type: transparent PNG modular sprite atlas for the existing spelling game \"Caça-Erro\", Duelo do Futuro EEJAM.\nActual mechanics: a sentence is displayed as individual tappable word tokens; one word contains a spelling mistake and students select it. Software will render sentence and word text dynamically. Keep ALL plaques and cards BLANK, do not bake misspelled examples into the sprites.\nExactly 16 isolated assets, regular four-column four-row grid:\nRow1: purple magnifying glass with clear light-blue lens; yellow pencil with pink eraser; open blue book; blue clipboard with three abstract writing lines.\nRow2: long rounded blue word-token plaque with blank cream face; identical token orange selected rim; identical token green correct rim with tiny check on right edge; identical token red error rim with tiny X on right edge. Flat front-on view for these four blank token surfaces.\nRow3: wide blank cream sentence-strip card with navy and gold rim; blank cream correction card with a small green check attached; isolated red wavy proofreading underline; isolated blue selection oval outline with transparent empty center.\nRow4: lightbulb hint icon; gentle one-finger touch hand; green-check sparkle cluster; purple next-sentence arrow.\nStyle: polished rounded 3D cartoon educational game assets, readable adult-friendly toy materials for teenagers 14–15, matching existing EEJAM game emblems. Crisp navy outlines, blue #2167DA, orange #E76C2D, gold #FFE06A, purple #5236B8, green #30C48D, red for small error indicators only. Clean silhouette and consistent lighting.\nComposition: one PNG sheet with true alpha transparency, all 16 objects isolated in a regular 4x4 grid, generous transparent gutters and outer padding, each object fully visible and within its cell. No panels or decorative background. No titles, no labels, no words, no numerals, no watermark. Do not show an error in a face or a person, just friendly school investigation and proofreading tools."
+    }
+  ]
+}

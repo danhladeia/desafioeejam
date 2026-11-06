@@ -1,0 +1,30 @@
+{
+  "generation": "built-in image generation",
+  "front": {
+    "file": "memory-school-items-atlas-v1.png",
+    "layout": "4x4",
+    "items": [
+      "Livro aberto",
+      "Caderno e lápis",
+      "Mochila",
+      "Notebook",
+      "Microscópio",
+      "Globo terrestre",
+      "Calculadora",
+      "Régua e esquadro",
+      "Paleta e pincel",
+      "Lâmpada",
+      "Capelo",
+      "Pilha de livros",
+      "Escola",
+      "Tubos de ensaio",
+      "Calendário",
+      "Fone de ouvido"
+    ],
+    "prompt": "Use case: stylized-concept\nAsset type: transparent PNG illustration atlas for the Memória EEJAM matching card game, ages 14–15.\nCreate exactly 16 separate school-and-study object illustrations in an evenly spaced 4 by 4 grid. These are the illustrations placed on the FRONT of the memory cards; no card panels behind them. One illustration of each subject, since identical copies will be made by the game to form pairs.\nRow 1: open book with blue cover; orange spiral notebook with pencil; blue school backpack; laptop displaying simple code brackets.\nRow 2: microscope; terrestrial globe on a stand; scientific calculator; ruler and set square grouped as one icon.\nRow 3: paint palette and paintbrush grouped as one icon; gold idea lightbulb; graduation cap; stack of three textbooks.\nRow 4: small school building; test tube rack; calendar with check mark (no words or numbers); headphones with small audio-wave accent.\nStyle: refined polished 3D cartoon matching our educational party-game assets; rounded modeled volumes, smooth toy-like materials, crisp navy contour, strong distinguishable silhouettes, charming but appropriate for teenagers, no faces on objects, soft highlights. Palette school blue #2167DA, orange #E76C2D, yellow #FFE06A, purple #5236B8, green #30C48D. Consistent front-three-quarter view and lighting.\nComposition: large square PNG atlas, exact regular 4x4 layout, equal cell sizes, each object centered in its own cell, consistent scale, each object occupies at most 70% of its cell, large TRANSPARENT gutters and outer padding. All objects fully visible. Make each easy to crop and recognize at small sizes.\nCRITICAL: genuinely transparent alpha background between all objects, no backdrop, no colored glow behind objects, no floor plane, no drop-shadow rectangles, no checkerboard pattern painted into image. No title, no captions, no text, no labels, no watermarks, no extra objects."
+  },
+  "back": {
+    "file": "memory-card-back-v1.png",
+    "prompt": "Use case: stylized-concept\nAsset type: concealed memory-card BACK, individual transparent PNG for Duelo do Futuro EEJAM 2027.\nCreate exactly ONE square card back, front-on, perfectly square with softly rounded corners, a small molded 3D bevel, friendly refined 3D cartoon toy aesthetic consistent with our blue/orange school-game assets. Its opaque face is deep school blue with a subtle symmetrical raised diamond pattern. Broad rounded orange and gold rim. In the center, a bold white and gold emblem of an open book beneath a large question mark. Elegant small raised gold stars in the four corners. Simple enough to recognize on a touchscreen. No words, no letters, no numbers, no text. The very same card back will conceal all pairs, so show no specific subject or matching-pair clues.\nComposition: one centered complete card facing straight forward, no perspective tilt, no hands, no duplicate cards, equal transparent padding around all four sides, rounded-corner silhouette. Card occupies 80% of square image.\nCRITICAL actual alpha transparent background OUTSIDE the card. The card face itself stays solid blue, not transparent. No background, no floor, no ambient glow or shadows outside silhouette, no backdrop, no checkerboard pattern painted into the image, no watermark.\nPalette blue #2167DA, navy #1E2359, orange #E76C2D, yellow #FFE06A, white. Clean polished modeled material, bright readable rim, teenage school party game."
+  }
+}

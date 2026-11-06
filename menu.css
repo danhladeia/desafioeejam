@@ -1,0 +1,212 @@
+@font-face{font-family:Fredoka;src:url('assets/fonts/fredoka-latin-wght.woff2') format('woff2');font-weight:300 700;font-style:normal;font-display:swap}
+/* Palco do jogo em tablet horizontal.
+   1rem = 1% da largura em 16:9. Tudo aqui escala junto, do tablet à lousa. */
+:root{
+  --blue:#2167da;--blue-deep:#0c2470;--orange:#e76c2d;--orange-deep:#7f2a07;
+  --yellow:#ffd63d;--yellow-deep:#c98a00;--ink:#101a5c;--paper:#fff;
+  --pop:cubic-bezier(.2,1.5,.4,1);
+  --seam-l:polygon(0 0,58% 0,47% 45%,54% 45%,42% 100%,0 100%);
+  --seam-r:polygon(58% 0,100% 0,100% 100%,42% 100%,54% 45%,47% 45%);
+}
+html{font-size:min(1vw,1.778vh);height:100%;overflow:hidden;background:var(--ink);font-family:Fredoka,'Trebuchet MS','Segoe UI',Roboto,system-ui,sans-serif}
+body{min-width:0;height:100%;min-height:0;overflow:hidden;background:var(--ink);overscroll-behavior:none;touch-action:manipulation;user-select:none;-webkit-user-select:none}
+input,textarea,select{user-select:text;-webkit-user-select:text}
+#app{position:relative;z-index:1;height:100vh;height:100dvh;display:flex;flex-direction:column}
+main{flex:1;min-height:0;width:100%;max-width:none;margin:0;padding:1.5rem 4rem 2rem;overflow:auto}
+.eyebrow{display:none}
+.result .eyebrow{display:block;font-size:1.6rem;letter-spacing:0;color:var(--yellow);margin-bottom:.5rem}
+
+/* Palco: os dois lados e o raio ficam atrás de todas as telas */
+#stage{position:fixed;inset:0;overflow:hidden;background:var(--ink)}
+.half{position:absolute;inset:0}
+.half::after{content:'';position:absolute;inset:0;background:repeating-conic-gradient(from 3deg at 50% 50%,#ffffff12 0 7deg,transparent 7deg 15deg)}
+.half-l{clip-path:var(--seam-l);background:radial-gradient(circle at 50% 50%,#3f8cf5,var(--blue) 32%,var(--blue-deep) 92%)}
+.half-r{clip-path:var(--seam-r);background:radial-gradient(circle at 50% 50%,#ff9a3d,var(--orange) 32%,var(--orange-deep) 92%)}
+.bolt{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.bolt polyline{fill:none;stroke-linejoin:miter;vector-effect:non-scaling-stroke}
+.bolt .glow{stroke:var(--yellow);stroke-width:1.1rem}
+.bolt .core{stroke:var(--paper);stroke-width:.4rem}
+.flash{position:absolute;inset:0;background:var(--paper);opacity:0;pointer-events:none}
+#stage::after{content:'';position:absolute;inset:0;background:#0d1650;opacity:.62;pointer-events:none}
+body[data-screen=home] #stage::after{opacity:0}
+
+/* Menu principal */
+.home{position:relative;height:100%;padding:0;overflow:hidden}
+.menu-top{position:absolute;z-index:3;inset:1.6rem 2.4rem auto;display:flex;align-items:center;justify-content:space-between}
+.school{display:flex;align-items:center;gap:1rem;color:var(--paper);font-size:1.25rem;font-weight:700;line-height:1.25;text-shadow:0 .1rem .3rem #0007}
+.school img{width:5rem;height:5rem}
+.tools{display:flex;align-items:center;gap:.7rem}
+.ico{width:4.6rem;height:4.6rem;padding:0;background:none;border-radius:1.2rem;flex:none}
+.ico img{display:block;width:100%;height:100%;object-fit:contain;pointer-events:none}
+.ico:hover{transform:none}
+.ico:active{transform:scale(.9)}
+.status{font-size:1.15rem;color:#dfe7ff;margin-right:.8rem;white-space:nowrap}
+.status i{width:.7rem;height:.7rem;margin-right:.5rem}
+.hero-m{position:absolute;z-index:1;bottom:1.5rem;height:32rem;width:auto;max-width:30%;object-fit:contain;filter:drop-shadow(0 1rem 0 #0a124055);animation:bob 4.5s ease-in-out infinite;pointer-events:none}
+.m-left{left:1.5rem}
+.m-right{right:1.5rem;animation-delay:-2.2s}
+.menu-core{position:absolute;z-index:2;left:50%;top:50%;width:40rem;transform:translate(-50%,-50%);display:flex;flex-direction:column;align-items:center;margin-top:1rem}
+.shield{height:27rem;width:auto;filter:drop-shadow(0 .9rem 0 #0a124066)}
+.tagline{margin:.9rem 0 1.5rem;padding:.55rem 2rem;background:var(--ink);color:var(--paper);border-radius:99rem;font-size:1.75rem;font-weight:700;line-height:1.2;white-space:nowrap}
+.menu-buttons{display:grid;gap:1.2rem;width:100%}
+.menu-buttons .row{display:flex;gap:1.2rem}
+.menu-buttons .row>*{flex:1}
+
+/* Botões de brinquedo: borda grossa como as artes, e afundam ao toque */
+.primary,.secondary,.danger{min-height:5.6rem;padding:1rem 2rem;border:.28rem solid var(--ink);border-radius:1.7rem;font-size:2rem;font-weight:700;line-height:1.1;box-shadow:0 .6rem 0 var(--ink);transition:transform .08s,box-shadow .08s}
+.primary{background:var(--yellow);color:var(--ink)}
+.secondary{background:var(--paper);color:var(--ink)}
+.danger{background:#ffd9df;color:#7c1230}
+.menu-buttons .primary{min-height:6.6rem;font-size:2.6rem}
+.menu-buttons .secondary{font-size:1.75rem}
+.primary:hover,.secondary:hover,.danger:hover{transform:none}
+.primary:active,.secondary:active,.danger:active{transform:translateY(.45rem);box-shadow:0 .15rem 0 var(--ink)}
+.text-button{font-size:1.4rem}
+.menu-buttons .text-button{min-height:4rem;padding:.4rem 1rem;font-size:1.6rem;font-weight:700;color:var(--paper);text-shadow:0 .1rem .3rem #0009}
+.menu-buttons .text-button:active{transform:scale(.96)}
+
+/* Barra das demais telas */
+.topbar{flex:none;height:7.2rem;padding:0 2.4rem;border:0;gap:2rem}
+.brand{flex:none}
+.brand img{display:block;width:auto;height:5.6rem}
+body[data-screen=play] .topbar{display:none}
+
+/* Catálogo: 11 selos e o sorteio, sem rolagem */
+.catalog{display:flex;flex-direction:column;justify-content:center;padding:0 3rem 1.5rem;overflow:hidden}
+.cat-head{display:flex;align-items:center;gap:1.4rem;margin-bottom:1.2rem}
+.cat-head h1{font-size:3.6rem;font-weight:700;letter-spacing:0;color:var(--paper)}
+.catalog .game-grid{grid-template-columns:repeat(6,1fr);gap:1.4rem .8rem}
+.catalog .game-card,.surprise{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;gap:.5rem;padding:.3rem;background:none;border:0;border-radius:1.6rem;overflow:visible;text-align:center;color:var(--paper);animation:seal-in .42s var(--pop) both;animation-delay:calc(var(--i)*38ms + 160ms)}
+.catalog .game-card:hover,.surprise:hover{box-shadow:none;transform:none}
+.catalog .game-card:active,.surprise:active{transform:scale(.93)}
+.game-card img,.surprise img{display:block;width:100%;height:14.4rem;object-fit:contain;filter:drop-shadow(0 .45rem 0 #060c33aa);pointer-events:none}
+.game-card .sub,.surprise .sub{font-size:1.32rem;font-weight:700;line-height:1.2;min-height:3.2rem;color:#e7edff}
+.surprise b{font-size:1.9rem;font-weight:700;color:var(--yellow)}
+.surprise img{height:11.6rem;padding:1.6rem}
+.secs{position:absolute;top:.2rem;right:.4rem;padding:.2rem .7rem;border-radius:99rem;background:var(--ink);color:var(--paper);font-size:1.15rem;font-weight:700}
+
+/* Demais telas herdam a escala */
+h1{font-size:3.8rem;letter-spacing:0;font-weight:700}
+p{color:#dbe4ff}
+.page-heading{margin:0 0 1.6rem}
+.page-heading p{margin-top:.5rem;font-size:1.6rem}
+label{font-size:1.5rem}
+input,textarea,select{font-size:1.6rem}
+.setup-panel{display:grid;grid-template-columns:1fr 1fr;gap:0 2.4rem;max-width:none;padding:2.2rem;background:#101b5ee6;border:.28rem solid #ffffff2e;border-radius:2rem}
+.setup-panel label:has(#names){grid-column:2;grid-row:1/3;display:flex;flex-direction:column}
+.setup-panel #names{flex:1;min-height:14rem;resize:none}
+.setup-panel .form-row{grid-column:1;grid-row:2;display:block}
+.setup-panel .actions{grid-column:1/-1;margin-top:.8rem}
+.hint{font-size:1.3rem}
+.next-up small{font-size:1.2rem}
+.next-up strong{font-size:2.6rem}
+.round h3{font-size:1.3rem}
+.match{background:#101b5ee6}
+.match>div{font-size:1.5rem}
+.preparation{max-width:none;margin:0 auto;padding-top:.5rem}
+.preparation h1{font-size:4.4rem}
+.preparation .rule{font-size:1.9rem;line-height:1.35;margin:.8rem auto;max-width:62rem}
+.versus{gap:2rem;margin:1.6rem 0}
+.versus>b{font-size:5rem;color:var(--yellow);animation:stamp-in .4s .32s var(--pop) both}
+.player-card{padding:1.8rem;background:var(--blue);border:.28rem solid var(--ink);box-shadow:0 .6rem 0 var(--ink);animation:side-l .42s var(--pop) both}
+.player-card.orange{background:var(--orange);border-color:var(--ink);animation-name:side-r}
+.player-card small,.player-card.orange small{font-size:1.25rem;letter-spacing:0;color:var(--paper)}
+.player-card h2{font-size:3rem;margin-top:.4rem}
+.gentle{font-size:1.7rem}
+.helper{font-size:1.4rem}
+.level-tag{font-size:1.3rem;color:#dbe4ff}
+
+/* Partida */
+.play{display:flex;flex-direction:column;padding:1rem 1.6rem;overflow:hidden}
+.play .game-top{flex:none;margin-bottom:.8rem}
+.play .arenas{flex:1;min-height:0}
+.play .arena{min-height:0;border-width:.28rem;background-color:#0d1650;animation:side-l .4s var(--pop) both}
+.play .arena.orange{animation-name:side-r}
+.play .play-footer{flex:none;margin-top:.6rem;font-size:1.2rem}
+.game-top h2{font-size:2.4rem}
+.timer{font-size:3.4rem}
+.board{min-height:0;height:calc(100% - 7rem);overflow:auto}
+.scoreboard small{font-size:1.15rem;letter-spacing:0}
+.scoreboard h2{font-size:2.2rem;margin-top:.2rem}
+.scoreboard strong{font-size:4rem}
+.scoreboard{padding:.8rem 1.6rem}
+.game-progress{font-size:1.4rem}
+.prompt{font-size:1.7rem}
+.play-footer{color:#dbe4ff}
+.countdown{font-size:22rem;color:var(--yellow);background:#0d1650e0;backdrop-filter:none;animation:count .85s var(--pop) infinite}
+
+/* Resultado */
+.result{max-width:none;margin:0 auto}
+.winner-m{display:block;height:19rem;width:auto;margin:0 auto .4rem;animation:stamp-in .5s .18s var(--pop) both;filter:drop-shadow(0 .8rem 0 #060c33aa)}
+.result h1{font-size:4.6rem;animation:rise .35s .4s var(--pop) both}
+.result h1 span{color:var(--yellow)}
+.trophy{font-size:9rem;margin:0 0 .8rem;animation:stamp-in .5s .18s var(--pop) both}
+.result-scores{margin:1.2rem 0;font-size:1.4rem;letter-spacing:0;color:var(--paper)}
+.result-scores span:last-child{color:var(--paper)}
+.result-scores b{font-size:4rem;margin-top:.2rem}
+.fact{padding:1.4rem 2rem;max-width:60rem;background:#101b5ee6;border:0}
+.fact small{font-size:1.3rem;letter-spacing:0}
+.fact p{font-size:1.5rem;margin-top:.3rem}
+.actions{margin-top:1.4rem}
+
+/* Janelas */
+dialog{max-width:48rem;padding:2.4rem;background:#101b5e;border:.28rem solid #ffffff2e}
+dialog h2{font-size:2.8rem;margin-bottom:1rem}
+dialog p{font-size:1.5rem;margin:1rem 0 1.6rem}
+
+/* Abertura: os lados colidem, o raio cai, o escudo carimba e os mascotes saltam */
+.intro .half-l{animation:slam-l .46s cubic-bezier(.3,0,.25,1) both}
+.intro .half-r{animation:slam-r .46s cubic-bezier(.3,0,.25,1) both}
+.intro .bolt{animation:strike .2s .42s linear both}
+.intro .flash{animation:flash .5s .44s ease-out forwards}
+.intro .home{animation:shake .42s .46s linear both}
+.intro .shield{animation:stamp-in .5s .62s var(--pop) both}
+.intro .m-left{animation:leap-l .58s 1s var(--pop) both,bob 4.5s 1.6s ease-in-out infinite}
+.intro .m-right{animation:leap-r .58s 1.08s var(--pop) both,bob 4.5s 1.7s ease-in-out infinite}
+.intro .tagline{animation:rise .32s 1.2s var(--pop) both}
+.intro .menu-buttons .primary{animation:rise .34s 1.32s var(--pop) both}
+.intro .menu-buttons .row{animation:rise .34s 1.44s var(--pop) both}
+.intro .menu-buttons .text-button{animation:fade .4s 1.7s ease-out both}
+.intro .menu-top{animation:fade .4s 1.6s ease-out both}
+
+/* Troca de tela: as duas portas abrem a partir do raio */
+#wipe{position:fixed;inset:0;z-index:70;overflow:hidden;pointer-events:none;visibility:hidden}
+#wipe.go{visibility:visible}
+#wipe .door{position:absolute;inset:0}
+#wipe .door-l{clip-path:var(--seam-l);background:var(--blue)}
+#wipe .door-r{clip-path:var(--seam-r);background:var(--orange)}
+#wipe.go .door-l{animation:door-l .46s cubic-bezier(.6,0,.3,1) both}
+#wipe.go .door-r{animation:door-r .46s cubic-bezier(.6,0,.3,1) both}
+
+/* Aparelho na vertical */
+#rotate{display:none}
+@media (orientation:portrait){
+  #rotate{position:fixed;inset:0;z-index:200;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:24px;padding:32px;background:var(--ink);text-align:center}
+  #rotate img{width:min(60vw,320px);height:auto}
+  #rotate p{color:var(--paper);font-size:24px;font-weight:700;line-height:1.3}
+}
+
+@keyframes slam-l{from{transform:translateX(-100%)}to{transform:none}}
+@keyframes slam-r{from{transform:translateX(100%)}to{transform:none}}
+@keyframes strike{from{clip-path:inset(0 0 100% 0)}to{clip-path:inset(0)}}
+@keyframes flash{from{opacity:.85}to{opacity:0}}
+@keyframes shake{0%,100%{transform:none}20%{transform:translate(-.6rem,.3rem)}40%{transform:translate(.5rem,-.3rem)}60%{transform:translate(-.3rem,.2rem)}80%{transform:translate(.2rem,-.1rem)}}
+@keyframes stamp-in{from{opacity:0;transform:scale(2.4) rotate(-7deg)}to{opacity:1;transform:none}}
+@keyframes leap-l{from{opacity:0;transform:translate(-70%,35%) rotate(-16deg)}to{opacity:1;transform:none}}
+@keyframes leap-r{from{opacity:0;transform:translate(70%,35%) rotate(16deg)}to{opacity:1;transform:none}}
+@keyframes rise{from{opacity:0;transform:translateY(2.4rem) scale(.9)}to{opacity:1;transform:none}}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+@keyframes seal-in{from{opacity:0;transform:scale(.4) rotate(-6deg)}to{opacity:1;transform:none}}
+@keyframes side-l{from{opacity:0;transform:translateX(-30%)}to{opacity:1;transform:none}}
+@keyframes side-r{from{opacity:0;transform:translateX(30%)}to{opacity:1;transform:none}}
+@keyframes door-l{from{transform:none}to{transform:translateX(-100%)}}
+@keyframes door-r{from{transform:none}to{transform:translateX(100%)}}
+@keyframes count{0%{transform:scale(1.7);opacity:0}30%{transform:scale(1);opacity:1}85%{transform:scale(1);opacity:1}100%{transform:scale(.9);opacity:.2}}
+
+/* Menu: identidade do jogo, mascotes e controles centrais. */
+.menu-core{top:1.5rem;bottom:1.5rem;transform:translateX(-50%);margin-top:0;justify-content:center;gap:.4rem}
+.shield{flex:0 1 auto;min-height:0;height:26rem;max-height:26rem;max-width:100%;object-fit:contain}
+.counter{position:relative;z-index:2;width:100%;padding:1.3rem 1.6rem;border:.28rem solid var(--ink);border-radius:2.4rem;background:linear-gradient(#22329a,#101a5c);box-shadow:0 .6rem 0 var(--ink),inset 0 .25rem 0 #ffffff30}
+.counter .menu-buttons .primary{min-height:6rem}
+.counter .menu-buttons .secondary{min-height:5.2rem}
+.intro .counter{animation:rise .34s 1.3s var(--pop) both}

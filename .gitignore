@@ -1,0 +1,9 @@
+node_modules/
+test-results/
+playwright-report/
+art-check-results/
+
+# Dados pessoais de menores: nunca versionar a lista com nomes completos
+Listas de Alunos*.pdf
+.claude/
+*.bak

@@ -1,0 +1,178 @@
+/* Modo Duelo. Mesma escala em rem do menu: 1rem = 1% da largura. */
+main.duel{display:flex;flex-direction:column;padding:1rem 3rem 1.4rem;overflow:auto}
+.duel-head{display:flex;align-items:center;gap:1.4rem;margin-bottom:1.2rem}
+.duel-head h1{font-size:3.6rem;color:var(--paper)}
+.duel-sub{margin-left:auto;font-size:1.8rem;font-weight:700;color:var(--yellow)}
+.small{min-height:4.4rem;padding:.6rem 1.6rem;font-size:1.5rem;border-radius:1.3rem;box-shadow:0 .4rem 0 var(--ink)}
+.form-error{min-height:2rem;margin:.4rem 0 0;font-size:1.4rem;font-weight:700;color:#ffb3a6}
+
+/* Token e nomes */
+.token-input{height:6.4rem;font-size:3rem;letter-spacing:.4rem;text-align:center;border-width:.28rem}
+.token-input.shake{animation:nope .35s}
+dialog textarea{font-size:1.8rem;min-height:18rem;resize:none}
+@keyframes nope{20%{transform:translateX(-.8rem)}40%{transform:translateX(.8rem)}60%{transform:translateX(-.5rem)}80%{transform:translateX(.5rem)}}
+
+/* Configuração */
+.duel-setup{flex:1;min-height:0;display:grid;grid-template-columns:1.2fr 1fr;gap:2.4rem}
+.duel-classes{display:grid;grid-template-rows:repeat(3,1fr);gap:1.4rem}
+.class-card{display:flex;align-items:center;justify-content:space-between;gap:1.6rem;padding:1.2rem 2.2rem;border:.28rem solid var(--ink);border-radius:2rem;background:var(--c);color:var(--ink);box-shadow:0 .6rem 0 var(--ink);animation:seal-in .42s var(--pop) both;animation-delay:calc(var(--i)*90ms)}
+.class-card b{display:block;font-size:3.2rem;line-height:1.1}
+.class-card small{display:block;margin-top:.3rem;font-size:1.6rem;font-weight:700;opacity:.8}
+.duel-config{display:flex;flex-direction:column;gap:1.2rem;padding:2rem;background:#101b5ee6;border:.28rem solid #ffffff2e;border-radius:2rem;animation:rise .4s .15s var(--pop) both}
+.duel-config h2{font-size:2.6rem}
+.chips{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem}
+.chip{min-height:7.6rem;font-size:3.6rem;font-weight:700;border:.28rem solid var(--ink);border-radius:1.6rem;background:var(--paper);color:var(--ink);box-shadow:0 .5rem 0 var(--ink);transition:transform .08s,box-shadow .08s,background .15s}
+.chip.on{background:var(--yellow);transform:translateY(-.2rem) scale(1.05)}
+.chip:hover{transform:none}.chip.on:hover{transform:translateY(-.2rem) scale(1.05)}
+.chip:active{transform:translateY(.4rem);box-shadow:0 .1rem 0 var(--ink)}
+.duel-config .hint{font-size:1.5rem;color:#dbe4ff;min-height:4.4rem}
+.duel-config .primary{margin-top:auto}
+.duel-config .text-button{font-size:1.4rem;color:#c9d6ff}
+.resume{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:1rem 1.4rem;border-radius:1.4rem;background:#ffffff1c}
+.resume b{display:block;font-size:1.8rem}.resume small{font-size:1.4rem;color:#dbe4ff}
+
+/* Roletas */
+.duel-draw{flex:1;min-height:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1rem}
+.dd-head{width:100%;display:flex;align-items:center;gap:2rem;min-height:4.4rem}
+.dd-round{font-size:2.4rem;font-weight:700;color:var(--paper);white-space:nowrap}
+.dd-round b{color:var(--yellow);font-size:3.2rem}
+.pips{display:flex;gap:.5rem;flex:1;flex-wrap:wrap}
+.pips i{width:1.1rem;height:1.1rem;border-radius:50%;background:#ffffff40}
+.pips i.done{background:var(--yellow)}.pips i.now{background:var(--paper);box-shadow:0 0 0 .3rem #ffffff55}
+.reel{position:relative;flex:none;overflow:hidden;border:.28rem solid var(--ink);border-radius:1.8rem;background:#0d1650;box-shadow:0 .5rem 0 var(--ink)}
+.reel .strip{display:flex;width:max-content;min-width:100%;will-change:transform}
+.reel-v .strip{width:100%}
+.reel .cell{flex:none;display:grid;place-items:center;color:var(--paper);font-weight:700;white-space:nowrap}
+.reel.spin .strip{filter:blur(.14rem)}
+.reel.locked{border-color:var(--yellow);animation:lock .5s var(--pop)}
+@keyframes lock{40%{transform:scale(1.06)}}
+.reel::after{content:'';position:absolute;inset:0;pointer-events:none}
+.reel-game{--item:12rem;--h:13rem;width:calc(var(--item)*3);height:var(--h)}
+.reel-game .strip{flex-direction:row}
+.reel-game .cell{width:var(--item);height:var(--h)}
+.reel-game .cell img{height:calc(var(--h) - 2rem);width:auto;max-width:92%;object-fit:contain}
+.reel-game::before{content:'';position:absolute;z-index:2;left:var(--item);width:var(--item);top:.4rem;bottom:.4rem;border:.35rem solid var(--yellow);border-radius:1.6rem;pointer-events:none}
+.reel-game::after{background:linear-gradient(90deg,#0d1650,#0d165000 34%,#0d165000 66%,#0d1650)}
+.reel-v .strip{flex-direction:column}
+.reel-v::after{background:linear-gradient(#0d165099,#0d165000 30%,#0d165000 70%,#0d165099)}
+.reel-class{--h:4.8rem;height:var(--h)}.reel-class .cell{height:var(--h);font-size:2.8rem}
+.reel-student{--h:5.6rem;height:var(--h)}.reel-student .cell{height:var(--h);font-size:3.8rem}
+.dd-game{height:3.4rem;font-size:3rem;color:var(--paper);text-shadow:0 .25rem 0 var(--ink);opacity:0}
+.dd-game.on{animation:stamp-in .45s var(--pop) both}
+.dd-sides{flex:none;width:100%;display:grid;grid-template-columns:1fr auto 1fr;gap:1.6rem;align-items:center}
+.dd-side{padding:.9rem 1.4rem 1.2rem;border:.28rem solid var(--ink);border-radius:2rem;box-shadow:0 .5rem 0 var(--ink);color:var(--paper)}
+.dd-side.blue{background:var(--blue);animation:side-l .42s var(--pop) both}
+.dd-side.orange{background:var(--orange);animation:side-r .42s var(--pop) both}
+.dd-side small{display:block;margin:.1rem 0 .3rem;font-size:1.3rem;font-weight:700}
+.dd-side .reel{margin-bottom:.4rem}
+.dd-vs{font-size:4.6rem;font-style:italic;color:var(--yellow);text-shadow:0 .3rem 0 var(--ink);opacity:0}
+.dd-vs.on{animation:stamp-in .45s var(--pop) both}
+.dd-actions{display:flex;gap:1.6rem;margin-top:.4rem;visibility:hidden}
+.dd-actions.show{visibility:visible;animation:rise .35s var(--pop) both}
+
+/* Placar e final */
+.standings{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem;margin:.6rem 0 1.4rem;padding-top:1rem}
+.st-card{position:relative;display:flex;flex-direction:column;align-items:center;padding:1.2rem 1.4rem 1.4rem;border:.28rem solid var(--ink);border-radius:2rem;background:var(--c);color:var(--ink);box-shadow:0 .6rem 0 var(--ink);animation:rise .4s var(--pop) both;animation-delay:calc(var(--i)*110ms)}
+.st-card .rank{position:absolute;top:-1.2rem;left:1.4rem;padding:.1rem 1rem;border:.25rem solid var(--ink);border-radius:99rem;background:var(--paper);font-size:1.6rem;font-weight:700}
+.st-card .st-name{font-size:2.6rem}
+.st-card .wins{font-size:8rem;line-height:1.05;font-weight:700}
+.st-card small{font-size:1.5rem;font-weight:700;margin-top:-.4rem}
+.st-card .st-meta{margin-top:.6rem;padding:.3rem 1.2rem;border-radius:99rem;background:#ffffff80;font-size:1.4rem;font-weight:700}
+.st-card.just .wins{animation:bump .8s .35s var(--pop) both}
+.st-card.lead{animation-name:rise,glow;animation-duration:.4s,1.6s;animation-iteration-count:1,infinite;animation-delay:calc(var(--i)*110ms),0s}
+.standings.final{margin-bottom:.4rem}
+@keyframes bump{0%{transform:scale(1)}35%{transform:scale(1.55) rotate(-4deg)}100%{transform:scale(1)}}
+@keyframes glow{50%{box-shadow:0 .6rem 0 var(--ink),0 0 3rem .6rem #ffd63daa}}
+.recent{list-style:none;margin:0 auto;padding:0;width:100%;max-width:92rem;display:grid;gap:.6rem}
+.recent li{display:grid;grid-template-columns:3rem 1fr 1.6fr auto 1.6fr;gap:1.2rem;align-items:center;padding:.7rem 1.4rem;border-radius:1.2rem;background:#101b5ecc;font-size:1.5rem;color:#dbe4ff;animation:rise .35s var(--pop) both}
+.recent li b{color:var(--yellow);font-size:1.7rem}
+.recent li i{font-style:normal;font-size:1.2rem;opacity:.8}
+.recent li span:last-of-type{text-align:right}
+.recent .won{color:var(--paper);font-weight:700}
+.recent em{color:#8aa0e6;font-style:normal}
+.duel-final-box .eyebrow{font-size:1.6rem;margin-bottom:.2rem}
+.duel-final-box h1{font-size:3.8rem}
+.duel-final-box .winner-m{height:10rem;margin-bottom:0}
+.duel-final-box .standings{margin:.2rem 0 .4rem;padding-top:.8rem;gap:1.6rem}
+.duel-final-box .st-card{padding:.9rem 1.2rem 1.1rem}
+.duel-final-box .st-card .wins{font-size:6rem}
+.duel-final-box .actions{margin-top:1rem}
+.round-tag{display:block;font-size:1.2rem;font-weight:700;color:var(--yellow)}
+
+/* Quanto menos larga a tela, mais altura sobra e maior fica o sorteio. */
+@media (max-aspect-ratio:8/5){
+  .reel-game{--item:13rem;--h:14rem}
+  .reel-class{--h:5.2rem}.reel-class .cell{font-size:3.1rem}
+  .reel-student{--h:6.4rem}.reel-student .cell{font-size:4.4rem}
+  .dd-game{height:3.6rem;font-size:3.3rem}
+  .dd-vs{font-size:5rem}
+  .duel-draw{gap:1.2rem}
+}
+@media (max-aspect-ratio:3/2){
+  .reel-game{--item:14rem;--h:15.4rem}
+  .reel-class{--h:5.8rem}.reel-class .cell{font-size:3.4rem}
+  .reel-student{--h:7rem}.reel-student .cell{font-size:4.8rem}
+  .dd-game{height:4.2rem;font-size:3.6rem}
+  .dd-side small{font-size:1.5rem}
+  .dd-vs{font-size:5.4rem}
+  .duel-draw{gap:1.6rem}
+}
+
+/* Escolha persistente dos jogos e recuperação explícita de dados. */
+.duel-options{display:flex;flex-direction:column;gap:1.1rem;min-height:0}
+.duel-options .duel-classes{grid-template-rows:repeat(3,minmax(0,1fr));gap:.8rem;flex:0 0 auto}
+.duel-options .class-card{padding:.45rem 1rem;min-height:4.5rem}
+.duel-options .class-card b{font-size:1.9rem;line-height:1.05}
+.duel-options .class-card small{font-size:1.1rem;line-height:1.1;margin-top:.2rem}
+.duel-options .class-card button{font-size:1.2rem;padding:.4rem .8rem;min-height:3.2rem}
+.duel-games{border:.2rem solid #ffffff35;border-radius:1.5rem;padding:1rem 1.2rem;background:#101b5ee6}
+.duel-games h2{font-size:2rem;margin:0}
+.duel-games p{font-size:1.2rem;margin:.3rem 0 .7rem;color:#dbe4ff}
+.duel-games .form-error{min-height:1.2rem;margin:.4rem 0 0;color:#ffb3a6}
+.duel-game-options{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.55rem}
+.duel-game-option{line-height:1.1;min-height:3.1rem;padding:.45rem .6rem;font-size:1.15rem;border:.2rem solid #8898c0;border-radius:.8rem;color:#dae2ff;background:#152153;box-shadow:none}
+.duel-game-option.on{background:#ffe17a;color:#12214a;border-color:#fff5c2}
+.duel-restore-error,.duel-exhausted p{font-size:1.5rem;line-height:1.4;padding:1rem;border:.2rem solid #ffb3a6;border-radius:1rem;color:#ffe1dc;background:#591d34;margin:0 0 1rem}
+.duel-exhausted{margin:auto;max-width:70rem;text-align:center}
+.duel-exhausted h1{font-size:3.4rem;margin-bottom:1rem}
+.duel-exhausted button{margin-top:1rem}
+.dd-status{font-size:1.25rem;color:#fce9a2;max-width:25rem;text-align:right}
+.dd-redraw{margin-top:.4rem;width:100%;font-size:1.2rem;min-height:3.2rem;padding:.4rem .8rem}
+.dd-redraw:disabled{visibility:hidden}
+.dd-error{width:100%;min-height:0;margin:0;text-align:center;font-size:1.1rem}
+.dd-error:empty{display:none}
+.dd-vs{display:flex;width:6rem;align-items:center;justify-content:center}
+.dd-vs img,.dd-vs .ui-image-icon{width:6rem;height:6rem;max-width:none;object-fit:contain;flex:none}
+.dd-vs.on{opacity:1}
+.final-tag{display:inline-flex;align-items:center;gap:.3rem;color:var(--yellow);font-size:1.6rem}
+.final-tag img,.final-tag .ui-image-icon{width:2.5rem;height:2.5rem;object-fit:contain}
+.duel-draw button img,.duel-config button img,main.duel .actions button img,.duel-final-box button img{width:2.4rem;height:2.4rem;object-fit:contain;vertical-align:middle}
+.result-scores em img,.recent em img{width:2.6rem;height:2.6rem;object-fit:contain;vertical-align:middle}
+.ranking-status{display:flex;align-items:center;justify-content:center;gap:.7rem;min-height:2.6rem;margin:0;font-size:1.6rem;color:var(--yellow)}
+.ranking-status img{width:2.8rem;height:2.8rem;object-fit:contain}
+.ranking-reveal .st-card{transition:background .4s,box-shadow .4s;animation:none;min-height:17.5rem}
+.ranking-reveal .st-card:not(.revealed){background:#172454;box-shadow:0 .6rem 0 var(--ink),inset 0 0 3rem #536adc44}
+.ranking-reveal .st-card:not(.revealed)>*{visibility:hidden}
+.ranking-reveal .st-card:not(.revealed)::after{content:'Revelando...';position:absolute;inset:0;display:grid;place-items:center;font-size:2rem;color:#f8e8b5;animation:ranking-suspense .8s ease-in-out infinite alternate}
+.ranking-reveal .st-card.revealed{animation:ranking-arrive .45s var(--pop) both}
+.duel-trophy img,.duel-trophy .ui-image-icon{width:8rem;height:8rem;object-fit:contain}
+.champion-rule{font-size:1.5rem;color:#fce9a2;margin:.4rem 0 .8rem}
+@keyframes ranking-suspense{to{opacity:.4}}
+@keyframes ranking-arrive{from{opacity:.3;translate:0 1.5rem;scale:.92}to{opacity:1;translate:0 0;scale:1}}
+@media(prefers-reduced-motion:reduce){
+  main.duel *,main.duel *::before,main.duel *::after,.duel-final-box *{animation:none!important;transition:none!important}
+  .dd-game.on,.dd-vs.on{opacity:1}
+}
+.reduced .dd-game.on,.reduced .dd-vs.on{opacity:1}
+.reduced .ranking-reveal *,.reduced .ranking-reveal *::after{animation:none!important;transition:none!important}
+/* Mantém controles completos dentro da altura da lousa. */
+.duel-config .hint{line-height:1.3;margin:0}
+.duel-config .primary .ui-image-icon,.dd-actions .ui-image-icon,main.duel .actions .ui-image-icon{width:2.4rem;height:2.4rem}
+.dd-redraw .ui-image-icon{width:1.8rem;height:1.8rem}
+@media(min-aspect-ratio:8/5){
+  .duel-draw{gap:.6rem}
+  .duel-draw .reel-game{--item:10.5rem;--h:10.5rem}
+  .duel-draw .reel-class{--h:4rem}
+  .duel-draw .reel-student{--h:4.8rem}
+  .duel-draw .dd-side{padding:.6rem 1rem .8rem}
+}

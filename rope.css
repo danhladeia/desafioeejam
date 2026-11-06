@@ -1,0 +1,25 @@
+.tug-stage.shared-rope{position:relative;display:block;flex:none;height:9.4rem;margin:0 5rem .5rem;border:0;padding:0;color:#fff;pointer-events:none;--rope-shift:0%}
+.tug-avatar{position:absolute;top:0;width:9rem;height:9rem;z-index:3;transform-origin:50% 90%}
+.tug-left{left:0}.tug-right{right:0}
+.tug-avatar small{position:absolute;bottom:0;left:0;right:0;text-align:center;font-size:1rem;font-weight:700;color:#dceaff;text-shadow:0 .15rem .1rem #101a5c}
+.tug-right small{color:#ffd6b5}
+.tug-sprite{width:100%;height:100%;background-image:url('assets/visual/rope/mascots-pulling-4-frames-v1.png');background-size:400% 200%;background-repeat:no-repeat;animation:tug-frames 1.15s steps(1,end) infinite;filter:drop-shadow(0 .18rem .1rem #0005)}
+.tug-faisca{background-position:0 0}.tug-pipo{background-position:0 100%;animation-delay:-.2s}
+.tug-lane{position:absolute;left:6rem;right:6rem;top:4.9rem;height:2rem;z-index:1}
+.tug-lane::before{content:'';position:absolute;left:50%;top:-2.7rem;height:5.4rem;border-left:.15rem dashed #fff8}
+.tug-rope{position:absolute;inset:0 -3rem;background:url('assets/visual/rope/rope-strip-v1.png') center center/100% 680% no-repeat;transform:translateX(var(--rope-shift));transition:transform .55s cubic-bezier(.2,1.3,.4,1);will-change:transform}
+#rope-marker{position:absolute;top:-1.05rem;display:block;width:1.7rem;height:3.2rem;transform:translateX(-50%);transition:left .55s cubic-bezier(.2,1.3,.4,1);z-index:2}
+#rope-marker>span{display:block;width:100%;height:100%;background:#ff5079;border:.15rem solid #71152e;clip-path:polygon(0 0,100% 0,100% 100%,50% 72%,0 100%);box-shadow:inset 0 .2rem 0 #ffbac9}
+.tug-status{position:absolute;top:.5rem;left:12rem;right:12rem;text-align:center;font-size:1.25rem;font-weight:700;color:#ffdf85;line-height:1.2;margin:0}
+.tug-stage[data-state=ready] .tug-sprite,.tug-stage[data-state=paused] .tug-sprite{animation-play-state:paused}
+.tug-left.pulling{animation:tug-left-pull .75s ease-out}.tug-right.pulling{animation:tug-right-pull .75s ease-out}.tug-avatar.slip{animation:tug-slip .45s ease-out}
+.tug-stage.is-pulling #rope-marker{filter:drop-shadow(0 0 .5rem #ffe06a)}
+.tug-stage[data-state=paused] .tug-avatar{animation-play-state:paused}
+.game-rope .prompt{min-height:0;padding:.6rem;margin-bottom:.4rem;font-size:1.7rem;line-height:1.3}
+.game-rope .answers{gap:.6rem}.game-rope .answer{font-size:2.2rem;min-height:6.2rem;padding:.7rem .9rem;line-height:1.2}.game-rope .game-progress{margin:.3rem;font-size:1.25rem}.game-rope .helper{font-size:1.2rem;line-height:1.3;margin:.45rem 0}
+@keyframes tug-frames{0%,100%{background-position-x:0%}25%{background-position-x:33.333333%}50%{background-position-x:66.666667%}75%{background-position-x:100%}}
+@keyframes tug-left-pull{30%{transform:translateX(-.7rem) rotate(-4deg)}100%{transform:none}}
+@keyframes tug-right-pull{30%{transform:translateX(.7rem) rotate(4deg)}100%{transform:none}}
+@keyframes tug-slip{30%{transform:translateY(.25rem) rotate(3deg)}60%{transform:rotate(-2deg)}100%{transform:none}}
+.reduced .tug-sprite,.reduced .tug-avatar{animation:none!important}.reduced .tug-rope,.reduced #rope-marker{transition:none}
+@media(prefers-reduced-motion:reduce){.tug-sprite,.tug-avatar{animation:none!important}.tug-rope,#rope-marker{transition:none}}
