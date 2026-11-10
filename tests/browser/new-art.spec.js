@@ -10,7 +10,8 @@ test('new seals and gameplay sprites load online and offline',async({page,contex
  for(const id of ['balanca','silabas','erro']){
   await page.goto('/');await page.clock.runFor(2300);await page.locator('[data-action="catalog-demo"]').click();await page.locator(`[data-id="${id}"]`).click();await page.locator('[data-action="start"]').click();await page.clock.runFor(2800);
   await expect(page.locator('#board-0 .asset-sprite').first()).toBeVisible();
-  const backgrounds=await page.locator('#board-0 .asset-sprite').evaluateAll(els=>els.map(el=>getComputedStyle(el).backgroundImage));expect(backgrounds.every(bg=>bg.includes('assets/visual/new-games/'))).toBe(true);
+  const backgrounds=await page.locator('#board-0 .asset-sprite').evaluateAll(els=>els.filter(el=>!el.classList.contains('mistake-word')).map(el=>getComputedStyle(el).backgroundImage));expect(backgrounds.every(bg=>bg.includes('assets/visual/new-games/'))).toBe(true);
+  if(id==='erro'){const words=await page.locator('#board-0 .mistake-word').evaluateAll(els=>els.map(el=>({color:getComputedStyle(el).color,bg:getComputedStyle(el).backgroundColor})));expect(words.length).toBeGreaterThan(0);for(const w of words){expect(w.color).toBe('rgb(255, 255, 255)');expect(w.bg).not.toBe('rgba(0, 0, 0, 0)')}}
   await page.screenshot({path:`test-results/new-art/${id}.png`,animations:'disabled'});
  }
  await page.goto('/');await page.evaluate(async()=>await navigator.serviceWorker.ready);await page.reload();await context.setOffline(true);await page.reload();await page.clock.runFor(2300);

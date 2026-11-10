@@ -20,7 +20,11 @@
 .game-silabas .syl-chip.placed{min-width:0;width:100%;height:100%;padding:0 .8rem;font-size:2.7rem}
 .game-silabas .syl-slots.ok{filter:drop-shadow(0 0 .5rem #30c48d)}
 .game-silabas .syl-chip.dragging{filter:drop-shadow(0 .7rem .5rem #0009)}
-.game-erro .mistake-word{min-height:5.6rem;padding:.7rem 1.7rem .6rem;border:0;border-radius:0;box-shadow:none;color:#101a5c;filter:drop-shadow(0 .2rem .15rem #0005)}
-.game-erro .mistake-word.correct,.game-erro .mistake-word.wrong{color:#101a5c;padding-right:2.4rem}
-.game-erro .mistake-word:hover{filter:brightness(1.08) drop-shadow(0 .25rem .2rem #0006)}
+/* Caça-Erro: cartão azul sólido com texto branco, legível em palavras de qualquer tamanho (a arte clara deixava o texto azul vazar para a moldura). */
+.game-erro .mistake-word{min-height:5.6rem;padding:.7rem 1.7rem .6rem;color:#fff}
+.game-erro .mistake-word.asset-sprite{background-image:none!important;background-color:#1f3fae!important;border:.25rem solid #8fc3ff;border-radius:1.4rem;box-shadow:0 .35rem 0 #0a1566;filter:none}
+.game-erro .mistake-word.correct.asset-sprite{background-color:#1a8f62!important;border-color:#8ff0c4}
+.game-erro .mistake-word.wrong.asset-sprite{background-color:#c93b54!important;border-color:#ffb3bf}
+.game-erro .mistake-word.correct,.game-erro .mistake-word.wrong{color:#fff}
+.game-erro .mistake-word:hover{filter:brightness(1.12)}
 @media(prefers-reduced-motion:reduce){.asset-sprite{transition:none!important}}
