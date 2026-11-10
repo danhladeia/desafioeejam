@@ -20,7 +20,7 @@ export function createPlaySession({g,demo,duel,solo,match,names,prefs,esc,shell,
  }
  function tieBreak(){
   if(s.tie||s.ended)return;s.tie=true;s.rope?.pause();s.games.forEach(game=>game.destroy());sound('tie');$('#clock').textContent='EMPATE';$('#play-state').textContent='Desempate: primeiro acerto válido';
-  const a=7+seed%13,b=3+seed%7,bank=g.subject==='edf'||g.id==='edf'?edfPool(g.edfTopics,3):[],card=bank.length?bank[seed%bank.length]:null,right=card?card.answer:a*b+12;
+  const a=7+seed%13,b=3+seed%7,bank=g.subject==='edf'||g.id==='edf'?edfPool(g.edfTopics,3,g.edfGrade):[],card=bank.length?bank[seed%bank.length]:null,right=card?card.answer:a*b+12;
   const question=card?card.q:`(${a} × ${b}) + 12 = ?`,options=card?card.options.map((label,value)=>({label,value})):[right-7,right,right+6,right+11].sort((x,y)=>(x*seed)%31-(y*seed)%31).map(value=>({label:String(value),value}));
   if(card)for(let turn=0;turn<seed%4;turn++)options.push(options.shift());
   names.forEach((_,i)=>{const board=$('#board-'+i);board.innerHTML=`<div class="prompt"><small>DESEMPATE${card?' EDF':''}</small><h2>${esc(question)}</h2><p>Toque uma vez na resposta correta.</p></div><div class="answers">${options.map(option=>`<button class="answer" data-value="${option.value}">${esc(option.label)}</button>`).join('')}</div>`;let blockedUntil=0;
@@ -41,7 +41,7 @@ export function createPlaySession({g,demo,duel,solo,match,names,prefs,esc,shell,
    if(!s.started||s.paused||s.ended){e.stopImmediatePropagation();return}const now=performance.now();s.guard[i]=s.guard[i].filter(t=>now-t<700);s.guard[i].push(now);if(s.guard[i].length>7)s.lock[i]=now+1000;
    if(now<s.lock[i]){e.stopImmediatePropagation();$('#guard-'+i).innerHTML=uiIcon('hand')+' Toque leve. Aguarde um instante.';s.notices.push(setTimeout(()=>{if(!s.ended&&$('#guard-'+i))$('#guard-'+i).textContent=''},1100))}
   },true);
-  s.games.push(createGame({id:g.id,el:$('#board-'+i),side:i,seed,solo,subject:g.subject,edfTopics:g.edfTopics,difficulty:prefs.difficulty,onScore:(delta,meta={})=>{
+  s.games.push(createGame({id:g.id,el:$('#board-'+i),side:i,seed,solo,subject:g.subject,edfTopics:g.edfTopics,edfGrade:g.edfGrade,difficulty:prefs.difficulty,onScore:(delta,meta={})=>{
    if(s.ended||s.paused||!s.started)return;
    const correct=meta.correct??delta>0,count=Number.isFinite(meta.correctDelta)?meta.correctDelta:correct?1:0,bonus=correct?Math.max(0,Math.min(20,Math.round(meta.bonus||0))):0;
    s.rawScores[i]=Math.max(0,s.rawScores[i]+delta);s.correctCounts[i]+=count;s.speedBonuses[i]=Math.min(999,s.speedBonuses[i]+bonus);s.scores[i]=s.correctCounts[i]*1000+s.speedBonuses[i];

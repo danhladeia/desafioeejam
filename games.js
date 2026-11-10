@@ -161,14 +161,14 @@ export function searchPath(a, b, size = 7) {
 }
 
 /** Each instance owns its DOM, listeners, logical clock, timeouts and random streams. */
-export function createGame({ id, el, side = 'left', seed = 0, difficulty = 'normal', solo = false, edfTopics, subject, onScore = () => {}, onFinish = () => {}, onEffect } = {}) {
+export function createGame({ id, el, side = 'left', seed = 0, difficulty = 'normal', solo = false, edfTopics, edfGrade, subject, onScore = () => {}, onFinish = () => {}, onEffect } = {}) {
   if (!el || typeof el.appendChild !== 'function') throw new TypeError('createGame precisa de um elemento el.');
   const definition = id === 'edf' ? EDF_GAME : GAMES.find(game => game.id === id);
   if (!definition) throw new RangeError(`Jogo desconhecido: ${id}`);
   const doc = el.ownerDocument;
   const view = doc.defaultView ?? globalThis;
   const now = () => view.performance?.now() ?? Date.now();
-  const theme = subject === 'edf' || id === 'edf' ? createEdfTheme(edfTopics) : null;
+  const theme = subject === 'edf' || id === 'edf' ? createEdfTheme(edfTopics, edfGrade) : null;
   const wordsForGame = () => theme ? theme.words : wordBank();
   const initialLevel = theme && difficulty === 'normal' ? 1 : levelOf(difficulty);
   let level = initialLevel, completed = 0, wrong = 0, points = 0, totalBonus = 0;
@@ -763,7 +763,7 @@ export function createGame({ id, el, side = 'left', seed = 0, difficulty = 'norm
   };
 
   switch (id) {
-    case 'edf': setupEdfCards(ctx, edfTopics); break;
+    case 'edf': setupEdfCards(ctx, edfTopics, edfGrade); break;
     case 'turbo': setupTurbo(); break;
     case 'rope': setupQuiz(); break;
     case 'rota': setupRota(); break;

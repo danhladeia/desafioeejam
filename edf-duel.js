@@ -1,4 +1,5 @@
 import {normalizeEdfTopics} from './edf-content.js';
+import {isGrade,DEFAULT_GRADE} from './edf-anos.js';
 import {EDF_VARIANTS} from './edf-theme.js';
 export const EDF_DUEL_KEY='eejam-edf-competition-v1';
 const norm=s=>s.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase();
@@ -14,7 +15,7 @@ function namesOf(names){
  if(new Set(result.map(norm)).size!==result.length)fail('Há alunos repetidos na mesma equipe. Diferencie os homônimos com uma inicial.');
  return result;
 }
-export function createEdfDuel({teams,rounds,games,topics,difficulty='normal'}){
+export function createEdfDuel({teams,rounds,games,topics,difficulty='normal',grade=DEFAULT_GRADE}){
  if(!Number.isInteger(rounds)||rounds<1||rounds>40)fail('Escolha de 1 a 40 rodadas, incluindo a final.');
  if(!Array.isArray(teams)||teams.length<2||teams.length>8)fail('Cadastre de 2 a 8 equipes.');
  const clean=teams.map((t,i)=>({id:'edf-team-'+i,name:typeof t.name==='string'?t.name.trim():'',students:namesOf(t.students)}));
@@ -22,7 +23,8 @@ export function createEdfDuel({teams,rounds,games,topics,difficulty='normal'}){
  if(clean.some(t=>!t.name||t.name.length>40)||new Set(clean.map(t=>norm(t.name))).size!==clean.length)fail('Dê nomes diferentes às equipes, com até 40 caracteres.');
  if(!Array.isArray(games)||!games.length||games.some(id=>!Object.hasOwn(EDF_VARIANTS,id))||new Set(games).size!==games.length)fail('Selecione ao menos um jogo EDF válido, sem repetições.');
  if(!['normal','hard'].includes(difficulty))fail('Dificuldade inválida.');
- return{version:1,createdAt:Date.now(),teams:clean,rounds,games:[...games],topics:normalizeEdfTopics(topics),difficulty,done:0,current:null,history:[],usedGames:[],lastGame:null,lastPair:null,champion:null,used:Object.fromEntries(clean.map(t=>[t.id,[]])),stats:Object.fromEntries(clean.map(t=>[t.id,{played:0,wins:0,points:0}]))};
+ if(!isGrade(grade))fail('Ano inválido.');
+ return{version:1,createdAt:Date.now(),teams:clean,rounds,games:[...games],topics:normalizeEdfTopics(topics,Number(grade)),difficulty,done:0,current:null,history:[],usedGames:[],lastGame:null,lastPair:null,champion:null,used:Object.fromEntries(clean.map(t=>[t.id,[]])),stats:Object.fromEntries(clean.map(t=>[t.id,{played:0,wins:0,points:0}])),grade:Number(grade)};
 }
 const compare=(a,b)=>(b.played?b.wins/b.played:0)-(a.played?a.wins/a.played:0)||b.wins-a.wins||b.points-a.points||a.name.localeCompare(b.name,'pt-BR');
 export function edfStandings(state){
@@ -68,7 +70,8 @@ export function commitEdfTurn(state,{scores,winnerSide}){
 export function addEdfStudents(state,id,names){const team=state.teams.find(t=>t.id===id);if(!team)fail('Equipe inválida.');team.students=namesOf([...team.students,...names]);return state}
 export function validateEdfDuel(value){
  if(!value||value.version!==1||!Array.isArray(value.history)||value.history.length>40)fail('Campeonato EDF salvo inválido.');
- const rebuilt=createEdfDuel({teams:value.teams,rounds:value.rounds,games:value.games,topics:value.topics,difficulty:value.difficulty});
+ if(value.grade===undefined)value={...value,grade:DEFAULT_GRADE};
+ const rebuilt=createEdfDuel({teams:value.teams,rounds:value.rounds,games:value.games,topics:value.topics,difficulty:value.difficulty,grade:value.grade});
  if(!same(rebuilt.teams,value.teams)||!Number.isFinite(value.createdAt))fail('Cadastro EDF salvo inválido.');rebuilt.createdAt=value.createdAt;
  for(const round of value.history){rebuilt.current=clone(round);delete rebuilt.current.scores;delete rebuilt.current.winnerSide;commitEdfTurn(rebuilt,round)}
  if(value.current){checkTurn(rebuilt,value.current);rebuilt.current=clone(value.current)}
