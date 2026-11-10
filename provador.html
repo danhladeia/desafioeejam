@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Provador do Avatar</title>
+<style>
+@font-face{font-family:Fredoka;src:url(assets/fonts/fredoka-latin-wght.woff2) format('woff2');font-weight:300 700}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;height:100%;background:#1c2350;color:#fff;font-family:Fredoka,system-ui,sans-serif;overflow:hidden;touch-action:manipulation;user-select:none}
+.app{display:grid;grid-template-columns:42% 1fr;height:100%;gap:2vh;padding:2vh;background:radial-gradient(120% 90% at 30% 20%,#3a4aa8,#1c2350 70%)}
+.stage{background:linear-gradient(#7fd3ff,#d9f4ff 62%,#9fe08a 62%,#6cc46b);border-radius:3vh;border:.6vh solid #fff;position:relative;overflow:hidden;box-shadow:0 1vh 3vh #0006}
+.stage svg{position:absolute;inset:2% 5% 3%;width:90%;height:95%}
+.shadow{position:absolute;left:50%;bottom:4.5%;width:34%;height:3%;transform:translateX(-50%);background:#0003;border-radius:50%;filter:blur(.4vh)}
+.panel{display:flex;flex-direction:column;gap:1.6vh;min-height:0}
+button.back{font:inherit;font-size:2.8vh;font-weight:600;padding:1.2vh 2.4vh;border-radius:2vh;border:.4vh solid #fff;background:#ffffff26;color:#fff;cursor:pointer}
+.top{display:flex;justify-content:space-between;align-items:center;gap:2vh}
+h1{margin:0;font-size:4.2vh;letter-spacing:.02em}
+.tabs{display:flex;gap:1.2vh}
+.tab{flex:1;font:inherit;font-size:3vh;font-weight:600;padding:1.6vh;border-radius:2vh;border:.4vh solid #fff5;background:#ffffff14;color:#fff;cursor:pointer}
+.tab[aria-selected=true]{background:#ffd23f;color:#3a2a00;border-color:#fff}
+.grid{flex:1;min-height:0;display:grid;grid-template-columns:repeat(4,1fr);gap:1.4vh;align-content:start;overflow-y:auto;overflow-x:hidden;padding:.4vh}
+.item{aspect-ratio:1;border-radius:2vh;background:#ffffff1f;border:.4vh solid #fff4;display:grid;place-items:center;cursor:pointer;padding:1vh}
+.item img{max-width:100%;max-height:100%;object-fit:contain}
+.item[aria-pressed=true]{background:#fff;border-color:#ffd23f;box-shadow:0 0 0 .6vh #ffd23f}
+.item.none{font-size:2.6vh;color:#fff}
+.item.none[aria-pressed=true]{color:#223}
+.row{display:flex;gap:1.4vh;align-items:center;flex-wrap:wrap}
+.row b{font-size:2.6vh;min-width:12vh}
+.sw{width:6vh;height:6vh;border-radius:50%;border:.5vh solid #fff8;cursor:pointer}
+.sw[aria-pressed=true]{border-color:#ffd23f;box-shadow:0 0 0 .5vh #ffd23f}
+.act{display:flex;gap:1.2vh}
+.act button{flex:1;font:inherit;font-size:2.8vh;font-weight:600;padding:1.4vh;border-radius:2vh;border:0;background:#58d68d;color:#06311a;cursor:pointer}
+.act button.alt{background:#ffffff26;color:#fff}
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="stage" id="stage"><div class="shadow"></div><svg id="av" viewBox="0 -9 40 77" aria-label="Seu personagem"></svg></div>
+  <div class="panel">
+    <div class="top"><h1>Monte seu personagem</h1><button class="back" id="back">⬅ Menu</button></div>
+    <div class="tabs" role="tablist" id="tabs"></div>
+    <div class="grid" id="grid"></div>
+    <div class="row" id="rowSkin"><b>Pele</b></div>
+    <div class="row" id="rowHair"><b>Cor do cabelo</b></div>
+    <div class="act"><button id="rand">Sortear</button><button class="alt" id="reset">Limpar</button></div>
+  </div>
+</div>
+<script>
+const DIR='assets/visual/avatar/';
+const SKINS=['#fde0c8','#f3c29b','#d99b6c','#b97a4e','#8d5a3b','#5e3b27'];
+const HAIRS=[
+ {n:'Original',f:'none',c:'#e9b89a'},
+ {n:'Preto',f:'brightness(.28) saturate(.6) contrast(1.1)',c:'#2a2220'},
+ {n:'Castanho',f:'sepia(.9) saturate(1.6) hue-rotate(-18deg) brightness(.55)',c:'#6b3f22'},
+ {n:'Loiro',f:'sepia(.8) saturate(2.2) hue-rotate(-3deg) brightness(1.05)',c:'#e8c15a'},
+ {n:'Ruivo',f:'sepia(1) saturate(4) hue-rotate(-32deg) brightness(.75)',c:'#c4501f'},
+ {n:'Azul',f:'sepia(1) saturate(4) hue-rotate(155deg) brightness(.8)',c:'#3a7bd5'},
+ {n:'Rosa',f:'sepia(1) saturate(3) hue-rotate(290deg) brightness(1)',c:'#ec6aa9'}
+];
+const HOFF={};
+const TABS=[['hair','Cabelo'],['shirt','Camiseta'],['pants','Calça']];
+const KEY='eejam-provador-v1';
+let M,S={tab:'hair',hair:'hair-1',shirt:'shirt-1',pants:'pants-1',skin:2,hc:0};
+try{Object.assign(S,JSON.parse(localStorage.getItem(KEY)||'{}'))}catch(e){}
+const $=s=>document.querySelector(s);
+const el=(t,c,x)=>{const e=document.createElement(t);if(c)e.className=c;if(x!=null)e.textContent=x;return e};
+const NS='http://www.w3.org/2000/svg';
+const sv=(t,a={})=>{const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);return e};
+const find=(g,id)=>M[g].find(i=>i.id===id);
+
+function body(skin){
+  const g=sv('g');const d=skin,hi=mix(skin,'#ffffff',.25),lo=mix(skin,'#000000',.22);
+  const defs=sv('defs');const gr=sv('linearGradient',{id:'sk',x1:0,x2:1,y1:0,y2:0});
+  [[0,lo],[.35,hi],[.7,d],[1,lo]].forEach(([o,c])=>gr.append(sv('stop',{offset:o,'stop-color':c})));defs.append(gr);g.append(defs);
+  const f='url(#sk)';
+  // pernas e pés
+  g.append(sv('rect',{x:14.2,y:50,width:5.2,height:11,rx:2.2,fill:f}),sv('rect',{x:20.6,y:50,width:5.2,height:11,rx:2.2,fill:f}));
+  g.append(sv('ellipse',{cx:16.4,cy:62.6,rx:4.1,ry:2.5,fill:'#f4f4f6',stroke:'#c9ccd8','stroke-width':.3}),sv('ellipse',{cx:23.6,cy:62.6,rx:4.1,ry:2.5,fill:'#f4f4f6',stroke:'#c9ccd8','stroke-width':.3}));
+  // braços
+  g.append(sv('rect',{x:10.9,y:22,width:3.6,height:15.5,rx:1.8,fill:f}),sv('rect',{x:25.5,y:22,width:3.6,height:15.5,rx:1.8,fill:f}));
+  g.append(sv('circle',{cx:12.7,cy:38,r:2.2,fill:d}),sv('circle',{cx:27.3,cy:38,r:2.2,fill:d}));
+  // tronco e pescoço
+  g.append(sv('rect',{x:14,y:19,width:12,height:20,rx:3.5,fill:f}),sv('rect',{x:17.3,y:15,width:5.4,height:6,fill:lo}));
+  // cabeça
+  g.append(sv('ellipse',{cx:20,cy:10.2,rx:7.6,ry:8,fill:f}),sv('ellipse',{cx:12.6,cy:11,rx:1.2,ry:1.8,fill:d}),sv('ellipse',{cx:27.4,cy:11,rx:1.2,ry:1.8,fill:d}));
+  // rosto
+  g.append(sv('ellipse',{cx:17.2,cy:11.3,rx:.95,ry:1.25,fill:'#2b2030'}),sv('ellipse',{cx:22.8,cy:11.3,rx:.95,ry:1.25,fill:'#2b2030'}),
+   sv('circle',{cx:16.9,cy:10.8,r:.33,fill:'#fff'}),sv('circle',{cx:22.5,cy:10.8,r:.33,fill:'#fff'}),
+   sv('path',{d:'M17.8 14.3 Q20 16 22.2 14.3',fill:'none',stroke:'#7a3b3b','stroke-width':.45,'stroke-linecap':'round'}),
+   sv('ellipse',{cx:15,cy:13.7,rx:1.2,ry:.7,fill:'#ff8a8a',opacity:.35}),sv('ellipse',{cx:25,cy:13.7,rx:1.2,ry:.7,fill:'#ff8a8a',opacity:.35}));
+  return g;
+}
+function mix(a,b,t){const p=h=>[1,3,5].map(i=>parseInt(h.slice(i,i+2),16));const A=p(a),B=p(b);return '#'+A.map((v,i)=>Math.round(v+(B[i]-v)*t).toString(16).padStart(2,'0')).join('')}
+
+function piece(it,x,y,filter){const i=sv('image',{href:DIR+it.file,x:x-it.w/2,y,width:it.w,height:it.h,preserveAspectRatio:'none'});if(filter&&filter!=='none')i.style.filter=filter;return i}
+function draw(){
+  const svg=$('#av');svg.replaceChildren();
+  const pa=S.pants&&find('pants',S.pants),sh=S.shirt&&find('shirt',S.shirt),ha=S.hair&&find('hair',S.hair);
+  const hy=ha?(HOFF[S.hair]??(S.hair==='hair-1'?-2.5:0.6)):0,hf=HAIRS[S.hc].f;
+  const defs=sv('defs'),cp=sv('clipPath',{id:'hf'});
+  cp.append(sv('path',{'clip-rule':'evenodd',d:'M-5 -20H45V19H-5Z M13.4 9.6Q13.6 5.4 20 5Q26.4 5.4 26.6 9.6V15.6Q20 20.4 13.4 15.6Z'}));defs.append(cp);svg.append(defs);
+  if(ha)svg.append(piece(ha,20,hy,hf));
+  svg.append(body(SKINS[S.skin]));
+  if(pa)svg.append(piece(pa,20,35.5));
+  if(sh)svg.append(piece(sh,20,18.6));
+  if(ha){const g=sv('g',{'clip-path':'url(#hf)'});g.append(piece(ha,20,hy,hf));svg.append(g)}
+  try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}
+}
+function grid(){
+  const g=$('#grid');g.replaceChildren();const t=S.tab;
+  const none=el('button','item none','Sem');none.setAttribute('aria-pressed',S[t]?'false':'true');none.onclick=()=>{S[t]=null;ui()};
+  if(t!=='pants')g.append(none);
+  M[t].forEach(it=>{const b=el('button','item');b.setAttribute('aria-pressed',S[t]===it.id);const im=new Image();im.src=DIR+it.file;im.alt=it.id;if(t==='hair'&&HAIRS[S.hc].f!=='none')im.style.filter=HAIRS[S.hc].f;b.append(im);b.onclick=()=>{S[t]=it.id;ui()};g.append(b)});
+}
+function tabs(){const b=$('#tabs');b.replaceChildren();TABS.forEach(([k,n])=>{const x=el('button','tab',n);x.setAttribute('role','tab');x.setAttribute('aria-selected',S.tab===k);x.onclick=()=>{S.tab=k;ui()};b.append(x)})}
+function swatches(){
+  const a=$('#rowSkin');a.replaceChildren(el('b',null,'Pele'));SKINS.forEach((c,i)=>{const s=el('button','sw');s.style.background=c;s.setAttribute('aria-label','Tom '+(i+1));s.setAttribute('aria-pressed',S.skin===i);s.onclick=()=>{S.skin=i;ui()};a.append(s)});
+  const h=$('#rowHair');h.replaceChildren(el('b',null,'Cabelo'));HAIRS.forEach((o,i)=>{const s=el('button','sw');s.style.background=o.c;s.setAttribute('aria-label',o.n);s.setAttribute('aria-pressed',S.hc===i);s.onclick=()=>{S.hc=i;ui()};h.append(s)});
+}
+function ui(){tabs();grid();swatches();draw()}
+const pick=a=>a[Math.floor(Math.random()*a.length)].id;
+$('#rand').onclick=()=>{S.hair=pick(M.hair);S.shirt=pick(M.shirt);S.pants=pick(M.pants);S.skin=Math.floor(Math.random()*SKINS.length);S.hc=Math.floor(Math.random()*HAIRS.length);ui()};
+$('#reset').onclick=()=>{S.hair=null;S.shirt=null;S.pants='pants-1';S.skin=2;S.hc=0;ui()};
+$('#back').onclick=()=>{location.href='./'};
+fetch(DIR+'avatar-pecas.json').then(r=>r.json()).then(m=>{M=m;ui()});
+</script>
+</body>
+</html>

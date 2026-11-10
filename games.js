@@ -4,9 +4,11 @@ import { setupSecretRace, setupSyllables, setupMistake } from './wordgames.js';
 import { setupBalance } from './mathgames.js';
 import { learningBank } from './learning.js';
 import { appendUiIcon } from './ui-art.js';
-import { EDF_GAME } from './edf-content.js';
+import { EDF_GAME, EDF_ORDEM_GAME } from './edf-content.js';
 import { setupEdfCards } from './edf-game.js';
-import { createEdfTheme } from './edf-theme.js';
+import { setupSequence } from './edf-sequencia.js';
+import { createEdfTheme, edfWordArt } from './edf-theme.js';
+import { createHangman, hangmanLabel } from './forca-boneco.js';
 
 /** Durations are suggestions in seconds; the host owns the match clock. */
 export const GAMES = [
@@ -18,7 +20,7 @@ export const GAMES = [
   { id: 'scramble', title: 'Desembaralha', subtitle: 'Organize as letras', icon: 'book', rule: 'Toque nas letras em ordem. Toque em uma letra escolhida para devolvê-la e confira a palavra.', duration: 60 },
   { id: 'search', title: 'Caça-Palavras', subtitle: 'Arraste sobre a palavra', icon: 'info', rule: 'Encontre palavras em oito direções: horizontal, vertical e diagonais, também de trás para a frente.', duration: 75 },
   { id: 'rope', title: 'Cabo de Guerra', subtitle: 'Contas e português puxam a vitória', icon: 'star', rule: 'Resolva contas e questões de português. Cada acerto puxa a corda. Abra seis acertos de vantagem ou termine à frente.', duration: 60 },
-  { id: 'forca', title: 'Forca das Palavras', subtitle: 'Seis chances para decolar', icon: 'rocket', rule: 'Escolha letras para revelar a palavra antes que as seis unidades de combustível acabem.', duration: 60 },
+  { id: 'forca', title: 'Forca das Palavras', subtitle: 'Seis chances para salvar o boneco', icon: 'rocket', rule: 'Escolha letras para revelar a palavra antes que o boneco da forca fique completo. Você tem seis chances.', duration: 60 },
   { id: 'balanca', title: 'Balança dos Números', subtitle: 'Some e equilibre', icon: 'check', rule: 'Arraste os pesos para o prato da direita até a soma ficar igual ao número da balança.', duration: 60 },
   { id: 'silabas', title: 'Sílabas Soltas', subtitle: 'Monte a palavra', icon: 'book', rule: 'Arraste as sílabas para os espaços e forme a palavra da dica.', duration: 60 },
   { id: 'erro', title: 'Caça-Erro', subtitle: 'Ache a palavra errada', icon: 'error', rule: 'Leia a frase e toque na palavra escrita errada.', duration: 50 },
@@ -161,14 +163,14 @@ export function searchPath(a, b, size = 7) {
 }
 
 /** Each instance owns its DOM, listeners, logical clock, timeouts and random streams. */
-export function createGame({ id, el, side = 'left', seed = 0, difficulty = 'normal', solo = false, edfTopics, subject, onScore = () => {}, onFinish = () => {}, onEffect } = {}) {
+export function createGame({ id, el, side = 'left', seed = 0, difficulty = 'normal', solo = false, edfTopics, edfGrade, subject, onScore = () => {}, onFinish = () => {}, onEffect } = {}) {
   if (!el || typeof el.appendChild !== 'function') throw new TypeError('createGame precisa de um elemento el.');
-  const definition = id === 'edf' ? EDF_GAME : GAMES.find(game => game.id === id);
+  const definition = id === 'edf' ? EDF_GAME : id === 'ordem' ? EDF_ORDEM_GAME : GAMES.find(game => game.id === id);
   if (!definition) throw new RangeError(`Jogo desconhecido: ${id}`);
   const doc = el.ownerDocument;
   const view = doc.defaultView ?? globalThis;
   const now = () => view.performance?.now() ?? Date.now();
-  const theme = subject === 'edf' || id === 'edf' ? createEdfTheme(edfTopics) : null;
+  const theme = subject === 'edf' || id === 'edf' || id === 'ordem' ? createEdfTheme(edfTopics, edfGrade) : null;
   const wordsForGame = () => theme ? theme.words : wordBank();
   const initialLevel = theme && difficulty === 'normal' ? 1 : levelOf(difficulty);
   let level = initialLevel, completed = 0, wrong = 0, points = 0, totalBonus = 0;
@@ -436,7 +438,7 @@ export function createGame({ id, el, side = 'left', seed = 0, difficulty = 'norm
         target.append(icon); target.dataset.icon = String(iconIndex);
         if(theme){
           const item=theme.targets[index%theme.targets.length],trap=kind==='trap';
-          Object.assign(icon.style,{backgroundImage:`url("${item.image}")`,backgroundSize:'contain',backgroundPosition:'center',height:'70%'});
+          Object.assign(icon.style,{backgroundImage:`url("${item.image}")`,backgroundSize:item.size,backgroundPosition:item.position,height:'70%'});
           const label=node('small','edf-target-label',trap?'DESCUIDO':item.label);target.append(label);if(trap)appendUiIcon(target,'error');
           target.setAttribute('aria-label',`${trap?'Descuido: não toque':item.label+': alvo positivo'}`);
         }
@@ -500,7 +502,7 @@ export function createGame({ id, el, side = 'left', seed = 0, difficulty = 'norm
       art.setAttribute('aria-hidden', 'true');
       art.style.backgroundPosition = `${cards[index].symbol % 4 * 100 / 3}% ${Math.floor(cards[index].symbol / 4) * 100 / 3}%`;
       target.replaceChildren(art);
-      if(theme){const item=theme.words[cards[index].symbol];Object.assign(art.style,{backgroundImage:`url("assets/visual/edf/${item.image}.png")`,backgroundSize:'contain',backgroundPosition:'center',width:'100%',height:'70%'});target.append(node('small','edf-memory-label',item.display))}
+      if(theme){const item=theme.words[cards[index].symbol],source=edfWordArt(item);Object.assign(art.style,{backgroundImage:`url("${source.image}")`,backgroundSize:source.size,backgroundPosition:source.position,width:'100%',height:'70%'});target.append(node('small','edf-memory-label',item.display))}
       target.setAttribute('aria-label', `Carta ${index + 1}: ${itemNames[cards[index].symbol]}`);
       target.classList.add('chosen', 'flipped');
       if (first === null) { first = index; return; }
@@ -564,15 +566,12 @@ export function createGame({ id, el, side = 'left', seed = 0, difficulty = 'norm
     const read = wordReader();
     let current, mistakes = 0, completed = 0;
     const guessed = new Set();
-    let slots, fuel, fuelLabel;
+    let slots, figure, mistakesLabel;
     function paint() {
       slots.replaceChildren();
       for (const letter of current.word) slots.append(node('span', 'letter', guessed.has(letter) ? letter : '＿'));
-      fuel.firstChild.style.width = `${(6 - mistakes) / 6 * 100}%`;
-      fuelLabel.textContent = `Combustível: ${6 - mistakes}/6`;
-      appendUiIcon(fuelLabel, 'rocket');
-      fuel.setAttribute('aria-label', `${6 - mistakes} unidades de combustível`);
-      fuel.setAttribute('aria-valuenow', String(6 - mistakes));
+      figure.setMistakes(mistakes);
+      mistakesLabel.textContent = hangmanLabel(mistakes);
       progress.textContent = `${completed} palavras descobertas`;
     }
     function render() {
@@ -581,12 +580,9 @@ export function createGame({ id, el, side = 'left', seed = 0, difficulty = 'norm
       prompt.textContent = level === 3 ? `Descubra a palavra · ${current.word.length} letras` : current.hint;
       helper.textContent = level === 3 ? `Dica: ${current.hint}` : 'Acentos não mudam a tecla: A também vale para Ã.';
       stage.replaceChildren();
-      fuel = node('div', 'fuel'); slots = node('div', 'word-slots');
-      fuel.setAttribute('role', 'meter'); fuel.setAttribute('aria-valuemin', '0'); fuel.setAttribute('aria-valuemax', '6');
-      const bar = node('div', 'fuel-fill');
-      Object.assign(bar.style, { height: '100%', background: 'linear-gradient(90deg, #ffb058, #74dba3)' });
-      fuel.append(bar); fuelLabel = node('div', 'helper');
+      figure = createHangman(doc); slots = node('div', 'word-slots'); mistakesLabel = node('div', 'helper');
       slots.style.display = 'flex'; slots.style.flexWrap = 'wrap'; slots.style.justifyContent = 'center';
+      const row = node('div', 'hangman-row'); row.append(figure.el, slots);
       const keyboard = node('div', 'answers');
       Object.assign(keyboard.style, { display: 'grid', gridTemplateColumns: 'repeat(4, minmax(0, 1fr))' });
       const letters = [...new Set(current.word)];
@@ -594,7 +590,7 @@ export function createGame({ id, el, side = 'left', seed = 0, difficulty = 'norm
       const keyCount = level === 1 ? 12 : level === 3 ? 16 : 14;
       letters.push(...alphabet.slice(0, keyCount - letters.length));
       shuffle(letters, layoutRng).forEach(letter => keyboard.append(button(letter, 'guess', letter, 'letter')));
-      stage.append(fuelLabel, fuel, slots, keyboard); paint();
+      stage.append(mistakesLabel, row, keyboard); paint();
     }
     act = (action, value, target) => {
       if (action !== 'guess' || guessed.has(value)) return;
@@ -604,10 +600,10 @@ export function createGame({ id, el, side = 'left', seed = 0, difficulty = 'norm
       paint();
       if ([...current.word].every(letter => guessed.has(letter))) {
         completed++; paint(); score(20 + (6 - mistakes) * 5, true, target);
-        if (active()) feedback(true, `Decolou! A palavra é ${current.word}.`, render, 1000);
+        if (active()) feedback(true, `Muito bem! A palavra é ${current.word}.`, render, 1000);
       } else if (!good) {
         score(0, false, target);
-        if (active()) feedback(false, mistakes === 6 ? `Sem combustível. A palavra era ${current.word}. Vamos tentar outra!` : 'Essa letra não aparece. Observe as letras reveladas.', mistakes === 6 ? render : null, mistakes === 6 ? 1700 : 1000);
+        if (active()) feedback(false, mistakes === 6 ? `Acabaram as chances. A palavra era ${current.word}. Vamos tentar outra!` : 'Essa letra não aparece. Observe as letras reveladas.', mistakes === 6 ? render : null, mistakes === 6 ? 1700 : 1000);
       } else helper.textContent = 'Essa letra faz parte da palavra!';
     };
     render();
@@ -763,7 +759,8 @@ export function createGame({ id, el, side = 'left', seed = 0, difficulty = 'norm
   };
 
   switch (id) {
-    case 'edf': setupEdfCards(ctx, edfTopics); break;
+    case 'edf': setupEdfCards(ctx, edfTopics, edfGrade); break;
+    case 'ordem': setupSequence(ctx); break;
     case 'turbo': setupTurbo(); break;
     case 'rope': setupQuiz(); break;
     case 'rota': setupRota(); break;

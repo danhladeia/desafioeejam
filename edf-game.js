@@ -1,8 +1,9 @@
-import {edfPool,normalizeEdfTopics,EDF_TOPICS,edfImage} from './edf-content.js';
+import {edfPool,normalizeEdfTopics,edfImage} from './edf-content.js';
+import {getGrade,DEFAULT_GRADE} from './edf-anos.js';
 import {appendUiIcon} from './ui-art.js';
 
-export function setupEdfCards(ctx,topicIds){
- const topics=normalizeEdfTopics(topicIds),readers=new Map(),goal=8;
+export function setupEdfCards(ctx,topicIds,grade=DEFAULT_GRADE){
+ const info=getGrade(grade),topics=normalizeEdfTopics(topicIds,info.grade),readers=new Map(),goal=8;
  const {node,button,stage,prompt,progress,helper,active,feedback,awardSolved,awardWrong,finish}=ctx;
  let current,solved=0;
  const trail=node('ol','edf-trail');trail.setAttribute('aria-label','Trilha de oito acertos');
@@ -15,16 +16,16 @@ export function setupEdfCards(ctx,topicIds){
   const level=ctx.level;
   if(!readers.has(level)){
    const rng=ctx.seededRandom(`${ctx.seed}:edf:${topics.join('+')}:${level}`);let deck=[],cursor=0,last;
-   readers.set(level,()=>{if(cursor>=deck.length){deck=ctx.shuffle(edfPool(topics,level),rng);cursor=0;if(deck.length>1&&deck[0].id===last)deck.push(deck.shift())}const value=deck[cursor++];last=value.id;return value});
+   readers.set(level,()=>{if(cursor>=deck.length){deck=ctx.shuffle(edfPool(topics,level,info.grade),rng);cursor=0;if(deck.length>1&&deck[0].id===last)deck.push(deck.shift())}const value=deck[cursor++];last=value.id;return value});
   }
   return readers.get(level)();
  }
  function render(){
   ctx.nextChallenge();current=nextCard();ctx.root.dataset.cardId=current.id;ctx.root.dataset.edfTopic=current.topic;
   prompt.replaceChildren();const copy=node('div','edf-question-copy');
-  const topic=EDF_TOPICS.find(t=>t.id===current.topic);
+  const topic=info.topics.find(t=>t.id===current.topic);
   copy.append(node('small','edf-card-meta',`${topic.title} • ${current.page?`PDF, p. ${current.page}`:'Complemento de tabuleiro'}`),node('h3','edf-question',current.q));
-  if(current.image){const image=node('img','edf-question-image');image.src=edfImage(current.image);image.alt=`Ilustração do caderno: ${topic.title}`;prompt.append(image)}
+  if(current.image){const image=node('img','edf-question-image');image.src=edfImage(current.image,info.grade);image.alt=`Ilustração do caderno: ${topic.title}`;prompt.append(image)}
   else{const picture=node('span','edf-question-image edf-book');appendUiIcon(picture,'book');prompt.append(picture)}
   prompt.append(copy);answers.replaceChildren();
   ctx.shuffle(current.options.map((text,index)=>({text,index})),ctx.seededRandom(`${ctx.seed}:${current.id}:options`)).forEach(option=>answers.append(button(option.text,'edf-answer',option.index,'answer')));

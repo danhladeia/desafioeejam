@@ -3,6 +3,7 @@ import { attachDrag } from './drag.js';
 import { SYLLABLE_WORDS, MISTAKES } from './learning.js';
 import { applySprite, spriteNode, syllableClue } from './new-art.js';
 import { appendUiIcon } from './ui-art.js';
+import { edfWordArt } from './edf-theme.js';
 
 const ALPHABET = [...'ABCDEFGHIJKLMNOPQRSTUVWXYZ'];
 const RIGHT_SIDE = /^(1|right|direita|orange|laranja)$/i;
@@ -159,7 +160,7 @@ export function setupSyllables(ctx) {
     slotsOf = Array(current.syllables.length).fill(null);
     busy = false;
     prompt.textContent = current.hint;
-    if(ctx.theme){const image=node('img','edf-syllable-clue');image.src=`assets/visual/edf/${current.image}.png`;image.alt='Ilustração do conteúdo de Educação Física';prompt.prepend(image)}else prompt.prepend(spriteNode(prompt.ownerDocument,syllableClue(current.word)));
+    if(ctx.theme){const image=node('span','edf-syllable-clue'),art=edfWordArt(current);image.setAttribute('role','img');image.setAttribute('aria-label','Ilustração do conteúdo de Educação Física');Object.assign(image.style,{display:'inline-block',backgroundImage:`url("${art.image}")`,backgroundSize:art.size,backgroundPosition:art.position,backgroundRepeat:'no-repeat'});prompt.prepend(image)}else prompt.prepend(spriteNode(prompt.ownerDocument,syllableClue(current.word)));
     helper.textContent = 'Arraste as sílabas para os espaços, na ordem certa. Ou toque para encaixar.';
     stage.replaceChildren();
     slotsEl = node('div', 'syl-slots');
