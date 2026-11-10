@@ -1,54 +1,30 @@
-// Cartas adaptadas do caderno fornecido pelo professor. Página = página física do PDF.
-export const EDF_SOURCE = {title:'Caderno de Atividades DED Express — Educação Física 7º ano',term:'3º trimestre de 2026',file:'1-Caderno_DED_Express_EF7_leve-1-.pdf'};
-export const EDF_TOPICS = [
- {id:'ginastica',title:'Ginástica e saúde',image:'grupo',description:'Capacidades físicas, planejamento e convivência.'},
- {id:'aventura',title:'Aventura urbana segura',image:'skate',description:'Proteção, espaço público e prevenção de riscos.'},
- {id:'lutas',title:'Lutas do Brasil',image:'capoeira',description:'História, regras, estratégia e respeito.'},
- {id:'tabuleiro',title:'Jogos de tabuleiro',image:null,description:'Pequeno complemento: estratégia, regras e jogo limpo.',supplement:true},
-];
-export const EDF_DEFAULT_TOPICS = ['ginastica','aventura','lutas'];
-export const EDF_GAME = {id:'edf',title:'Trilha de Cartas EDF',subtitle:'Educação Física • 7º ano',icon:'book',duration:120,rule:'Leia a carta e escolha uma resposta. Cada acerto avança uma casa na sua trilha. Complete oito casas ou termine com mais acertos; a rapidez desempata.'};
-const rows = [
- ['g1','ginastica',1,5,'grupo','Qual situação caracteriza um exercício físico?', ['Uma sessão planejada, com objetivo e regularidade','Qualquer movimento feito sem planejamento','Somente uma competição com medalhas','Ficar parado observando uma aula'],0,'O exercício físico é uma atividade planejada, com objetivo e regularidade.'],
- ['g2','ginastica',1,7,'hidro','Qual característica está associada à hidroginástica?', ['Exercícios na água, com baixo impacto nas articulações','Prática exclusiva em pistas de corrida','Ausência de movimento corporal','Uso obrigatório de uma minicama elástica'],0,'A hidroginástica é praticada na água e tem baixo impacto nas articulações.'],
- ['g3','ginastica',1,8,'calma','Em que ordem se organizam as partes de uma aula de ginástica?', ['Aquecimento, parte principal e volta à calma','Parte principal, volta à calma e aquecimento','Volta à calma, aquecimento e parte principal','Só parte principal, sem preparação'],0,'O aquecimento prepara; a parte principal desenvolve o objetivo; a volta à calma encerra gradualmente.'],
- ['g4','ginastica',2,6,'corrida','Em um exercício de resistência, qual capacidade é mais solicitada?', ['Sustentar um esforço ao longo do tempo','Mover-se apenas uma vez, sem continuidade','Conhecer somente as regras do jogo','Evitar qualquer alteração da respiração'],0,'A resistência permite manter uma atividade por mais tempo.'],
- ['g5','ginastica',2,7,'forca','Uma aula usa pesos ou o próprio corpo para desenvolver força. Qual prática corresponde a isso?', ['Musculação','Hidroginástica sem trabalho muscular','Passeio de observação','Volta à calma com respiração'],0,'A musculação desenvolve força com pesos ou com a resistência do próprio corpo.'],
- ['g6','ginastica',2,9,'grupo','Além do movimento, o que uma prática corporal em grupo pode fortalecer?', ['Amizades e vínculos na comunidade','A exclusão de quem está começando','A obrigação de todos terem o mesmo desempenho','A disputa sem regras entre colegas'],0,'Práticas em grupo podem ampliar redes de sociabilidade e o sentimento de pertencimento.'],
- ['g7','ginastica',3,8,'calma','Um grupo planeja a aula, mas quer eliminar o aquecimento para ter mais tempo de exercícios. Qual ajuste é melhor?', ['Manter as três partes e distribuir o tempo entre elas','Começar pelo exercício mais intenso sem preparação','Substituir toda a aula pela avaliação dos colegas','Fazer a volta à calma antes de qualquer movimento'],0,'O planejamento considera preparação, objetivo principal e recuperação, além dos espaços e tempos.'],
- ['g8','ginastica',3,7,'hidro','Duas práticas têm objetivos diferentes: uma usa pesos e outra ocorre na água. Qual comparação está correta?', ['Musculação desenvolve força; hidroginástica ocorre na água','As duas só podem ser feitas em minicamas elásticas','A musculação não trabalha força e a hidroginástica exige pista','As duas dispensam planejamento do espaço'],0,'Os tipos de ginástica têm objetivos, ambientes e materiais próprios.'],
- ['g9','ginastica',3,9,'grupo','A turma quer criar um grupo de movimento que acolha iniciantes. Qual proposta combina melhor com o caderno?', ['Convidar colegas e combinar uma prática acessível ao grupo','Aceitar somente quem já domina a prática','Eliminar o diálogo para ganhar tempo','Classificar as pessoas antes de permitir participação'],0,'Conviver e acolher colegas faz parte das redes de sociabilidade construídas nas práticas corporais.'],
- ['a1','aventura',1,13,'capacete','Para que serve a espuma interna do capacete?', ['Absorver parte da energia de um impacto','Aumentar a velocidade do praticante','Substituir o ajuste da fivela','Impedir qualquer necessidade de cuidado'],0,'O casco e a espuma participam da proteção; tamanho e ajuste também importam.'],
- ['a2','aventura',1,12,'praca','Quem tem direito de usar os espaços públicos?', ['Todas as pessoas, respeitando o uso coletivo','Somente o grupo que chegou primeiro','Apenas quem está praticando um esporte','Só quem leva equipamento próprio'],0,'A convivência no espaço público considera o direito de todos.'],
- ['a3','aventura',1,14,'skate','Antes de tentar manobras mais complexas, o que é importante dominar?', ['Postura, equilíbrio e frenagem','Somente a maior velocidade possível','A filmagem da apresentação','O uso exclusivo de rampas altas'],0,'O caderno apresenta o domínio do básico como parte da prática segura.'],
- ['a4','aventura',2,13,'capacete','Qual afirmação sobre equipamentos de proteção está correta?', ['Precisam ter tamanho adequado e estar bem ajustados','Protegem igualmente mesmo soltos','São apenas enfeites para a prática','Permitem ignorar as condições do local'],0,'Os equipamentos só cumprem sua função quando usados com tamanho e ajuste adequados.'],
- ['a5','aventura',2,14,'skate','No skate, o que o caderno chama de remada?', ['O impulso dado com um pé no chão','A troca do capacete no início da aula','O descanso sentado no equipamento','O desenho do percurso no papel'],0,'A remada produz impulso com o pé apoiado no chão.'],
- ['a6','aventura',2,16,'riscos','O que deve constar em um plano de gestão de riscos?', ['Riscos, chance de ocorrer, prevenção e ação se acontecerem','Apenas o nome da equipe vencedora','Só uma lista de manobras difíceis','A quantidade de fotos da atividade'],0,'Planejar riscos envolve identificar o problema, prevenir e combinar como agir.'],
- ['a7','aventura',3,12,'praca','Uma praça está cheia de pedestres e praticantes. Qual acordo favorece a convivência?', ['Combinar áreas e horários de uso, respeitando a circulação','Expulsar quem não está no grupo','Usar toda a passagem sem conversar','Acelerar para obrigar os outros a sair'],0,'Compartilhar o espaço exige diálogo e respeito ao direito de circulação de todos.'],
- ['a8','aventura',3,15,'riscos','A escola quer adaptar um desafio de equilíbrio. Qual proposta segue a ideia de recriação?', ['Manter o desafio em uma trave no chão, com regras e materiais aprovados pelo professor','Elevar o percurso para aumentar o risco','Retirar as regras para surpreender a turma','Copiar a prática sem considerar espaço e materiais'],0,'Recriar significa adaptar materiais, regras e espaço, preservando o desafio e reduzindo riscos.'],
- ['a9','aventura',3,16,'riscos','O grupo identificou piso molhado no local de prática. O que falta fazer no planejamento?', ['Avaliar o risco e definir prevenção antes de começar','Ignorar o risco porque todos usam capacete','Decidir só depois de alguém cair','Registrar apenas a pontuação da equipe'],0,'A gestão de riscos ocorre antes da prática e orienta decisões de prevenção.'],
- ['l1','lutas',1,19,'capoeira','Que elementos aparecem juntos na capoeira?', ['Jogo, música e ginga','Somente força e silêncio','Apenas corrida em linha reta','Só levantamento de pesos'],0,'A capoeira reúne movimentos, música, roda e respeito entre os participantes.'],
- ['l2','lutas',1,20,'huka','A quais povos o caderno associa o huka-huka?', ['Povos do Alto Xingu','Somente atletas europeus','Equipes de ciclismo urbano','Praticantes de hidroginástica'],0,'O huka-huka é uma luta de povos indígenas do Alto Xingu.'],
- ['l3','lutas',1,22,'respeito','Quem pode participar das práticas de luta na escola?', ['Todas as pessoas, com respeito e adaptações necessárias','Somente os meninos','Apenas quem já tem graduação','Somente quem nunca precisa de apoio'],0,'O caderno defende solidariedade, justiça, equidade e direito de participação.'],
- ['l4','lutas',2,19,'capoeira','Qual afirmação corresponde à história da capoeira apresentada no caderno?', ['Ela se relaciona à resistência de africanos escravizados e seus descendentes no Brasil','Ela surgiu como modalidade de natação','Ela foi criada apenas como exercício com pesos','Ela sempre esteve livre de perseguição e preconceito'],0,'A história da capoeira envolve resistência, perseguição e reconhecimento cultural.'],
- ['l5','lutas',2,20,'huka','Qual comparação entre as lutas estudadas está correta?', ['O huka-huka é do Alto Xingu; a luta marajoara é da Ilha de Marajó','As duas foram criadas em pistas de patinação','As duas dispensam equilíbrio e regras','A luta marajoara é uma forma de hidroginástica'],0,'As lutas têm contextos culturais e regras próprios.'],
- ['l6','lutas',2,21,'respeito','Na luta adaptada da escola, o colega faz o sinal combinado de parar. Qual deve ser a resposta?', ['Interromper imediatamente a ação','Continuar para completar o movimento','Aumentar a força para terminar primeiro','Esperar a torcida decidir'],0,'Respeitar o sinal de parada é parte essencial das regras e do cuidado com o colega.'],
- ['l7','lutas',3,22,'respeito','Uma colega é excluída porque alguém diz que luta é “coisa de menino”. Qual atitude enfrenta o preconceito?', ['Questionar a ideia e defender a participação com respeito e equidade','Aceitar a exclusão para evitar conversa','Separar a turma por suposta habilidade de cada gênero','Transformar a frase em regra da aula'],0,'Questionar estereótipos e garantir condições de participação combate o preconceito.'],
- ['l8','lutas',3,21,'respeito','O que caracteriza uma estratégia em um jogo de oposição?', ['Planejar distância, defesa e momento da ação respeitando as regras','Usar qualquer força para vencer','Ignorar os sinais do colega','Agir sem observar o adversário ou as regras'],0,'Estratégia é pensar sobre como alcançar o objetivo dentro dos acordos do jogo.'],
- ['l9','lutas',3,25,'respeito','O grupo quer garantir equidade na atividade. Qual decisão se aproxima desse princípio?', ['Oferecer a cada pessoa o apoio de que precisa para participar','Exigir o mesmo apoio para todos, mesmo quando não funciona','Permitir só a participação de quem não precisa de adaptação','Confundir equidade com ausência de regras'],0,'Equidade considera necessidades diferentes para possibilitar participação.'],
- // Complemento curto solicitado: não pertence ao PDF de ginástica, aventura e lutas.
- ['t1','tabuleiro',1,null,null,'Qual atitude demonstra jogo limpo em uma partida de tabuleiro?', ['Respeitar as regras e a vez do colega','Mudar a regra quando estiver perdendo','Mover peças escondido','Impedir que o colega conheça as regras'],0,'Jogo limpo inclui regras compartilhadas, respeito e honestidade.'],
- ['t2','tabuleiro',1,null,null,'O que caracteriza uma estratégia em jogos de tabuleiro?', ['Planejar escolhas considerando objetivos e possíveis respostas do adversário','Mover sempre a primeira peça que encontrar','Ignorar a posição das outras peças','Trocar as regras sem combinar'],0,'Estratégia envolve observar a situação, antecipar possibilidades e decidir.'],
- ['t3','tabuleiro',2,null,null,'No xadrez, como a torre se movimenta em uma jogada comum, sem roque?', ['Em linhas retas, pelas fileiras ou colunas livres','Apenas em diagonais','Em formato de L','Somente uma casa na diagonal'],0,'A torre percorre fileiras e colunas, sem saltar peças.'],
- ['t4','tabuleiro',2,null,null,'No jogo de damas em um tabuleiro de 8×8, quais casas são usadas para jogar?', ['As casas de uma mesma cor, geralmente as escuras','Todas as casas, sem alternância','Apenas as quatro casas centrais','Somente as casas da borda'],0,'As peças percorrem diagonais pelas casas da cor usada na partida.'],
- ['t5','tabuleiro',3,null,null,'Um grupo quer adaptar um jogo de tabuleiro para incluir mais colegas. O que deve fazer?', ['Combinar a adaptação antes e garantir que todos entendam as novas regras','Mudar as regras secretamente durante a partida','Permitir que apenas uma equipe conheça a adaptação','Eliminar qualquer objetivo para evitar planejamento'],0,'Adaptações podem favorecer a participação quando são claras e combinadas com todos.'],
- ['t6','tabuleiro',3,null,null,'Dois colegas discordam sobre uma regra durante a partida. Qual é a melhor decisão?', ['Consultar a regra combinada e resolver o conflito com respeito','Decidir pela pessoa que falar mais alto','Alterar o resultado escondido','Continuar sem esclarecer o combinado'],0,'Dialogar e consultar as regras mantém a partida justa.'],
-];
-export const EDF_CARDS = rows.map(([id,topic,level,page,image,q,options,answer,explain])=>({id,topic,level,page,image,q,options,answer,explain,source:page?'pdf':'complemento'}));
-export const edfImage = name => name ? `assets/visual/edf/${name}.png` : null;
-export function normalizeEdfTopics(ids=EDF_DEFAULT_TOPICS){
- const selected=EDF_TOPICS.filter(topic=>Array.isArray(ids)&&ids.includes(topic.id)).map(topic=>topic.id);
+import {getGrade,DEFAULT_GRADE} from './edf-anos.js';
+
+// As exportações abaixo (EDF_SOURCE, EDF_TOPICS, EDF_DEFAULT_TOPICS, EDF_CARDS) continuam descrevendo o 7º ano.
+const seven=getGrade(DEFAULT_GRADE);
+export const EDF_SOURCE=seven.source;
+export const EDF_TOPICS=seven.topics;
+export const EDF_DEFAULT_TOPICS=[...seven.defaultTopics];
+export const EDF_GAME={id:'edf',title:'Trilha de Cartas EDF',subtitle:'Educação Física • 7º ano',icon:'book',duration:120,rule:'Leia a carta e escolha uma resposta. Cada acerto avança uma casa na sua trilha. Complete oito casas ou termine com mais acertos; a rapidez desempata.'};
+export const EDF_ORDEM_GAME={id:'ordem',title:'Ordene a Sequência',subtitle:'Educação Física',icon:'drag',duration:90,rule:'Coloque os cartões na ordem correta: arraste um cartão sobre outro para trocá-los de lugar e toque em Conferir. Cada sequência certa vale ponto; a rapidez desempata.'};
+
+const cardCache=new Map(),sequenceCache=new Map();
+export function edfCardsOf(grade=DEFAULT_GRADE){
+ const info=getGrade(grade);
+ if(!cardCache.has(info.grade))cardCache.set(info.grade,info.cards.map(([id,topic,level,page,image,q,options,answer,explain])=>({id,topic,level,page,image,q,options,answer,explain,source:page?'pdf':'complemento'})));
+ return cardCache.get(info.grade);
+}
+export function edfSequencesOf(grade=DEFAULT_GRADE){
+ const info=getGrade(grade);
+ if(!sequenceCache.has(info.grade))sequenceCache.set(info.grade,info.sequences.map(([id,topic,level,page,prompt,steps,explain])=>({id,topic,level,page,prompt,steps,explain})));
+ return sequenceCache.get(info.grade);
+}
+export const EDF_CARDS=edfCardsOf(DEFAULT_GRADE);
+export const edfImage=(name,grade=DEFAULT_GRADE)=>name?`${getGrade(grade).imageDir}/${name}.png`:null;
+export function normalizeEdfTopics(ids,grade=DEFAULT_GRADE){
+ const selected=getGrade(grade).topics.filter(topic=>Array.isArray(ids)&&ids.includes(topic.id)).map(topic=>topic.id);
  if(!selected.length)throw Error('Selecione ao menos um tema para as cartas.');return selected;
 }
-export function edfRecordId(ids){return 'edf:'+normalizeEdfTopics(ids).join('+')}
-export function edfPool(ids,level){const topics=normalizeEdfTopics(ids);return EDF_CARDS.filter(card=>topics.includes(card.topic)&&card.level===Math.max(1,Math.min(3,level)))}
+export function edfRecordId(ids,grade=DEFAULT_GRADE){const year=getGrade(grade).grade;return(year===DEFAULT_GRADE?'edf:':`edf${year}:`)+normalizeEdfTopics(ids,year).join('+')}
+export function edfPool(ids,level,grade=DEFAULT_GRADE){const topics=normalizeEdfTopics(ids,grade);return edfCardsOf(grade).filter(card=>topics.includes(card.topic)&&card.level===Math.max(1,Math.min(3,level)))}
+export function edfSequencePool(ids,level,grade=DEFAULT_GRADE){const topics=normalizeEdfTopics(ids,grade);return edfSequencesOf(grade).filter(item=>topics.includes(item.topic)&&item.level===Math.max(1,Math.min(3,level)))}
