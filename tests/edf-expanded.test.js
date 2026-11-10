@@ -5,8 +5,8 @@ import {EDF_TOPICS} from '../edf-content.js';
 import {seededRandom} from '../games.js';
 import {createEdfDuel,drawEdfTurn,redrawEdfStudent,commitEdfTurn,edfStandings,validateEdfDuel,saveEdfDuel,loadEdfDuel,addEdfStudents} from '../edf-duel.js';
 const teams=(count,names=40)=>Array.from({length:count},(_,i)=>({name:'Equipe '+i,students:Array.from({length:names},(_,j)=>'Aluno '+i+'-'+j)}));
-test('all thirteen EDF games have usable isolated content at every level and syllables rebuild their words',()=>{
- assert.equal(Object.keys(EDF_VARIANTS).length,13);
+test('all fourteen EDF games have usable isolated content at every level and syllables rebuild their words',()=>{
+ assert.equal(Object.keys(EDF_VARIANTS).length,14);
  const normalize=s=>s.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toUpperCase();
  for(const w of EDF_WORDS)assert.equal(normalize(w.syllables.join('')),w.word,w.display);
  for(const topic of EDF_TOPICS){const t=createEdfTheme([topic.id]);assert.ok(t.words.length>=8);assert.ok(t.pictures.length);assert.ok(t.words.every(w=>w.topic===topic.id));for(const level of [1,2,3]){assert.ok(t.questions(level).length>=2);assert.ok(t.mistakes.filter(m=>m.level===level).length>=2);assert.ok(t.syllables.some(w=>level===1?w.syllables.length===2:level===2?w.syllables.length===3:w.syllables.length>=4))}}

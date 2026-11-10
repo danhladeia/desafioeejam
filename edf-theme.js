@@ -20,6 +20,7 @@ export const EDF_MISTAKES=edfMistakesOf(DEFAULT_GRADE);
 
 export const EDF_VARIANTS={
  edf:{title:'Trilha de Cartas EDF'},turbo:{title:'Toque Turbo EDF',rule:'Toque nas atitudes positivas ligadas aos temas estudados. Evite as cartas de descuido.'},rota:{title:'Rota dos Saberes EDF',rule:'Leia cada situação e classifique no grupo correto do conteúdo de Educação Física.'},memory:{title:'Memória em Movimento',rule:'Encontre pares de conceitos e ilustrações dos temas de Educação Física selecionados.'},puzzle:{title:'Monte a Cena EDF',rule:'Monte a ilustração do caderno encaixando as peças no lugar certo.'},secret:{title:'Palavra Secreta EDF'},forca:{title:'Forca EDF'},scramble:{title:'Desembaralha EDF'},search:{title:'Caça-Palavras EDF'},rope:{title:'Cabo de Guerra EDF',rule:'Responda perguntas dos temas de Educação Física. Cada acerto puxa a corda.'},silabas:{title:'Sílabas em Movimento',rule:'Forme palavras dos temas de Educação Física com as sílabas da bandeja.'},erro:{title:'Caça-Erro EDF',rule:'Encontre o erro de escrita em frases sobre o conteúdo de Educação Física.'},balanca:{title:'Circuito em Equilíbrio',rule:'Combine blocos de tempo para planejar o circuito. A soma dos minutos deve igualar o objetivo.'},
+ ordem:{title:EDF_ORDEM_GAME.title,rule:EDF_ORDEM_GAME.rule},
 };
 export function makeEdfGame(base,topics,grade=DEFAULT_GRADE){
  const info=getGrade(grade),ids=normalizeEdfTopics(topics,info.grade);

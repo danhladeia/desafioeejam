@@ -15,3 +15,21 @@
 .edf-grade:has(input:checked){border-color:#ffd63d;background:#1b2a8a;box-shadow:0 0 0 .2rem #ffd63d66}
 .edf-grade:has(input:focus-visible){outline:.3rem solid #fff;outline-offset:.2rem}
 @media(max-aspect-ratio:14/10){.edf-grades{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+/* Ordene a Sequência */
+.game-ordem{display:flex;flex-direction:column;height:100%;min-height:0}
+.game-ordem>.prompt{flex:none;min-height:0;margin:0 0 .3rem;padding:.4rem .8rem;text-align:left}
+.game-ordem .edf-card-meta{display:block;font-size:1.1rem;opacity:.85}
+.game-ordem .edf-question{margin:0;font-size:1.5rem;line-height:1.15}
+.game-ordem .game-progression,.game-ordem .game-progress{margin:0;font-size:1.1rem;line-height:1.2}
+.game-ordem .helper{margin:.2rem 0;font-size:1.15rem;line-height:1.2}
+.game-ordem .game-stage{flex:1 1 0;min-height:0;display:flex;flex-direction:column;gap:.4rem}
+.seq-list{display:grid;gap:.3rem;margin:0;padding:0;list-style:none}
+.seq-row{display:grid;grid-template-columns:2.8rem 1fr;gap:.5rem;align-items:center;padding:.2rem .3rem;border:.18rem dashed #ffffff55;border-radius:1rem;background:#ffffff14}
+.seq-num{display:grid;place-items:center;width:2.6rem;height:2.6rem;border-radius:50%;background:#ffd63d;color:#101a5c;font-size:1.5rem;font-weight:700}
+.seq-card{display:flex;align-items:center;min-height:3rem;padding:.25rem .8rem;border:.2rem solid #101a5c;border-radius:.9rem;background:#fff4d6;color:#101a5c;font-size:1.3rem;font-weight:600;line-height:1.12;cursor:grab;touch-action:none;user-select:none}
+.seq-card.selected{outline:.28rem solid #30c48d;outline-offset:.1rem}
+.seq-card.dragging{cursor:grabbing;box-shadow:0 1rem 1.2rem #0009}
+.seq-list.ok .seq-row{border-color:#30c48d;background:#30c48d33}
+.seq-list.bad{animation:nope .35s}
+.game-ordem .answer{flex:none;min-height:3.8rem;padding:.3rem 1rem;font-size:1.6rem}

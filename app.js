@@ -1,5 +1,5 @@
 import {GAMES,createGame} from './games.js';
-import {EDF_GAME,edfRecordId} from './edf-content.js';
+import {EDF_GAME,EDF_ORDEM_GAME,edfRecordId} from './edf-content.js';
 import {getGrade,normalizeGrade} from './edf-anos.js';
 import {loadEdfConfig,showEdfMenu} from './edf-menu.js';
 import {makeEdfGame} from './edf-theme.js';
@@ -17,8 +17,8 @@ const $=s=>document.querySelector(s), app=$('#app'), modal=$('#modal');
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 let tournament=null,screen='home',selected='turbo',session=null,playing=false,offlineReady=false,introPlayed=false,soloMode=false,soloName='Você';
 let edfConfig=loadEdfConfig(),edfActive=false;
-const edfGames=[EDF_GAME,...GAMES];
-function selectedGame(){const base=selected==='edf'?EDF_GAME:GAMES.find(game=>game.id===selected);return edfActive?makeEdfGame(base,edfConfig.topics,edfConfig.grade):base}
+const edfGames=[EDF_GAME,...GAMES,EDF_ORDEM_GAME];
+function selectedGame(){const base=selected==='edf'?EDF_GAME:selected==='ordem'?EDF_ORDEM_GAME:GAMES.find(game=>game.id===selected);return edfActive?makeEdfGame(base,edfConfig.topics,edfConfig.grade):base}
 function edfSetup(){dispose();screen='edf-setup';soloMode=false;edfActive=true;showEdfMenu({shell,button,esc,prefs,config:edfConfig,teams:tournament?.teams||[],games:edfGames,toast,onStart:(config,level)=>{edfConfig=config;soloMode=config.solo;soloName=config.names[0];prefs.difficulty=level;prefSave();selected=config.gameId||'edf';preparation(true)}})}
 function edfCompetition(){try{const controls=[...document.querySelectorAll('[name="edf-topic"]:checked')],grade=normalizeGrade(document.querySelector('[name="edf-grade"]:checked')?.value??edfConfig.grade);edfActive=true;edfDuelUI.open(controls.length?controls.map(el=>el.value):getGrade(grade).defaultTopics,grade)}catch(error){toast(error.message)}}
 let prefs;try{prefs=JSON.parse(localStorage.getItem('eejam-prefs')||'{}')}catch{prefs={}}

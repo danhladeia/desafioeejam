@@ -10,6 +10,7 @@ FILES.push('./provador.html', './assets/visual/avatar/avatar-pecas.json', './ass
 FILES.push('./edf-anos.js','./edf-ano6.js','./edf-ano7.js','./edf-ano8.js','./edf-ano9.js');
 FILES.push(...Object.entries({ano6:['atividade','exercicio','frequencia','capacidades','circuito','epi','risco','parkour','patrimonio','capoeira','ginga','estereotipo'],ano8:['rede','taco','invasao','combate','manchete','tatica','sistema','superioridade','fairplay','adaptado','doping','lazer'],ano9:['programa','intensidade','consciencia','taichi','beleza','anabolizante','trekking','arvorismo','rapel','rastro','ukemi','esportivizacao']}).flatMap(([folder,names])=>names.map(name=>`./assets/visual/edf/${folder}/${name}.png`)),'./assets/visual/edf/ano6/proveniencia.json','./assets/visual/edf/ano8/proveniencia.json','./assets/visual/edf/ano9/proveniencia.json');
 FILES.push('./forca-boneco.js');
+FILES.push('./edf-sequencia.js');
 self.addEventListener('install',e=>e.waitUntil(caches.open(VERSION).then(c=>c.addAll(FILES)).then(()=>self.skipWaiting())));
 self.addEventListener('activate',e=>e.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>k!==VERSION).map(k=>caches.delete(k)))).then(()=>self.clients.claim())));
 self.addEventListener('fetch',e=>{if(e.request.method!=='GET'||new URL(e.request.url).origin!==self.location.origin)return;e.respondWith(caches.match(e.request).then(cached=>cached||fetch(e.request)))});

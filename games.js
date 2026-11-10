@@ -4,8 +4,9 @@ import { setupSecretRace, setupSyllables, setupMistake } from './wordgames.js';
 import { setupBalance } from './mathgames.js';
 import { learningBank } from './learning.js';
 import { appendUiIcon } from './ui-art.js';
-import { EDF_GAME } from './edf-content.js';
+import { EDF_GAME, EDF_ORDEM_GAME } from './edf-content.js';
 import { setupEdfCards } from './edf-game.js';
+import { setupSequence } from './edf-sequencia.js';
 import { createEdfTheme, edfWordArt } from './edf-theme.js';
 import { createHangman, hangmanLabel } from './forca-boneco.js';
 
@@ -164,12 +165,12 @@ export function searchPath(a, b, size = 7) {
 /** Each instance owns its DOM, listeners, logical clock, timeouts and random streams. */
 export function createGame({ id, el, side = 'left', seed = 0, difficulty = 'normal', solo = false, edfTopics, edfGrade, subject, onScore = () => {}, onFinish = () => {}, onEffect } = {}) {
   if (!el || typeof el.appendChild !== 'function') throw new TypeError('createGame precisa de um elemento el.');
-  const definition = id === 'edf' ? EDF_GAME : GAMES.find(game => game.id === id);
+  const definition = id === 'edf' ? EDF_GAME : id === 'ordem' ? EDF_ORDEM_GAME : GAMES.find(game => game.id === id);
   if (!definition) throw new RangeError(`Jogo desconhecido: ${id}`);
   const doc = el.ownerDocument;
   const view = doc.defaultView ?? globalThis;
   const now = () => view.performance?.now() ?? Date.now();
-  const theme = subject === 'edf' || id === 'edf' ? createEdfTheme(edfTopics, edfGrade) : null;
+  const theme = subject === 'edf' || id === 'edf' || id === 'ordem' ? createEdfTheme(edfTopics, edfGrade) : null;
   const wordsForGame = () => theme ? theme.words : wordBank();
   const initialLevel = theme && difficulty === 'normal' ? 1 : levelOf(difficulty);
   let level = initialLevel, completed = 0, wrong = 0, points = 0, totalBonus = 0;
@@ -759,6 +760,7 @@ export function createGame({ id, el, side = 'left', seed = 0, difficulty = 'norm
 
   switch (id) {
     case 'edf': setupEdfCards(ctx, edfTopics, edfGrade); break;
+    case 'ordem': setupSequence(ctx); break;
     case 'turbo': setupTurbo(); break;
     case 'rope': setupQuiz(); break;
     case 'rota': setupRota(); break;
