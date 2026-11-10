@@ -6,7 +6,7 @@ import { learningBank } from './learning.js';
 import { appendUiIcon } from './ui-art.js';
 import { EDF_GAME } from './edf-content.js';
 import { setupEdfCards } from './edf-game.js';
-import { createEdfTheme } from './edf-theme.js';
+import { createEdfTheme, edfWordArt } from './edf-theme.js';
 
 /** Durations are suggestions in seconds; the host owns the match clock. */
 export const GAMES = [
@@ -436,7 +436,7 @@ export function createGame({ id, el, side = 'left', seed = 0, difficulty = 'norm
         target.append(icon); target.dataset.icon = String(iconIndex);
         if(theme){
           const item=theme.targets[index%theme.targets.length],trap=kind==='trap';
-          Object.assign(icon.style,{backgroundImage:`url("${item.image}")`,backgroundSize:'contain',backgroundPosition:'center',height:'70%'});
+          Object.assign(icon.style,{backgroundImage:`url("${item.image}")`,backgroundSize:item.size,backgroundPosition:item.position,height:'70%'});
           const label=node('small','edf-target-label',trap?'DESCUIDO':item.label);target.append(label);if(trap)appendUiIcon(target,'error');
           target.setAttribute('aria-label',`${trap?'Descuido: não toque':item.label+': alvo positivo'}`);
         }
@@ -500,7 +500,7 @@ export function createGame({ id, el, side = 'left', seed = 0, difficulty = 'norm
       art.setAttribute('aria-hidden', 'true');
       art.style.backgroundPosition = `${cards[index].symbol % 4 * 100 / 3}% ${Math.floor(cards[index].symbol / 4) * 100 / 3}%`;
       target.replaceChildren(art);
-      if(theme){const item=theme.words[cards[index].symbol];Object.assign(art.style,{backgroundImage:`url("assets/visual/edf/${item.image}.png")`,backgroundSize:'contain',backgroundPosition:'center',width:'100%',height:'70%'});target.append(node('small','edf-memory-label',item.display))}
+      if(theme){const item=theme.words[cards[index].symbol],source=edfWordArt(item);Object.assign(art.style,{backgroundImage:`url("${source.image}")`,backgroundSize:source.size,backgroundPosition:source.position,width:'100%',height:'70%'});target.append(node('small','edf-memory-label',item.display))}
       target.setAttribute('aria-label', `Carta ${index + 1}: ${itemNames[cards[index].symbol]}`);
       target.classList.add('chosen', 'flipped');
       if (first === null) { first = index; return; }

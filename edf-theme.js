@@ -38,4 +38,10 @@ export function createEdfTheme(topics){
  const single=ids.length===1?categories[ids[0]]:null;
  const cross={ginastica:['Desenvolver força com pesos ou com o próprio corpo.','Praticar hidroginástica na água.','Organizar aquecimento, parte principal e volta à calma.'],aventura:['Usar capacete e joelheiras para andar de skate.','Praticar remada e frenagem no skate.','Planejar riscos do uso de uma pista urbana.'],lutas:['Conhecer a roda de capoeira, sua música e sua ginga.','Estudar o huka-huka dos povos do Alto Xingu.','Conhecer as regras da luta marajoara.'],tabuleiro:['Mover a torre em uma fileira do tabuleiro de xadrez.','Jogar damas nas casas de uma mesma cor.','Proteger o rei durante uma partida de xadrez.']};
  const classification=single?{categories:single.names,activities:single.examples.map(([text,category])=>({text,category}))}:{categories:ids.map(id=>EDF_TOPICS.find(t=>t.id===id).title),activities:ids.flatMap((id,index)=>cross[id].map(text=>({text,category:index})))};
- const pictures=words.filter(w=>w.image&&w.topic!=='tabuleiro').map(w=>w.image).filter((v,i,a)=>a.indexOf(v)===i).map(image=>({src:edfImage(image),...({grupo:{w:620,h:411},forca:{w:620,h:562},corrida:{w:620,h:458},hidro:{w:620,h:416},calma:{w:620,h:212},capacete:{w:558,h:483},skate:{w:499,h:565},riscos:{w:616,h:614},praca:{w:620,h:499},capoeira:{w:620,h:551},huka:{w:620,h:529},respeito:{w:620,h:452}}[image]),backg
+ const pictures=words.filter(w=>w.image&&w.topic!=='tabuleiro').map(w=>w.image).filter((v,i,a)=>a.indexOf(v)===i).map(image=>({src:edfImage(image),...({grupo:{w:620,h:411},forca:{w:620,h:562},corrida:{w:620,h:458},hidro:{w:620,h:416},calma:{w:620,h:212},capacete:{w:558,h:483},skate:{w:499,h:565},riscos:{w:616,h:614},praca:{w:620,h:499},capoeira:{w:620,h:551},huka:{w:620,h:529},respeito:{w:620,h:452}}[image]),background:'#f0e8ff'}));
+ if(ids.includes('tabuleiro'))pictures.push({src:EDF_BOARD_ATLAS,w:1254,h:1254,background:'#f0e8ff'});
+ return{topics:ids,key:ids.join('+'),words:unique,pictures,classification,mistakes:EDF_MISTAKES.filter(m=>ids.includes(m.topic)),syllables:unique,
+ questions:level=>EDF_CARDS.filter(c=>ids.includes(c.topic)&&c.level===level).map(c=>({question:c.q,options:c.options,answer:c.answer,explanation:c.explain})),
+ targets:unique.filter(w=>w.word.length<=8).map(w=>({label:w.display,...edfWordArt(w)})),
+ };
+}

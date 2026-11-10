@@ -59,3 +59,8 @@ test('EDF illustrated puzzle still snaps and scores exactly once after a drag',a
  await hit.dispatchEvent('pointerdown',{pointerId:7,button:0,clientX:coordinates.from.x,clientY:coordinates.from.y});await hit.dispatchEvent('pointermove',{pointerId:7,button:0,clientX:coordinates.to.x,clientY:coordinates.to.y});await hit.dispatchEvent('pointerup',{pointerId:7,button:0,clientX:coordinates.to.x,clientY:coordinates.to.y});
  await expect(page.locator('#board-0 .jigsaw-piece').first()).toHaveAttribute('data-placed','true');await expect(page.locator('#score-0')).toHaveText('1000');await page.screenshot({path:'art-check-results/edf-expanded/puzzle-encaixe.png',animations:'disabled',style:'#wipe{visibility:hidden!important}'});
 });
+
+test('EDF new board artwork and a saved custom competition work offline',async({page,context})=>{
+ await competition(page,{count:2,rounds:1,students:3});await page.evaluate(async()=>await navigator.serviceWorker.ready);await page.reload();await page.clock.runFor(2300);await context.setOffline(true);await page.reload();await page.clock.runFor(2300);await page.locator('[data-action="edf"]').click();await page.locator('[data-action="edf-tournament"]').click();await page.locator('[data-action="edf-match-draw"]').click();await page.clock.runFor(5000);await page.locator('[data-action="edf-match-start"]').click();await page.clock.runFor(2800);await expect(page.locator('.game-rope[data-subject="edf"]')).toHaveCount(2);
+ expect(await page.evaluate(async()=>(await fetch('/assets/visual/edf/board-pieces-atlas-v1.png')).ok)).toBe(true);await context.setOffline(false);
+});

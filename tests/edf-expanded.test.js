@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {createEdfTheme,EDF_WORDS,EDF_MISTAKES,EDF_VARIANTS} from '../edf-theme.js';
+import {createEdfTheme,EDF_WORDS,EDF_MISTAKES,EDF_VARIANTS,EDF_BOARD_ATLAS} from '../edf-theme.js';
 import {EDF_TOPICS} from '../edf-content.js';
 import {seededRandom} from '../games.js';
 import {createEdfDuel,drawEdfTurn,redrawEdfStudent,commitEdfTurn,edfStandings,validateEdfDuel,saveEdfDuel,loadEdfDuel,addEdfStudents} from '../edf-duel.js';
@@ -11,6 +11,7 @@ test('all thirteen EDF games have usable isolated content at every level and syl
  for(const w of EDF_WORDS)assert.equal(normalize(w.syllables.join('')),w.word,w.display);
  for(const topic of EDF_TOPICS){const t=createEdfTheme([topic.id]);assert.ok(t.words.length>=8);assert.ok(t.pictures.length);assert.ok(t.words.every(w=>w.topic===topic.id));for(const level of [1,2,3]){assert.ok(t.questions(level).length>=2);assert.ok(t.mistakes.filter(m=>m.level===level).length>=2);assert.ok(t.syllables.some(w=>level===1?w.syllables.length===2:level===2?w.syllables.length===3:w.syllables.length>=4))}}
  for(const m of EDF_MISTAKES){assert.equal(m.tokens.filter(t=>t.wrong).length,1);assert.notEqual(m.tokens.find(t=>t.wrong).text,m.right)}
+ assert.ok(createEdfTheme(['tabuleiro']).targets.every(t=>t.image===EDF_BOARD_ATLAS));
 });
 test('EDF qualifying appearances stay balanced for two through eight teams; final, game cycles and students survive restore',()=>{
  for(let n=2;n<=8;n++)for(const rounds of [5,10,15,20]){

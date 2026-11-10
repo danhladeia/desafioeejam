@@ -2,7 +2,7 @@
 
 ## Educação Física — 7º ano
 
-O botão **EDF • 7º ano** abre a Trilha de Cartas EDF, com 27 perguntas das três unidades do caderno DED Express enviado e seis cartas complementares sobre jogos de tabuleiro. Há seleção de temas, revisão das respostas, imagens extraídas do PDF, modo solo e duelo livre, trilha animada, progressão de nível e desempate temático. As partidas EDF não alteram o campeonato. Instruções e referências estão em [MODO_EDF_7_ANO.md](MODO_EDF_7_ANO.md).
+O botão **EDF • 7º ano** oferece treze jogos: os doze do modo normal adaptados aos conteúdos do caderno e a Trilha de Cartas. Forca, caça-palavras, memória, quebra-cabeças, sílabas, caça-erro, rota, cabo de guerra e os demais usam o conteúdo EDF. Há partidas solo/livres e campeonato próprio com equipes, alunos, quantidade de rodadas, sorteio de cinco segundos, troca individual de aluno, ranking e final. Instruções, regras e referências estão em [MODO_EDF_7_ANO.md](MODO_EDF_7_ANO.md).
 
 ## Atualização de campeonato e partidas
 

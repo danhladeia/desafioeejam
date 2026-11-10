@@ -1,0 +1,21 @@
+{
+  "method": "Built-in image_gen",
+  "prompt": "Use case: stylized-concept. Asset type: transparent PNG sprite atlas for the Brazilian school game Duelo do Futuro, Education Física grade 7. Create ONE square sprite sheet with exactly 3 equal columns and 3 equal rows, nine isolated icons, ordered left to right then top to bottom: row 1 chess king with clear cross finial, chess pawn, chess rook/castle; row 2 chess bishop with diagonal slit, chess knight horse head, chess queen with crown; row 3 two stacked contrasting draughts/checkers counters, small correct alternating 8x8 chessboard in three-quarter perspective with two pawns, open strategy rulebook with a simple path and arrows (no writing). Every object is chunky polished 3D cartoon toy art, rounded glossy plastic, vivid royal blue and orange with purple and gold accents matching a playful educational competition UI. Recognizable educational chess silhouettes, NOT emoji or flat pictograms. EXACT regular 3x3 grid, same scale, centered within each cell, at least 12 percent empty padding on all sides of EACH cell, no touching or overlap, complete silhouettes. Completely transparent background with real alpha, including all cell gutters; no background, no checkerboard transparency preview, no floor, no panels, no frames, no captions, no letters, no numbers, no watermark. No humans. Soft studio shading inside each icon only. Intended to crop cleanly by uniform CSS sprite cells.",
+  "grid": {
+    "columns": 3,
+    "rows": 3
+  },
+  "order": [
+    "rei",
+    "peao",
+    "torre",
+    "bispo",
+    "cavalo",
+    "dama",
+    "pecas-de-damas",
+    "tabuleiro",
+    "estrategia"
+  ],
+  "output": "board-pieces-atlas-v1.png",
+  "transparency": true
+}
