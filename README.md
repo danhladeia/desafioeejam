@@ -1,8 +1,8 @@
 # Duelo do Futuro — EEJAM 2027
 
-## Educação Física — 7º ano
+## Educação Física — 6º ao 9º ano
 
-O botão **EDF • 7º ano** oferece treze jogos: os doze do modo normal adaptados aos conteúdos do caderno e a Trilha de Cartas. Forca, caça-palavras, memória, quebra-cabeças, sílabas, caça-erro, rota, cabo de guerra e os demais usam o conteúdo EDF. Há partidas solo/livres e campeonato próprio com equipes, alunos, quantidade de rodadas, sorteio de cinco segundos, troca individual de aluno, ranking e final. Instruções, regras e referências estão em [MODO_EDF_7_ANO.md](MODO_EDF_7_ANO.md).
+O botão **EDF** oferece catorze jogos para o ano escolhido (6º, 7º, 8º ou 9º): os doze do modo normal adaptados aos conteúdos do caderno, a Trilha de Cartas e o Ordene a Sequência. Forca, caça-palavras, memória, quebra-cabeças, sílabas, caça-erro, rota, cabo de guerra e os demais usam o conteúdo EDF do ano. Há partidas solo/livres e campeonato próprio com equipes, alunos, quantidade de rodadas, sorteio de cinco segundos, troca individual de aluno, ranking e final. Instruções, regras e referências estão em [MODO_EDF_7_ANO.md](MODO_EDF_7_ANO.md).
 
 ## Atualização de campeonato e partidas
 
@@ -24,7 +24,7 @@ O áudio inicia após o primeiro toque/clique ou tecla. O botão com a nota musi
 
 Há efeitos diferentes para interface, contagem, largada, acerto, erro, bônus, desempate, pausa, vitória e campeão. O áudio complementa as indicações visuais.
 
-Versão jogável local com 12 desafios no catálogo. Forca usa combustível de foguete; Palavra Secreta disputa rodadas de descoberta da mesma palavra.
+Versão jogável local com 12 desafios no catálogo. Forca usa a forca e o boneco tradicional (seis erros); Palavra Secreta usa combustível de foguete e disputa rodadas de descoberta da mesma palavra.
 
 ## Abrir
 
@@ -85,4 +85,4 @@ Os fundos de cada jogo existem como prancha de referência; nesta versão o camp
 
 `npm test` executa testes do campeonato, persistência, conteúdo e geração de caça-palavras. Para testes no navegador: `npm install`, `npx playwright install chromium` e `npx playwright test`.
 
-Arquivos principais: app.js (telas/motor/efeitos), games.js (minijogos), core.js (campeonato/persistência), content.js (banco revisável), style.css (estilos dos jogos), menu.css (palco, menu, abertura e escala para tablet), duel.js (regras e sorteio do Modo Duelo), duel-ui.js e duel.css (telas do Modo Duelo), roster.js (alunos do 9º A e B), sw.js (cache). Ao atualizar arquivos distribuídos, incremente a versão do cache em sw.js e app.js e revalide o offline antes do evento.
+Arquivos principais: app.js (telas/motor/efeitos), games.js (minijogos), core.js (campeonato/persistência), content.js (banco revisável), style.css (estilos dos jogos), menu.css (palco, menu, abertura e escala para tablet), duel.js (regras e sorteio do Modo Duelo), duel-ui.js e duel.css (telas do Modo Duelo), roster.js (alunos do 9º A e B), sw.js (cache). Ao atualizar arquivos distribuídos, incremente a versão do cache em sw.js e app.js e revalide o offline antes do evento. edf-anos.js e edf-ano6.js a edf-ano9.js (conteúdo por ano), edf-sequencia.js (Ordene a Sequência) e forca-boneco.js (boneco da Forca).

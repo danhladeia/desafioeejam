@@ -1,10 +1,10 @@
-# Educação Física — 7º ano
+# Educação Física — 6º ao 9º ano
 
-Abra **EDF • 7º ano** no menu inicial. O EDF oferece os doze jogos do modo normal adaptados aos conteúdos e mantém a Trilha de Cartas, totalizando treze desafios.
+Abra **EDF** no menu inicial e escolha o ano: 6º, 7º, 8º ou 9º. Cada ano usa o conteúdo do seu caderno DED Express. O EDF oferece os doze jogos do modo normal adaptados aos conteúdos, a Trilha de Cartas e o Ordene a Sequência, totalizando catorze desafios.
 
 ## Jogar uma partida
 
-Marque os conteúdos, escolha um desafio e selecione solo ou duelo livre. Informe os nomes e clique em **Preparar jogo EDF**. O duelo livre também pode reaproveitar os nomes das equipes cadastradas no campeonato normal.
+Escolha o ano, marque os conteúdos, escolha um desafio e selecione solo ou duelo livre. Informe os nomes e clique em **Preparar jogo EDF**. O duelo livre também pode reaproveitar os nomes das equipes cadastradas no campeonato normal.
 
 | Jogo EDF | Adaptação |
 | --- | --- |
@@ -14,15 +14,16 @@ Marque os conteúdos, escolha um desafio e selecione solo ou duelo livre. Inform
 | Memória em Movimento | Pares de conceitos, ilustrações do caderno e peças de tabuleiro. |
 | Monte a Cena | Quebra-cabeças com as imagens dos temas, com fundo nas peças para preservar sua visibilidade. |
 | Palavra Secreta | Disputa de palavras do conteúdo, com dicas. |
-| Forca | Descoberta de palavras e conceitos do conteúdo. |
+| Forca | Descoberta de palavras e conceitos do conteúdo, com a forca de madeira e o boneco tradicional (seis erros). |
 | Desembaralha | Letras de palavras dos temas marcados. |
 | Caça-Palavras | Palavras dos temas em oito direções, incluindo diagonais e inversas. |
 | Cabo de Guerra | Perguntas do conteúdo puxam a corda a cada acerto. |
 | Sílabas em Movimento | Formação de palavras dos temas, com ilustrações e sílabas. |
 | Caça-Erro | Revisão da escrita em frases sobre os conteúdos. |
 | Circuito em Equilíbrio | Combinação de blocos de minutos para planejar o tempo de um circuito. |
+| Ordene a Sequência | Arrastar cartões para a ordem certa: linhas do tempo e passo a passo do caderno. Disponível só no EDF. |
 
-Todos os desafios respeitam os temas selecionados. Os jogos de palavras, por exemplo, usam vocabulário de ginástica, aventura e lutas, em vez do banco do modo normal. As melhores marcas solo são separadas por jogo, temas e dificuldade.
+Todos os desafios respeitam os temas selecionados. Os jogos de palavras, por exemplo, usam vocabulário dos temas marcados, em vez do banco do modo normal. As melhores marcas solo são separadas por jogo, temas e dificuldade.
 
 ## Equipes, alunos e sorteio
 
@@ -42,11 +43,18 @@ O campeonato EDF é salvo neste aparelho. Ao voltar pela mesma opção, o jogo r
 
 ## Conteúdo e artes
 
-Os três temas do caderno vêm selecionados por padrão: Ginástica e saúde; Aventura urbana segura; Lutas do Brasil: história e respeito. Jogos de tabuleiro é um complemento opcional e pode ser usado sozinho.
+Cada ano tem três unidades, que vêm marcadas por padrão:
 
-Há 27 cartas de revisão adaptadas das páginas 5–9, 12–16 e 19–25 do **Caderno de Atividades DED Express — Educação Física 7º ano**, 3º trimestre de 2026, fornecido nesta conversa, além de seis cartas complementares de tabuleiro. **Conferir cartas e fontes** mostra as respostas comentadas e as páginas do material.
+| Ano | Unidades |
+| --- | --- |
+| 6º | Corpo em forma; Aventura na cidade; Lutas do Brasil |
+| 7º | Ginástica e saúde; Aventura urbana segura; Lutas do Brasil: história e respeito. Jogos de tabuleiro é um complemento opcional e pode ser usado sozinho |
+| 8º | Rede/parede e campo e taco; Invasão e combate: tática; Esporte e sociedade |
+| 9º | Ginásticas e corpo; Aventura na natureza; Lutas do mundo |
 
-Doze ilustrações PNG foram extraídas do glossário da página 25 com a transparência original preservada. Os arquivos e sua procedência estão em `assets/visual/edf/proveniencia.json`.
+Cada ano tem 27 cartas de revisão (9 por unidade), 48 palavras, 27 frases do Caça-Erro e 18 sequências do Ordene a Sequência, todas com a página do caderno. O 7º ano tem, além disso, seis cartas e três sequências complementares de tabuleiro. **Conferir cartas e fontes** mostra as cartas do ano escolhido, com as respostas comentadas e as páginas do material. As cartas, palavras e sequências dos anos 6, 8 e 9 foram escritas a partir do texto dos cadernos; o professor deve conferi-las antes de usar em turma.
+
+Doze ilustrações PNG de cada ano foram extraídas do glossário da página 25 do caderno, com a transparência original preservada. As do 7º ano estão em `assets/visual/edf/`; as dos outros anos, em `assets/visual/edf/ano6/`, `ano8/` e `ano9/`. A procedência de cada arquivo está no `proveniencia.json` da pasta, e o script `scripts/extrair-glossario.py` repete a extração.
 
 A nova prancha `assets/visual/edf/board-pieces-atlas-v1.png` contém nove ilustrações 3D de tabuleiro, com transparência: rei, peão, torre, bispo, cavalo, dama, peças de damas, tabuleiro e estratégia. Foi gerada pelo recurso de imagens integrado; o prompt completo e a ordem das células estão em `assets/visual/edf/board-pieces-generation-v1.json`. Os jogos recortam a prancha na própria tela, preservando o arquivo original.
 
@@ -60,4 +68,4 @@ Os módulos, imagens e telas entram no cache offline. Carregue a atualização c
 
 ## Verificação desta atualização
 
-Passaram os 79 testes de regras e conteúdo e a suíte completa de 101 testes de navegador. Foram abertos os treze jogos EDF em solo e duelo, nos dois níveis, em tablet 1024×768. O teste de campeonato percorreu cinco rodadas, troca individual de aluno, retomada após recarregar, classificação e final, sem repetir participantes. Também foram verificados o acréscimo de nomes após esgotar uma lista, a interrupção da animação ao sair, o encaixe das novas peças de quebra-cabeça e o uso offline do campeonato e das novas imagens. A prancha 3D tem 1254×1254 pixels e transparência real.
+Passaram 103 testes de regras e conteúdo e 116 dos 117 testes de navegador (o que falha, o da Palavra Secreta com o alfabeto inteiro, já falhava antes deste trabalho e não foi alterado), incluindo os 14 jogos EDF nos quatro anos, a Forca com boneco nos dois modos e o Ordene a Sequência por toque e por arrasto.
