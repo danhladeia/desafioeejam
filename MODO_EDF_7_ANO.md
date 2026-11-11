@@ -69,3 +69,7 @@ Os módulos, imagens e telas entram no cache offline. Carregue a atualização c
 ## Verificação desta atualização
 
 Passaram 103 testes de regras e conteúdo e 116 dos 117 testes de navegador (o que falha, o da Palavra Secreta com o alfabeto inteiro, já falhava antes deste trabalho e não foi alterado), incluindo os 14 jogos EDF nos quatro anos, a Forca com boneco nos dois modos e o Ordene a Sequência por toque e por arrasto.
+# Corte Certo EDF
+
+O **Corte Certo EDF** está disponível junto aos demais jogos EDF. Arraste sobre itens ligados aos temas escolhidos; descuidos retiram vidas e bombas retiram duas. A seleção de itens usa a mesma semente para os dois lados do duelo e as imagens-base das pranchas arcade foram adicionadas ao pacote offline. O conteúdo dos anos 6, 8 e 9 continua sujeito à conferência do professor antes de uso em turma.
+

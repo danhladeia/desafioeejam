@@ -1,0 +1,95 @@
+{
+ "sheet": "E1-basquete-jogador.png",
+ "mode": "grid",
+ "scale": 0.6,
+ "items": [
+  {
+   "id": "player-01",
+   "file": "player-01.webp",
+   "w": 153,
+   "h": 274,
+   "anchor": {
+    "x": 76.5,
+    "y": 274.0
+   },
+   "frame": 0
+  },
+  {
+   "id": "player-02",
+   "file": "player-02.webp",
+   "w": 153,
+   "h": 274,
+   "anchor": {
+    "x": 76.5,
+    "y": 274.0
+   },
+   "frame": 1
+  },
+  {
+   "id": "player-03",
+   "file": "player-03.webp",
+   "w": 153,
+   "h": 274,
+   "anchor": {
+    "x": 76.5,
+    "y": 274.0
+   },
+   "frame": 2
+  },
+  {
+   "id": "player-04",
+   "file": "player-04.webp",
+   "w": 153,
+   "h": 274,
+   "anchor": {
+    "x": 76.5,
+    "y": 274.0
+   },
+   "frame": 3
+  },
+  {
+   "id": "player-05",
+   "file": "player-05.webp",
+   "w": 153,
+   "h": 274,
+   "anchor": {
+    "x": 76.5,
+    "y": 274.0
+   },
+   "frame": 4
+  },
+  {
+   "id": "player-06",
+   "file": "player-06.webp",
+   "w": 153,
+   "h": 274,
+   "anchor": {
+    "x": 76.5,
+    "y": 274.0
+   },
+   "frame": 5
+  },
+  {
+   "id": "player-07",
+   "file": "player-07.webp",
+   "w": 153,
+   "h": 274,
+   "anchor": {
+    "x": 76.5,
+    "y": 274.0
+   },
+   "frame": 6
+  },
+  {
+   "id": "player-08",
+   "file": "player-08.webp",
+   "w": 153,
+   "h": 274,
+   "anchor": {
+    "x": 76.5,
+    "y": 274.0
+   },
+   "frame": 7
+  }
+ ]
+}

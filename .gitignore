@@ -8,3 +8,9 @@ Listas de Alunos*.pdf
 .claude/
 *.bak
 .codex-remote-attachments/
+
+# Material grande ou com imagens de pessoas: não versionar
+Fotos do Evento/
+Conteudos EDF/
+# Pranchas originais (só o fatiador usa); o jogo usa os recortes em assets/visual/arcade/sprites
+assets/visual/arcade/pranchas/

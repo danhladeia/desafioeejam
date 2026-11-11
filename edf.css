@@ -33,3 +33,7 @@
 .seq-list.ok .seq-row{border-color:#30c48d;background:#30c48d33}
 .seq-list.bad{animation:nope .35s}
 .game-ordem .answer{flex:none;min-height:3.8rem;padding:.3rem 1rem;font-size:1.6rem}
+/* Arena compartilhada dos desafios arcade. */
+.game-slice{display:flex;flex-direction:column;height:100%}.game-slice .game-stage{flex:1;min-height:0;display:grid;place-items:center}.arcade-canvas{display:block;width:min(100%,72rem);max-height:100%;aspect-ratio:10/7;border:.35rem solid #81d7ff;border-radius:1.4rem;background:#14285a;touch-action:none}.game-slice .prompt{min-height:0;margin:.25rem 0;padding:.5rem;font-size:1.65rem}.game-slice .helper,.game-slice .game-progress{margin:.25rem 0;font-size:1.2rem}
+/* Ícones arcade recortados da prancha PNG transparente. */
+.edf-game-choices .arcade-game-seal{display:block;width:4.7rem;height:4.7rem;background-image:url('./assets/visual/arcade/arcade-game-icons-transparent-v1.png');background-repeat:no-repeat;background-size:400% 200%;background-position:var(--arcade-x) var(--arcade-y)}

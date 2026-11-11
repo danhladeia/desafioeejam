@@ -19,6 +19,14 @@ export const EDF_WORDS=edfWordsOf(DEFAULT_GRADE);
 export const EDF_MISTAKES=edfMistakesOf(DEFAULT_GRADE);
 
 export const EDF_VARIANTS={
+ slice:{title:'Corte Certo EDF',rule:'Corte somente os itens ligados aos temas de Educação Física escolhidos. Evite descuidos e perigos.'},
+ hoops:{title:'Cesta do Saber EDF',rule:'Arremesse a bola na cesta da alternativa correta sobre Educação Física.'},
+ penalty:{title:'Chute a Gol EDF',rule:'Chute para o gol que traz a alternativa correta sobre Educação Física.'},
+ skate:{title:'Corrida Urbana EDF',rule:'Desvie, pule, abaixe e pegue itens de segurança ligados aos temas selecionados.'},
+ rio:{title:'Descida do Rio EDF',rule:'Navegue pelas três pistas, evitando riscos e coletando itens de segurança.'},
+ capoeira:{title:'Roda de Capoeira EDF',rule:'Toque no ritmo e responda às perguntas sobre a cultura corporal com respeito.'},
+ pose:{title:'Pose por Pose EDF',rule:'Acompanhe as poses no compasso e responda aos desafios de Educação Física.'},
+ rally:{title:'Rally na Rede EDF',rule:'Escolha o gesto de vôlei no tempo certo e responda às perguntas do tema.'},
  edf:{title:'Trilha de Cartas EDF'},turbo:{title:'Toque Turbo EDF',rule:'Toque nas atitudes positivas ligadas aos temas estudados. Evite as cartas de descuido.'},rota:{title:'Rota dos Saberes EDF',rule:'Leia cada situação e classifique no grupo correto do conteúdo de Educação Física.'},memory:{title:'Memória em Movimento',rule:'Encontre pares de conceitos e ilustrações dos temas de Educação Física selecionados.'},puzzle:{title:'Monte a Cena EDF',rule:'Monte a ilustração do caderno encaixando as peças no lugar certo.'},secret:{title:'Palavra Secreta EDF'},forca:{title:'Forca EDF'},scramble:{title:'Desembaralha EDF'},search:{title:'Caça-Palavras EDF'},rope:{title:'Cabo de Guerra EDF',rule:'Responda perguntas dos temas de Educação Física. Cada acerto puxa a corda.'},silabas:{title:'Sílabas em Movimento',rule:'Forme palavras dos temas de Educação Física com as sílabas da bandeja.'},erro:{title:'Caça-Erro EDF',rule:'Encontre o erro de escrita em frases sobre o conteúdo de Educação Física.'},balanca:{title:'Circuito em Equilíbrio',rule:'Combine blocos de tempo para planejar o circuito. A soma dos minutos deve igualar o objetivo.'},
  ordem:{title:EDF_ORDEM_GAME.title,rule:EDF_ORDEM_GAME.rule},
 };

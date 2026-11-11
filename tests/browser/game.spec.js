@@ -15,7 +15,7 @@ test('complete tournament, nonfinal ranking, persistence, undo and replay',async
  let champion;
  for(let match=0;match<3;match++){
   await page.locator('[data-action="catalog"]').click();
-  await expect(page.locator('.game-card')).toHaveCount(12);
+   await expect(page.locator('.game-card')).toHaveCount(20);
   await page.screenshot({path:`${SHOTS}/catalog-${match}.png`,fullPage:true});
   await page.locator('[data-id="rope"]').click();await page.locator('[data-action="start"]').click();
   await page.clock.runFor(2900);await expect(page.locator('.game-rope')).toHaveCount(2);
@@ -54,15 +54,15 @@ test('complete tournament, nonfinal ranking, persistence, undo and replay',async
 
 test('all games start, pause and dispose with independent sides',async({page})=>{
  await page.goto('/');
- const result=await page.evaluate(async()=>{
+  const result=await page.evaluate(async()=>{
   const {GAMES,createGame}=await import('/games.js');const results=[];
-  for(const g of GAMES){const a=document.createElement('div'),b=document.createElement('div');a.style.width=b.style.width='650px';document.body.append(a,b);let scores=[0,0];const make=(el,side)=>createGame({id:g.id,el,side,seed:42,difficulty:'hard',onScore:n=>scores[side]+=n,onFinish:()=>{}});const ga=make(a,0),gb=make(b,1);ga.start();gb.start();const prompts=[a.querySelector('.prompt').textContent,b.querySelector('.prompt').textContent];const elements=a.querySelectorAll('button, .jigsaw-piece, .search-cell, .syl-chip, .weight').length;const button=a.querySelector('[data-action]');button?.dispatchEvent(new PointerEvent('pointerdown',{bubbles:true,pointerId:1,button:0}));ga.pause();gb.pause();results.push({id:g.id,elements,prompts,scores});ga.resume();gb.resume();ga.destroy();gb.destroy();a.remove();b.remove()}
+   for(const g of GAMES){const a=document.createElement('div'),b=document.createElement('div');a.style.width=b.style.width='650px';document.body.append(a,b);let scores=[0,0];const make=(el,side)=>createGame({id:g.id,el,side,seed:42,difficulty:'hard',onScore:n=>scores[side]+=n,onFinish:()=>{}});const ga=make(a,0),gb=make(b,1);ga.start();gb.start();const prompts=[a.querySelector('.prompt').textContent,b.querySelector('.prompt').textContent];const elements=a.querySelectorAll('button, canvas, .jigsaw-piece, .search-cell, .syl-chip, .weight').length;const button=a.querySelector('[data-action]');button?.dispatchEvent(new PointerEvent('pointerdown',{bubbles:true,pointerId:1,button:0}));ga.pause();gb.pause();results.push({id:g.id,elements,prompts,scores});ga.resume();gb.resume();ga.destroy();gb.destroy();a.remove();b.remove()}
   return results;
  });
- expect(result).toHaveLength(12);for(const item of result){expect(item.elements).toBeGreaterThan(0);expect(item.scores[1]).toBe(0)}
+  expect(result).toHaveLength(20);for(const item of result){expect(item.elements).toBeGreaterThan(0);expect(item.scores[1]).toBe(0)}
 });
 test('offline shell and assets load after cache',async({page,context})=>{
- await page.goto('/');await page.evaluate(async()=>{await navigator.serviceWorker.ready});await page.reload();await context.setOffline(true);await page.reload();await expect(page.getByRole('button',{name:'Modo Duelo'})).toBeVisible();await page.locator('[data-action="catalog-demo"]').first().click();await expect(page.locator('.game-card')).toHaveCount(12);await context.setOffline(false);
+ await page.goto('/');await page.evaluate(async()=>{await navigator.serviceWorker.ready});await page.reload();await context.setOffline(true);await page.reload();await expect(page.getByRole('button',{name:'Modo Duelo'})).toBeVisible();await page.locator('[data-action="catalog-demo"]').first().click();await expect(page.locator('.game-card')).toHaveCount(20);await context.setOffline(false);
 });
 test('real simultaneous touch contacts and cancellation',async({page,context})=>{
  await page.goto('/');await page.locator('[data-action="diagnostic"]').click();

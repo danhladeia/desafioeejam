@@ -18,6 +18,6 @@ test('todo arquivo do cache offline existe no projeto e os arquivos novos do EDF
 
 test('a versão do cache mudou e é a mesma que o app abre para conferir o modo offline',()=>{
  const {version}=swData();
- assert.equal(version,'eejam-v16-edf-anos');
+ assert.equal(version,'eejam-v24-arcade-art');
  assert.match(read('app.js'),new RegExp(`caches\\.open\\('${version}'\\)`));
 });

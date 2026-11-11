@@ -52,4 +52,9 @@ export function newSeal(id){
  const index=['balanca','silabas','erro'].indexOf(id);
  return index<0?null:`<span class="new-game-seal" data-seal="${id}" style="--seal-index:${index}" aria-hidden="true"></span>`;
 }
+const arcadeIds=['slice','hoops','penalty','skate','rio','capoeira','pose','rally'];
+export function arcadeSeal(id){
+ const index=arcadeIds.indexOf(id);
+ return index<0?null:`<span class="arcade-game-seal" style="--arcade-x:${index%4*33.3333}%;--arcade-y:${Math.floor(index/4)*100}%" aria-hidden="true"></span>`;
+}
 export function syllableClue(word){return ({ESCOLA:'clue-school',CADERNO:'clue-notebook',MOCHILA:'clue-backpack',COMPUTADOR:'clue-computer',BIBLIOTECA:'clue-library',CALCULADORA:'clue-calculator'})[word]||'clue-book'}

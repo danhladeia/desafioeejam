@@ -1,0 +1,95 @@
+{
+ "sheet": "F1-chutador.png",
+ "mode": "grid",
+ "scale": 0.6,
+ "items": [
+  {
+   "id": "kicker-01",
+   "file": "kicker-01.webp",
+   "w": 195,
+   "h": 261,
+   "anchor": {
+    "x": 97.5,
+    "y": 261.0
+   },
+   "frame": 0
+  },
+  {
+   "id": "kicker-02",
+   "file": "kicker-02.webp",
+   "w": 195,
+   "h": 261,
+   "anchor": {
+    "x": 97.5,
+    "y": 261.0
+   },
+   "frame": 1
+  },
+  {
+   "id": "kicker-03",
+   "file": "kicker-03.webp",
+   "w": 195,
+   "h": 261,
+   "anchor": {
+    "x": 97.5,
+    "y": 261.0
+   },
+   "frame": 2
+  },
+  {
+   "id": "kicker-04",
+   "file": "kicker-04.webp",
+   "w": 195,
+   "h": 261,
+   "anchor": {
+    "x": 97.5,
+    "y": 261.0
+   },
+   "frame": 3
+  },
+  {
+   "id": "kicker-05",
+   "file": "kicker-05.webp",
+   "w": 195,
+   "h": 261,
+   "anchor": {
+    "x": 97.5,
+    "y": 261.0
+   },
+   "frame": 4
+  },
+  {
+   "id": "kicker-06",
+   "file": "kicker-06.webp",
+   "w": 195,
+   "h": 261,
+   "anchor": {
+    "x": 97.5,
+    "y": 261.0
+   },
+   "frame": 5
+  },
+  {
+   "id": "kicker-07",
+   "file": "kicker-07.webp",
+   "w": 195,
+   "h": 261,
+   "anchor": {
+    "x": 97.5,
+    "y": 261.0
+   },
+   "frame": 6
+  },
+  {
+   "id": "kicker-08",
+   "file": "kicker-08.webp",
+   "w": 195,
+   "h": 261,
+   "anchor": {
+    "x": 97.5,
+    "y": 261.0
+   },
+   "frame": 7
+  }
+ ]
+}

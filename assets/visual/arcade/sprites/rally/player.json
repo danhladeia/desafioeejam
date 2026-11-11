@@ -1,0 +1,139 @@
+{
+ "sheet": "G1-volei-jogadores.png",
+ "mode": "grid",
+ "scale": 0.6,
+ "items": [
+  {
+   "id": "player-01",
+   "file": "player-01.webp",
+   "w": 166,
+   "h": 196,
+   "anchor": {
+    "x": 83.0,
+    "y": 196.0
+   },
+   "frame": 0
+  },
+  {
+   "id": "player-02",
+   "file": "player-02.webp",
+   "w": 166,
+   "h": 196,
+   "anchor": {
+    "x": 83.0,
+    "y": 196.0
+   },
+   "frame": 1
+  },
+  {
+   "id": "player-03",
+   "file": "player-03.webp",
+   "w": 166,
+   "h": 196,
+   "anchor": {
+    "x": 83.0,
+    "y": 196.0
+   },
+   "frame": 2
+  },
+  {
+   "id": "player-04",
+   "file": "player-04.webp",
+   "w": 166,
+   "h": 196,
+   "anchor": {
+    "x": 83.0,
+    "y": 196.0
+   },
+   "frame": 3
+  },
+  {
+   "id": "player-05",
+   "file": "player-05.webp",
+   "w": 166,
+   "h": 196,
+   "anchor": {
+    "x": 83.0,
+    "y": 196.0
+   },
+   "frame": 4
+  },
+  {
+   "id": "player-06",
+   "file": "player-06.webp",
+   "w": 166,
+   "h": 196,
+   "anchor": {
+    "x": 83.0,
+    "y": 196.0
+   },
+   "frame": 5
+  },
+  {
+   "id": "player-07",
+   "file": "player-07.webp",
+   "w": 166,
+   "h": 196,
+   "anchor": {
+    "x": 83.0,
+    "y": 196.0
+   },
+   "frame": 6
+  },
+  {
+   "id": "player-08",
+   "file": "player-08.webp",
+   "w": 166,
+   "h": 196,
+   "anchor": {
+    "x": 83.0,
+    "y": 196.0
+   },
+   "frame": 7
+  },
+  {
+   "id": "player-09",
+   "file": "player-09.webp",
+   "w": 166,
+   "h": 196,
+   "anchor": {
+    "x": 83.0,
+    "y": 196.0
+   },
+   "frame": 8
+  },
+  {
+   "id": "player-10",
+   "file": "player-10.webp",
+   "w": 166,
+   "h": 196,
+   "anchor": {
+    "x": 83.0,
+    "y": 196.0
+   },
+   "frame": 9
+  },
+  {
+   "id": "player-11",
+   "file": "player-11.webp",
+   "w": 166,
+   "h": 196,
+   "anchor": {
+    "x": 83.0,
+    "y": 196.0
+   },
+   "frame": 10
+  },
+  {
+   "id": "player-12",
+   "file": "player-12.webp",
+   "w": 166,
+   "h": 196,
+   "anchor": {
+    "x": 83.0,
+    "y": 196.0
+   },
+   "frame": 11
+  }
+ ]
+}

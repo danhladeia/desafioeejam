@@ -80,6 +80,7 @@ body[data-screen=play] .topbar{display:none}
 .catalog .game-card:hover,.surprise:hover{box-shadow:none;transform:none}
 .catalog .game-card:active,.surprise:active{transform:scale(.93)}
 .game-card img,.surprise img{display:block;width:100%;height:14.4rem;object-fit:contain;filter:drop-shadow(0 .45rem 0 #060c33aa);pointer-events:none}
+.arcade-game-seal{display:block;width:100%;height:14.4rem;background-image:url('./assets/visual/arcade/arcade-game-icons-transparent-v1.png');background-repeat:no-repeat;background-size:400% 200%;background-position:var(--arcade-x) var(--arcade-y);filter:drop-shadow(0 .45rem 0 #060c33aa);pointer-events:none}
 .game-card .sub,.surprise .sub{font-size:1.32rem;font-weight:700;line-height:1.2;min-height:3.2rem;color:#e7edff}
 .surprise b{font-size:1.9rem;font-weight:700;color:var(--yellow)}
 .surprise img{height:11.6rem;padding:1.6rem}

@@ -86,3 +86,7 @@ Os fundos de cada jogo existem como prancha de referência; nesta versão o camp
 `npm test` executa testes do campeonato, persistência, conteúdo e geração de caça-palavras. Para testes no navegador: `npm install`, `npx playwright install chromium` e `npx playwright test`.
 
 Arquivos principais: app.js (telas/motor/efeitos), games.js (minijogos), core.js (campeonato/persistência), content.js (banco revisável), style.css (estilos dos jogos), menu.css (palco, menu, abertura e escala para tablet), duel.js (regras e sorteio do Modo Duelo), duel-ui.js e duel.css (telas do Modo Duelo), roster.js (alunos do 9º A e B), sw.js (cache). Ao atualizar arquivos distribuídos, incremente a versão do cache em sw.js e app.js e revalide o offline antes do evento. edf-anos.js e edf-ano6.js a edf-ano9.js (conteúdo por ano), edf-sequencia.js (Ordene a Sequência) e forca-boneco.js (boneco da Forca).
+# Arcade EDF
+
+O projeto inclui o primeiro desafio arcade, **Corte Certo**: dois alunos podem cortar itens simultaneamente em arenas independentes. Ele funciona no modo normal e no EDF, respeita pausa, pontuação por rapidez, multitoque por arena e o cache offline. Os demais desafios arcade descritos em `ARQUITETURA_ARCADE.md` seguem a mesma base de canvas.
+

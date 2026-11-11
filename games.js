@@ -9,9 +9,21 @@ import { setupEdfCards } from './edf-game.js';
 import { setupSequence } from './edf-sequencia.js';
 import { createEdfTheme, edfWordArt } from './edf-theme.js';
 import { createHangman, hangmanLabel } from './forca-boneco.js';
+import { setupSlice } from './arcade/slice.js';
+import { setupThrow } from './arcade/throw.js';
+import { setupRunner } from './arcade/runner.js';
+import { setupRhythm } from './arcade/rhythm.js';
 
 /** Durations are suggestions in seconds; the host owns the match clock. */
 export const GAMES = [
+  { id: 'slice', title: 'Corte Certo', subtitle: 'Escolhas seguras em movimento', icon: 'drag', rule: 'Arraste sobre os itens corretos. Evite os descuidos e as bombas.', duration: 60 },
+  { id: 'hoops', title: 'Cesta do Saber', subtitle: 'Arremesse na resposta certa', icon: 'star', rule: 'Arraste da bola até a cesta da resposta correta e solte.', duration: 60 },
+  { id: 'penalty', title: 'Chute a Gol', subtitle: 'Escolha o canto correto', icon: 'star', rule: 'Arraste da bola até o canto da resposta correta e solte para chutar.', duration: 60 },
+  { id: 'skate', title: 'Corrida Urbana', subtitle: 'Skate em três pistas', icon: 'rocket', rule: 'Deslize para trocar de pista, pule os obstáculos baixos e abaixe sob os altos. Pegue as moedas e os itens de segurança.', duration: 60 },
+  { id: 'rio', title: 'Descida do Rio', subtitle: 'Desvie e aprenda na corredeira', icon: 'rocket', rule: 'Deslize para trocar de pista, pule troncos e abaixe sob galhos. Pegue as moedas e os itens de segurança.', duration: 60 },
+  { id: 'capoeira', title: 'Roda de Capoeira', subtitle: 'Toque no ritmo da roda', icon: 'star', rule: 'Toque na coluna quando a marca chegar à linha.', duration: 60 },
+  { id: 'pose', title: 'Pose por Pose', subtitle: 'Ritmo e ginástica', icon: 'star', rule: 'Cada coluna é uma pose de ginástica. Toque na pose no compasso.', duration: 60 },
+  { id: 'rally', title: 'Rally na Rede', subtitle: 'Gesto certo, tempo certo', icon: 'star', rule: 'Cada coluna é um gesto de vôlei. Toque no gesto da bola quando ela chegar à linha.', duration: 60 },
   { id: 'turbo', title: 'Toque Turbo', subtitle: 'Atenção e precisão', icon: 'idea', rule: 'Toque com calma em ideias e livros. Evite as armadilhas vermelhas.', duration: 35 },
   { id: 'rota', title: 'Rota do EMTI', subtitle: 'Aprender, criar e conviver', icon: 'hand', rule: 'Classifique cada atividade em Aprender, Criar projetos ou Conviver.', duration: 60 },
   { id: 'memory', title: 'Memória EEJAM', subtitle: 'Observe e encontre os pares', icon: 'book', rule: 'Vire duas cartas por vez. Encontre todos os pares para terminar.', duration: 60 },
@@ -759,6 +771,14 @@ export function createGame({ id, el, side = 'left', seed = 0, difficulty = 'norm
   };
 
   switch (id) {
+    case 'slice': setupSlice(ctx); break;
+    case 'hoops': setupThrow(ctx, 'hoops'); break;
+    case 'penalty': setupThrow(ctx, 'penalty'); break;
+    case 'skate': setupRunner(ctx, 'skate'); break;
+    case 'rio': setupRunner(ctx, 'rio'); break;
+    case 'capoeira': setupRhythm(ctx, 'capoeira'); break;
+    case 'pose': setupRhythm(ctx, 'pose'); break;
+    case 'rally': setupRhythm(ctx, 'rally'); break;
     case 'edf': setupEdfCards(ctx, edfTopics, edfGrade); break;
     case 'ordem': setupSequence(ctx); break;
     case 'turbo': setupTurbo(); break;
