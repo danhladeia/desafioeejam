@@ -1,0 +1,271 @@
+{
+ "sheet": "J2-caiaque-obstaculos-itens.png",
+ "mode": "cells",
+ "scale": 0.5,
+ "items": [
+  {
+   "id": "obj-01",
+   "file": "obj-01.webp",
+   "w": 121,
+   "h": 84,
+   "anchor": {
+    "x": 60.5,
+    "y": 84.0
+   },
+   "cell": 0
+  },
+  {
+   "id": "obj-02",
+   "file": "obj-02.webp",
+   "w": 120,
+   "h": 94,
+   "anchor": {
+    "x": 60.0,
+    "y": 94.0
+   },
+   "cell": 1
+  },
+  {
+   "id": "obj-03",
+   "file": "obj-03.webp",
+   "w": 120,
+   "h": 68,
+   "anchor": {
+    "x": 60.0,
+    "y": 68.0
+   },
+   "cell": 2
+  },
+  {
+   "id": "obj-04",
+   "file": "obj-04.webp",
+   "w": 125,
+   "h": 72,
+   "anchor": {
+    "x": 62.5,
+    "y": 72.0
+   },
+   "cell": 3
+  },
+  {
+   "id": "obj-05",
+   "file": "obj-05.webp",
+   "w": 116,
+   "h": 72,
+   "anchor": {
+    "x": 58.0,
+    "y": 72.0
+   },
+   "cell": 4
+  },
+  {
+   "id": "obj-06",
+   "file": "obj-06.webp",
+   "w": 74,
+   "h": 94,
+   "anchor": {
+    "x": 37.0,
+    "y": 94.0
+   },
+   "cell": 5
+  },
+  {
+   "id": "obj-07",
+   "file": "obj-07.webp",
+   "w": 124,
+   "h": 84,
+   "anchor": {
+    "x": 62.0,
+    "y": 84.0
+   },
+   "cell": 6
+  },
+  {
+   "id": "obj-08",
+   "file": "obj-08.webp",
+   "w": 128,
+   "h": 125,
+   "anchor": {
+    "x": 64.0,
+    "y": 125.0
+   },
+   "cell": 7
+  },
+  {
+   "id": "obj-09",
+   "file": "obj-09.webp",
+   "w": 128,
+   "h": 80,
+   "anchor": {
+    "x": 64.0,
+    "y": 80.0
+   },
+   "cell": 8
+  },
+  {
+   "id": "obj-10",
+   "file": "obj-10.webp",
+   "w": 128,
+   "h": 85,
+   "anchor": {
+    "x": 64.0,
+    "y": 85.0
+   },
+   "cell": 9
+  },
+  {
+   "id": "obj-11",
+   "file": "obj-11.webp",
+   "w": 115,
+   "h": 116,
+   "anchor": {
+    "x": 57.5,
+    "y": 116.0
+   },
+   "cell": 10
+  },
+  {
+   "id": "obj-12",
+   "file": "obj-12.webp",
+   "w": 112,
+   "h": 128,
+   "anchor": {
+    "x": 56.0,
+    "y": 128.0
+   },
+   "cell": 11
+  },
+  {
+   "id": "obj-13",
+   "file": "obj-13.webp",
+   "w": 124,
+   "h": 93,
+   "anchor": {
+    "x": 62.0,
+    "y": 93.0
+   },
+   "cell": 12
+  },
+  {
+   "id": "obj-14",
+   "file": "obj-14.webp",
+   "w": 128,
+   "h": 104,
+   "anchor": {
+    "x": 64.0,
+    "y": 104.0
+   },
+   "cell": 13
+  },
+  {
+   "id": "obj-15",
+   "file": "obj-15.webp",
+   "w": 128,
+   "h": 76,
+   "anchor": {
+    "x": 64.0,
+    "y": 76.0
+   },
+   "cell": 14
+  },
+  {
+   "id": "obj-16",
+   "file": "obj-16.webp",
+   "w": 128,
+   "h": 68,
+   "anchor": {
+    "x": 64.0,
+    "y": 68.0
+   },
+   "cell": 15
+  },
+  {
+   "id": "obj-17",
+   "file": "obj-17.webp",
+   "w": 122,
+   "h": 94,
+   "anchor": {
+    "x": 61.0,
+    "y": 94.0
+   },
+   "cell": 16
+  },
+  {
+   "id": "obj-18",
+   "file": "obj-18.webp",
+   "w": 110,
+   "h": 111,
+   "anchor": {
+    "x": 55.0,
+    "y": 111.0
+   },
+   "cell": 17
+  },
+  {
+   "id": "obj-19",
+   "file": "obj-19.webp",
+   "w": 120,
+   "h": 75,
+   "anchor": {
+    "x": 60.0,
+    "y": 75.0
+   },
+   "cell": 18
+  },
+  {
+   "id": "obj-20",
+   "file": "obj-20.webp",
+   "w": 128,
+   "h": 96,
+   "anchor": {
+    "x": 64.0,
+    "y": 96.0
+   },
+   "cell": 19
+  },
+  {
+   "id": "obj-21",
+   "file": "obj-21.webp",
+   "w": 128,
+   "h": 88,
+   "anchor": {
+    "x": 64.0,
+    "y": 88.0
+   },
+   "cell": 20
+  },
+  {
+   "id": "obj-22",
+   "file": "obj-22.webp",
+   "w": 128,
+   "h": 94,
+   "anchor": {
+    "x": 64.0,
+    "y": 94.0
+   },
+   "cell": 21
+  },
+  {
+   "id": "obj-23",
+   "file": "obj-23.webp",
+   "w": 128,
+   "h": 98,
+   "anchor": {
+    "x": 64.0,
+    "y": 98.0
+   },
+   "cell": 22
+  },
+  {
+   "id": "obj-24",
+   "file": "obj-24.webp",
+   "w": 122,
+   "h": 96,
+   "anchor": {
+    "x": 61.0,
+    "y": 96.0
+   },
+   "cell": 23
+  }
+ ]
+}

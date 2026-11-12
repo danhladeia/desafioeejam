@@ -1,0 +1,205 @@
+{
+ "sheet": "L3-alvos-arco-e-flecha.png",
+ "mode": "cells",
+ "scale": 0.5,
+ "items": [
+  {
+   "id": "target-01",
+   "file": "target-01.webp",
+   "w": 117,
+   "h": 138,
+   "anchor": {
+    "x": 58.5,
+    "y": 138.0
+   },
+   "cell": 0
+  },
+  {
+   "id": "target-02",
+   "file": "target-02.webp",
+   "w": 122,
+   "h": 140,
+   "anchor": {
+    "x": 61.0,
+    "y": 140.0
+   },
+   "cell": 1
+  },
+  {
+   "id": "target-03",
+   "file": "target-03.webp",
+   "w": 117,
+   "h": 138,
+   "anchor": {
+    "x": 58.5,
+    "y": 138.0
+   },
+   "cell": 2
+  },
+  {
+   "id": "target-04",
+   "file": "target-04.webp",
+   "w": 112,
+   "h": 145,
+   "anchor": {
+    "x": 56.0,
+    "y": 145.0
+   },
+   "cell": 3
+  },
+  {
+   "id": "target-05",
+   "file": "target-05.webp",
+   "w": 128,
+   "h": 145,
+   "anchor": {
+    "x": 64.0,
+    "y": 145.0
+   },
+   "cell": 4
+  },
+  {
+   "id": "target-06",
+   "file": "target-06.webp",
+   "w": 114,
+   "h": 145,
+   "anchor": {
+    "x": 57.0,
+    "y": 145.0
+   },
+   "cell": 5
+  },
+  {
+   "id": "target-07",
+   "file": "target-07.webp",
+   "w": 118,
+   "h": 139,
+   "anchor": {
+    "x": 59.0,
+    "y": 139.0
+   },
+   "cell": 6
+  },
+  {
+   "id": "target-08",
+   "file": "target-08.webp",
+   "w": 121,
+   "h": 139,
+   "anchor": {
+    "x": 60.5,
+    "y": 139.0
+   },
+   "cell": 7
+  },
+  {
+   "id": "target-09",
+   "file": "target-09.webp",
+   "w": 120,
+   "h": 140,
+   "anchor": {
+    "x": 60.0,
+    "y": 140.0
+   },
+   "cell": 8
+  },
+  {
+   "id": "target-10",
+   "file": "target-10.webp",
+   "w": 115,
+   "h": 141,
+   "anchor": {
+    "x": 57.5,
+    "y": 141.0
+   },
+   "cell": 9
+  },
+  {
+   "id": "target-11",
+   "file": "target-11.webp",
+   "w": 128,
+   "h": 144,
+   "anchor": {
+    "x": 64.0,
+    "y": 144.0
+   },
+   "cell": 10
+  },
+  {
+   "id": "target-12",
+   "file": "target-12.webp",
+   "w": 112,
+   "h": 143,
+   "anchor": {
+    "x": 56.0,
+    "y": 143.0
+   },
+   "cell": 11
+  },
+  {
+   "id": "target-13",
+   "file": "target-13.webp",
+   "w": 124,
+   "h": 142,
+   "anchor": {
+    "x": 62.0,
+    "y": 142.0
+   },
+   "cell": 12
+  },
+  {
+   "id": "target-14",
+   "file": "target-14.webp",
+   "w": 112,
+   "h": 147,
+   "anchor": {
+    "x": 56.0,
+    "y": 147.0
+   },
+   "cell": 13
+  },
+  {
+   "id": "target-15",
+   "file": "target-15.webp",
+   "w": 124,
+   "h": 142,
+   "anchor": {
+    "x": 62.0,
+    "y": 142.0
+   },
+   "cell": 14
+  },
+  {
+   "id": "target-16",
+   "file": "target-16.webp",
+   "w": 124,
+   "h": 141,
+   "anchor": {
+    "x": 62.0,
+    "y": 141.0
+   },
+   "cell": 15
+  },
+  {
+   "id": "target-17",
+   "file": "target-17.webp",
+   "w": 115,
+   "h": 148,
+   "anchor": {
+    "x": 57.5,
+    "y": 148.0
+   },
+   "cell": 16
+  },
+  {
+   "id": "target-18",
+   "file": "target-18.webp",
+   "w": 123,
+   "h": 142,
+   "anchor": {
+    "x": 61.5,
+    "y": 142.0
+   },
+   "cell": 17
+  }
+ ]
+}

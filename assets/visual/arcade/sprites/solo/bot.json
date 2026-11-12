@@ -1,0 +1,95 @@
+{
+ "sheet": "N1-robo-poses.png",
+ "mode": "grid",
+ "scale": 0.6,
+ "items": [
+  {
+   "id": "bot-01",
+   "file": "bot-01.webp",
+   "w": 215,
+   "h": 266,
+   "anchor": {
+    "x": 107.5,
+    "y": 266.0
+   },
+   "frame": 0
+  },
+  {
+   "id": "bot-02",
+   "file": "bot-02.webp",
+   "w": 215,
+   "h": 266,
+   "anchor": {
+    "x": 107.5,
+    "y": 266.0
+   },
+   "frame": 1
+  },
+  {
+   "id": "bot-03",
+   "file": "bot-03.webp",
+   "w": 215,
+   "h": 266,
+   "anchor": {
+    "x": 107.5,
+    "y": 266.0
+   },
+   "frame": 2
+  },
+  {
+   "id": "bot-04",
+   "file": "bot-04.webp",
+   "w": 215,
+   "h": 266,
+   "anchor": {
+    "x": 107.5,
+    "y": 266.0
+   },
+   "frame": 3
+  },
+  {
+   "id": "bot-05",
+   "file": "bot-05.webp",
+   "w": 215,
+   "h": 266,
+   "anchor": {
+    "x": 107.5,
+    "y": 266.0
+   },
+   "frame": 4
+  },
+  {
+   "id": "bot-06",
+   "file": "bot-06.webp",
+   "w": 215,
+   "h": 266,
+   "anchor": {
+    "x": 107.5,
+    "y": 266.0
+   },
+   "frame": 5
+  },
+  {
+   "id": "bot-07",
+   "file": "bot-07.webp",
+   "w": 215,
+   "h": 266,
+   "anchor": {
+    "x": 107.5,
+    "y": 266.0
+   },
+   "frame": 6
+  },
+  {
+   "id": "bot-08",
+   "file": "bot-08.webp",
+   "w": 215,
+   "h": 266,
+   "anchor": {
+    "x": 107.5,
+    "y": 266.0
+   },
+   "frame": 7
+  }
+ ]
+}

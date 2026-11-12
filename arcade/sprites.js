@@ -25,14 +25,15 @@ export function loadSprites(game, names, view = globalThis) {
 }
 
 /** Desenha o sprite com o ponto de apoio em (x, y). `h` é a altura desejada; a largura segue a proporção. */
-export function drawSprite(g, set, id, x, y, { h, w, flip = false, alpha = 1, anchor, center = false } = {}) {
+export function drawSprite(g, set, id, x, y, { h, w, flip = false, alpha = 1, anchor, center = false, top = false, rot = 0 } = {}) {
   const s = set.get(id);
   if (!s || !s.img.complete || !s.img.naturalWidth) return false;
   const height = h ?? (w ? w * s.h / s.w : s.h), width = w ?? height * s.w / s.h;
-  const ax = center ? 0.5 : (anchor?.x ?? s.anchor.x) / s.w, ay = center ? 0.5 : (anchor?.y ?? s.anchor.y) / s.h;
+  const ax = center || top ? 0.5 : (anchor?.x ?? s.anchor.x) / s.w, ay = center ? 0.5 : top ? 0.08 : (anchor?.y ?? s.anchor.y) / s.h;
   g.save();
   if (alpha !== 1) g.globalAlpha *= alpha;
   g.translate(x, y);
+  if (rot) g.rotate(rot);
   if (flip) g.scale(-1, 1);
   g.drawImage(s.img, -width * ax, -height * ay, width, height);
   g.restore();

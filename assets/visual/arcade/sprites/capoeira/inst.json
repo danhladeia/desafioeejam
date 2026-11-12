@@ -1,0 +1,139 @@
+{
+ "sheet": "O1-instrumentos-ritmo.png",
+ "mode": "cells",
+ "scale": 0.5,
+ "items": [
+  {
+   "id": "inst-01",
+   "file": "inst-01.webp",
+   "w": 160,
+   "h": 138,
+   "anchor": {
+    "x": 80.0,
+    "y": 138.0
+   },
+   "cell": 0
+  },
+  {
+   "id": "inst-02",
+   "file": "inst-02.webp",
+   "w": 128,
+   "h": 152,
+   "anchor": {
+    "x": 64.0,
+    "y": 152.0
+   },
+   "cell": 1
+  },
+  {
+   "id": "inst-03",
+   "file": "inst-03.webp",
+   "w": 176,
+   "h": 116,
+   "anchor": {
+    "x": 88.0,
+    "y": 116.0
+   },
+   "cell": 2
+  },
+  {
+   "id": "inst-04",
+   "file": "inst-04.webp",
+   "w": 124,
+   "h": 153,
+   "anchor": {
+    "x": 62.0,
+    "y": 153.0
+   },
+   "cell": 3
+  },
+  {
+   "id": "inst-05",
+   "file": "inst-05.webp",
+   "w": 145,
+   "h": 148,
+   "anchor": {
+    "x": 72.5,
+    "y": 148.0
+   },
+   "cell": 4
+  },
+  {
+   "id": "inst-06",
+   "file": "inst-06.webp",
+   "w": 136,
+   "h": 154,
+   "anchor": {
+    "x": 68.0,
+    "y": 154.0
+   },
+   "cell": 5
+  },
+  {
+   "id": "inst-07",
+   "file": "inst-07.webp",
+   "w": 100,
+   "h": 150,
+   "anchor": {
+    "x": 50.0,
+    "y": 150.0
+   },
+   "cell": 6
+  },
+  {
+   "id": "inst-08",
+   "file": "inst-08.webp",
+   "w": 145,
+   "h": 160,
+   "anchor": {
+    "x": 72.5,
+    "y": 160.0
+   },
+   "cell": 7
+  },
+  {
+   "id": "inst-09",
+   "file": "inst-09.webp",
+   "w": 170,
+   "h": 139,
+   "anchor": {
+    "x": 85.0,
+    "y": 139.0
+   },
+   "cell": 8
+  },
+  {
+   "id": "inst-10",
+   "file": "inst-10.webp",
+   "w": 165,
+   "h": 146,
+   "anchor": {
+    "x": 82.5,
+    "y": 146.0
+   },
+   "cell": 9
+  },
+  {
+   "id": "inst-11",
+   "file": "inst-11.webp",
+   "w": 151,
+   "h": 165,
+   "anchor": {
+    "x": 75.5,
+    "y": 165.0
+   },
+   "cell": 10
+  },
+  {
+   "id": "inst-12",
+   "file": "inst-12.webp",
+   "w": 156,
+   "h": 139,
+   "anchor": {
+    "x": 78.0,
+    "y": 139.0
+   },
+   "cell": 11
+  }
+ ]
+}

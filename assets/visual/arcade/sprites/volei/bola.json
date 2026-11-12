@@ -1,0 +1,271 @@
+{
+ "sheet": "T2-volei-bolas-zonas-efeitos.png",
+ "mode": "cells",
+ "scale": 0.6,
+ "items": [
+  {
+   "id": "bola-01",
+   "file": "bola-01.webp",
+   "w": 127,
+   "h": 127,
+   "anchor": {
+    "x": 63.5,
+    "y": 127.0
+   },
+   "cell": 0
+  },
+  {
+   "id": "bola-02",
+   "file": "bola-02.webp",
+   "w": 152,
+   "h": 120,
+   "anchor": {
+    "x": 76.0,
+    "y": 120.0
+   },
+   "cell": 1
+  },
+  {
+   "id": "bola-03",
+   "file": "bola-03.webp",
+   "w": 145,
+   "h": 124,
+   "anchor": {
+    "x": 72.5,
+    "y": 124.0
+   },
+   "cell": 2
+  },
+  {
+   "id": "bola-04",
+   "file": "bola-04.webp",
+   "w": 126,
+   "h": 127,
+   "anchor": {
+    "x": 63.0,
+    "y": 127.0
+   },
+   "cell": 3
+  },
+  {
+   "id": "bola-05",
+   "file": "bola-05.webp",
+   "w": 137,
+   "h": 122,
+   "anchor": {
+    "x": 68.5,
+    "y": 122.0
+   },
+   "cell": 4
+  },
+  {
+   "id": "bola-06",
+   "file": "bola-06.webp",
+   "w": 41,
+   "h": 41,
+   "anchor": {
+    "x": 20.5,
+    "y": 41.0
+   },
+   "cell": 5
+  },
+  {
+   "id": "bola-07",
+   "file": "bola-07.webp",
+   "w": 150,
+   "h": 75,
+   "anchor": {
+    "x": 75.0,
+    "y": 75.0
+   },
+   "cell": 6
+  },
+  {
+   "id": "bola-08",
+   "file": "bola-08.webp",
+   "w": 154,
+   "h": 76,
+   "anchor": {
+    "x": 77.0,
+    "y": 76.0
+   },
+   "cell": 7
+  },
+  {
+   "id": "bola-09",
+   "file": "bola-09.webp",
+   "w": 154,
+   "h": 74,
+   "anchor": {
+    "x": 77.0,
+    "y": 74.0
+   },
+   "cell": 8
+  },
+  {
+   "id": "bola-10",
+   "file": "bola-10.webp",
+   "w": 146,
+   "h": 66,
+   "anchor": {
+    "x": 73.0,
+    "y": 66.0
+   },
+   "cell": 9
+  },
+  {
+   "id": "bola-11",
+   "file": "bola-11.webp",
+   "w": 131,
+   "h": 93,
+   "anchor": {
+    "x": 65.5,
+    "y": 93.0
+   },
+   "cell": 10
+  },
+  {
+   "id": "bola-12",
+   "file": "bola-12.webp",
+   "w": 149,
+   "h": 67,
+   "anchor": {
+    "x": 74.5,
+    "y": 67.0
+   },
+   "cell": 11
+  },
+  {
+   "id": "bola-13",
+   "file": "bola-13.webp",
+   "w": 69,
+   "h": 76,
+   "anchor": {
+    "x": 34.5,
+    "y": 76.0
+   },
+   "cell": 12
+  },
+  {
+   "id": "bola-14",
+   "file": "bola-14.webp",
+   "w": 109,
+   "h": 102,
+   "anchor": {
+    "x": 54.5,
+    "y": 102.0
+   },
+   "cell": 13
+  },
+  {
+   "id": "bola-15",
+   "file": "bola-15.webp",
+   "w": 147,
+   "h": 127,
+   "anchor": {
+    "x": 73.5,
+    "y": 127.0
+   },
+   "cell": 14
+  },
+  {
+   "id": "bola-16",
+   "file": "bola-16.webp",
+   "w": 145,
+   "h": 95,
+   "anchor": {
+    "x": 72.5,
+    "y": 95.0
+   },
+   "cell": 15
+  },
+  {
+   "id": "bola-17",
+   "file": "bola-17.webp",
+   "w": 125,
+   "h": 136,
+   "anchor": {
+    "x": 62.5,
+    "y": 136.0
+   },
+   "cell": 16
+  },
+  {
+   "id": "bola-18",
+   "file": "bola-18.webp",
+   "w": 152,
+   "h": 123,
+   "anchor": {
+    "x": 76.0,
+    "y": 123.0
+   },
+   "cell": 17
+  },
+  {
+   "id": "bola-19",
+   "file": "bola-19.webp",
+   "w": 101,
+   "h": 72,
+   "anchor": {
+    "x": 50.5,
+    "y": 72.0
+   },
+   "cell": 18
+  },
+  {
+   "id": "bola-20",
+   "file": "bola-20.webp",
+   "w": 136,
+   "h": 103,
+   "anchor": {
+    "x": 68.0,
+    "y": 103.0
+   },
+   "cell": 19
+  },
+  {
+   "id": "bola-21",
+   "file": "bola-21.webp",
+   "w": 142,
+   "h": 118,
+   "anchor": {
+    "x": 71.0,
+    "y": 118.0
+   },
+   "cell": 20
+  },
+  {
+   "id": "bola-22",
+   "file": "bola-22.webp",
+   "w": 119,
+   "h": 37,
+   "anchor": {
+    "x": 59.5,
+    "y": 37.0
+   },
+   "cell": 21
+  },
+  {
+   "id": "bola-23",
+   "file": "bola-23.webp",
+   "w": 133,
+   "h": 73,
+   "anchor": {
+    "x": 66.5,
+    "y": 73.0
+   },
+   "cell": 22
+  },
+  {
+   "id": "bola-24",
+   "file": "bola-24.webp",
+   "w": 121,
+   "h": 46,
+   "anchor": {
+    "x": 60.5,
+    "y": 46.0
+   },
+   "cell": 23
+  }
+ ]
+}

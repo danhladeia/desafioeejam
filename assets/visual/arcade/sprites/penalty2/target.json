@@ -1,0 +1,205 @@
+{
+ "sheet": "S1-falta-alvos.png",
+ "mode": "cells",
+ "scale": 0.5,
+ "items": [
+  {
+   "id": "target-01",
+   "file": "target-01.webp",
+   "w": 115,
+   "h": 114,
+   "anchor": {
+    "x": 57.5,
+    "y": 114.0
+   },
+   "cell": 0
+  },
+  {
+   "id": "target-02",
+   "file": "target-02.webp",
+   "w": 102,
+   "h": 129,
+   "anchor": {
+    "x": 51.0,
+    "y": 129.0
+   },
+   "cell": 1
+  },
+  {
+   "id": "target-03",
+   "file": "target-03.webp",
+   "w": 122,
+   "h": 94,
+   "anchor": {
+    "x": 61.0,
+    "y": 94.0
+   },
+   "cell": 2
+  },
+  {
+   "id": "target-04",
+   "file": "target-04.webp",
+   "w": 122,
+   "h": 118,
+   "anchor": {
+    "x": 61.0,
+    "y": 118.0
+   },
+   "cell": 3
+  },
+  {
+   "id": "target-05",
+   "file": "target-05.webp",
+   "w": 108,
+   "h": 109,
+   "anchor": {
+    "x": 54.0,
+    "y": 109.0
+   },
+   "cell": 4
+  },
+  {
+   "id": "target-06",
+   "file": "target-06.webp",
+   "w": 113,
+   "h": 118,
+   "anchor": {
+    "x": 56.5,
+    "y": 118.0
+   },
+   "cell": 5
+  },
+  {
+   "id": "target-07",
+   "file": "target-07.webp",
+   "w": 115,
+   "h": 158,
+   "anchor": {
+    "x": 57.5,
+    "y": 158.0
+   },
+   "cell": 6
+  },
+  {
+   "id": "target-08",
+   "file": "target-08.webp",
+   "w": 114,
+   "h": 156,
+   "anchor": {
+    "x": 57.0,
+    "y": 156.0
+   },
+   "cell": 7
+  },
+  {
+   "id": "target-09",
+   "file": "target-09.webp",
+   "w": 102,
+   "h": 131,
+   "anchor": {
+    "x": 51.0,
+    "y": 131.0
+   },
+   "cell": 8
+  },
+  {
+   "id": "target-10",
+   "file": "target-10.webp",
+   "w": 126,
+   "h": 149,
+   "anchor": {
+    "x": 63.0,
+    "y": 149.0
+   },
+   "cell": 9
+  },
+  {
+   "id": "target-11",
+   "file": "target-11.webp",
+   "w": 110,
+   "h": 160,
+   "anchor": {
+    "x": 55.0,
+    "y": 160.0
+   },
+   "cell": 10
+  },
+  {
+   "id": "target-12",
+   "file": "target-12.webp",
+   "w": 108,
+   "h": 113,
+   "anchor": {
+    "x": 54.0,
+    "y": 113.0
+   },
+   "cell": 11
+  },
+  {
+   "id": "target-13",
+   "file": "target-13.webp",
+   "w": 108,
+   "h": 111,
+   "anchor": {
+    "x": 54.0,
+    "y": 111.0
+   },
+   "cell": 12
+  },
+  {
+   "id": "target-14",
+   "file": "target-14.webp",
+   "w": 106,
+   "h": 98,
+   "anchor": {
+    "x": 53.0,
+    "y": 98.0
+   },
+   "cell": 13
+  },
+  {
+   "id": "target-15",
+   "file": "target-15.webp",
+   "w": 118,
+   "h": 120,
+   "anchor": {
+    "x": 59.0,
+    "y": 120.0
+   },
+   "cell": 14
+  },
+  {
+   "id": "target-16",
+   "file": "target-16.webp",
+   "w": 124,
+   "h": 96,
+   "anchor": {
+    "x": 62.0,
+    "y": 96.0
+   },
+   "cell": 15
+  },
+  {
+   "id": "target-17",
+   "file": "target-17.webp",
+   "w": 120,
+   "h": 132,
+   "anchor": {
+    "x": 60.0,
+    "y": 132.0
+   },
+   "cell": 16
+  },
+  {
+   "id": "target-18",
+   "file": "target-18.webp",
+   "w": 110,
+   "h": 116,
+   "anchor": {
+    "x": 55.0,
+    "y": 116.0
+   },
+   "cell": 17
+  }
+ ]
+}

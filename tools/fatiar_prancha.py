@@ -40,6 +40,21 @@ def key_strong(a):
     return out
 
 
+def key_flood(a, light=205, spread=30, min_bg=20000):
+    """Remove fundo claro e acinzentado 'embutido' (névoa branca ou lilás).
+    Marca os pixels claros e de baixa saturação e remove só as regiões grandes ligadas entre si;
+    brancos pequenos dentro da peça (camisa, meias, espuma) ficam, porque não formam região grande."""
+    rgb = a[..., :3].astype(int)
+    mask = (rgb.min(axis=2) > light) & ((rgb.max(axis=2) - rgb.min(axis=2)) < spread)
+    lab, n = ndi.label(mask)
+    sizes = ndi.sum(mask, lab, range(1, n + 1))
+    big = np.isin(lab, [i + 1 for i, v in enumerate(sizes) if v >= min_bg])
+    big = ndi.binary_dilation(big, iterations=1) & mask
+    out = a.copy()
+    out[..., 3] = np.where(big, 0, 255).astype(np.uint8)
+    return out
+
+
 def key_green(a, tol=70, soft=60):
     """Remove o fundo verde medindo a cor real nas bordas da imagem.
 
@@ -103,8 +118,11 @@ def main():
     ap.add_argument('--out', required=True)
     ap.add_argument('--prefix', default='peca')
     ap.add_argument('--grid', help='COLUNASxLINHAS: fatia em células iguais (quadros de animação)')
+    ap.add_argument('--cells', help='COLUNASxLINHAS: uma peça por célula, cada uma recortada pelo seu próprio contorno (numeração fixa)')
     ap.add_argument('--chroma', action='store_true', help='remove fundo verde #00FF00 (plano B)')
     ap.add_argument('--strong', action='store_true', help='como --chroma, mas remove também sombras verdes (personagens)')
+    ap.add_argument('--flood', action='store_true', help='remove fundo claro embutido (névoa branca ou lilás)')
+    ap.add_argument('--flood-min', type=int, default=20000, help='tamanho mínimo (px) das regiões claras removidas pelo --flood')
     ap.add_argument('--anchor', choices=['bottom', 'center'], default='bottom')
     ap.add_argument('--min-area', type=int, default=1500, help='ignora manchas menores (px² originais)')
     ap.add_argument('--gap', type=int, default=4, help='dilatação para unir partes da mesma peça')
@@ -114,7 +132,9 @@ def main():
     args = ap.parse_args()
 
     a = np.array(Image.open(args.sheet).convert('RGBA'))
-    if args.strong:
+    if args.flood:
+        a = key_flood(a, min_bg=args.flood_min)
+    elif args.strong:
         a = key_strong(a)
     elif args.chroma:
         a = key_green(a)
@@ -125,7 +145,22 @@ def main():
     os.makedirs(args.out, exist_ok=True)
     items = []
 
-    if args.grid:
+    if args.cells:
+        cols, rows = (int(v) for v in args.cells.lower().split('x'))
+        ch, cw = a.shape[0] // rows, a.shape[1] // cols
+        for r in range(rows):
+            for c in range(cols):
+                cell = a[r * ch:(r + 1) * ch, c * cw:(c + 1) * cw]
+                t = trim(cell, args.pad)
+                if not t:
+                    continue
+                i = r * cols + c + 1
+                fn = f'{args.prefix}-{i:02d}.webp'
+                w, h = save(t[0], os.path.join(args.out, fn), args.quality, args.scale)
+                items.append({'id': f'{args.prefix}-{i:02d}', 'file': fn, 'w': w, 'h': h,
+                              'anchor': anchor_of(h, w, args.anchor), 'cell': i - 1})
+        mode = 'cells'
+    elif args.grid:
         cols, rows = (int(v) for v in args.grid.lower().split('x'))
         ch, cw = a.shape[0] // rows, a.shape[1] // cols
         cells = [a[r * ch:(r + 1) * ch, c * cw:(c + 1) * cw] for r in range(rows) for c in range(cols)]

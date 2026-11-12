@@ -53,7 +53,9 @@ export function newSeal(id){
  return index<0?null:`<span class="new-game-seal" data-seal="${id}" style="--seal-index:${index}" aria-hidden="true"></span>`;
 }
 const arcadeIds=['slice','hoops','penalty','skate','rio','capoeira','pose','rally'];
+const spriteSeals={bike:'assets/visual/arcade/sprites/mtb/rider-01.webp',archery:'assets/visual/arcade/sprites/archery/target-01.webp'};
 export function arcadeSeal(id){
+ if(spriteSeals[id])return `<span class="arcade-sprite-seal" style="background-image:url('${spriteSeals[id]}')" aria-hidden="true"></span>`;
  const index=arcadeIds.indexOf(id);
  return index<0?null:`<span class="arcade-game-seal" style="--arcade-x:${index%4*33.3333}%;--arcade-y:${Math.floor(index/4)*100}%" aria-hidden="true"></span>`;
 }

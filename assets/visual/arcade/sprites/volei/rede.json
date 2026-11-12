@@ -1,0 +1,95 @@
+{
+ "sheet": "T1-rede-animacoes-acessorios.png",
+ "mode": "cells",
+ "scale": 0.6,
+ "items": [
+  {
+   "id": "rede-01",
+   "file": "rede-01.webp",
+   "w": 203,
+   "h": 150,
+   "anchor": {
+    "x": 101.5,
+    "y": 150.0
+   },
+   "cell": 0
+  },
+  {
+   "id": "rede-02",
+   "file": "rede-02.webp",
+   "w": 203,
+   "h": 150,
+   "anchor": {
+    "x": 101.5,
+    "y": 150.0
+   },
+   "cell": 1
+  },
+  {
+   "id": "rede-03",
+   "file": "rede-03.webp",
+   "w": 203,
+   "h": 150,
+   "anchor": {
+    "x": 101.5,
+    "y": 150.0
+   },
+   "cell": 2
+  },
+  {
+   "id": "rede-04",
+   "file": "rede-04.webp",
+   "w": 203,
+   "h": 150,
+   "anchor": {
+    "x": 101.5,
+    "y": 150.0
+   },
+   "cell": 3
+  },
+  {
+   "id": "rede-05",
+   "file": "rede-05.webp",
+   "w": 204,
+   "h": 150,
+   "anchor": {
+    "x": 102.0,
+    "y": 150.0
+   },
+   "cell": 4
+  },
+  {
+   "id": "rede-06",
+   "file": "rede-06.webp",
+   "w": 34,
+   "h": 215,
+   "anchor": {
+    "x": 17.0,
+    "y": 215.0
+   },
+   "cell": 5
+  },
+  {
+   "id": "rede-07",
+   "file": "rede-07.webp",
+   "w": 65,
+   "h": 236,
+   "anchor": {
+    "x": 32.5,
+    "y": 236.0
+   },
+   "cell": 6
+  },
+  {
+   "id": "rede-08",
+   "file": "rede-08.webp",
+   "w": 227,
+   "h": 115,
+   "anchor": {
+    "x": 113.5,
+    "y": 115.0
+   },
+   "cell": 7
+  }
+ ]
+}

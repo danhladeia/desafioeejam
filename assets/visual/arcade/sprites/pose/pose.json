@@ -1,0 +1,139 @@
+{
+ "sheet": "P1-ginastica-poses.png",
+ "mode": "grid",
+ "scale": 0.6,
+ "items": [
+  {
+   "id": "pose-01",
+   "file": "pose-01.webp",
+   "w": 180,
+   "h": 201,
+   "anchor": {
+    "x": 90.0,
+    "y": 201.0
+   },
+   "frame": 0
+  },
+  {
+   "id": "pose-02",
+   "file": "pose-02.webp",
+   "w": 180,
+   "h": 201,
+   "anchor": {
+    "x": 90.0,
+    "y": 201.0
+   },
+   "frame": 1
+  },
+  {
+   "id": "pose-03",
+   "file": "pose-03.webp",
+   "w": 180,
+   "h": 201,
+   "anchor": {
+    "x": 90.0,
+    "y": 201.0
+   },
+   "frame": 2
+  },
+  {
+   "id": "pose-04",
+   "file": "pose-04.webp",
+   "w": 180,
+   "h": 201,
+   "anchor": {
+    "x": 90.0,
+    "y": 201.0
+   },
+   "frame": 3
+  },
+  {
+   "id": "pose-05",
+   "file": "pose-05.webp",
+   "w": 180,
+   "h": 201,
+   "anchor": {
+    "x": 90.0,
+    "y": 201.0
+   },
+   "frame": 4
+  },
+  {
+   "id": "pose-06",
+   "file": "pose-06.webp",
+   "w": 180,
+   "h": 201,
+   "anchor": {
+    "x": 90.0,
+    "y": 201.0
+   },
+   "frame": 5
+  },
+  {
+   "id": "pose-07",
+   "file": "pose-07.webp",
+   "w": 180,
+   "h": 201,
+   "anchor": {
+    "x": 90.0,
+    "y": 201.0
+   },
+   "frame": 6
+  },
+  {
+   "id": "pose-08",
+   "file": "pose-08.webp",
+   "w": 180,
+   "h": 201,
+   "anchor": {
+    "x": 90.0,
+    "y": 201.0
+   },
+   "frame": 7
+  },
+  {
+   "id": "pose-09",
+   "file": "pose-09.webp",
+   "w": 180,
+   "h": 201,
+   "anchor": {
+    "x": 90.0,
+    "y": 201.0
+   },
+   "frame": 8
+  },
+  {
+   "id": "pose-10",
+   "file": "pose-10.webp",
+   "w": 180,
+   "h": 201,
+   "anchor": {
+    "x": 90.0,
+    "y": 201.0
+   },
+   "frame": 9
+  },
+  {
+   "id": "pose-11",
+   "file": "pose-11.webp",
+   "w": 180,
+   "h": 201,
+   "anchor": {
+    "x": 90.0,
+    "y": 201.0
+   },
+   "frame": 10
+  },
+  {
+   "id": "pose-12",
+   "file": "pose-12.webp",
+   "w": 180,
+   "h": 201,
+   "anchor": {
+    "x": 90.0,
+    "y": 201.0
+   },
+   "frame": 11
+  }
+ ]
+}

@@ -1,0 +1,95 @@
+{
+ "sheet": "N2-badges-modos-dificuldade.png",
+ "mode": "cells",
+ "scale": 0.5,
+ "items": [
+  {
+   "id": "badge-01",
+   "file": "badge-01.webp",
+   "w": 179,
+   "h": 182,
+   "anchor": {
+    "x": 89.5,
+    "y": 182.0
+   },
+   "cell": 0
+  },
+  {
+   "id": "badge-02",
+   "file": "badge-02.webp",
+   "w": 191,
+   "h": 182,
+   "anchor": {
+    "x": 95.5,
+    "y": 182.0
+   },
+   "cell": 1
+  },
+  {
+   "id": "badge-03",
+   "file": "badge-03.webp",
+   "w": 191,
+   "h": 183,
+   "anchor": {
+    "x": 95.5,
+    "y": 183.0
+   },
+   "cell": 2
+  },
+  {
+   "id": "badge-04",
+   "file": "badge-04.webp",
+   "w": 180,
+   "h": 183,
+   "anchor": {
+    "x": 90.0,
+    "y": 183.0
+   },
+   "cell": 3
+  },
+  {
+   "id": "badge-05",
+   "file": "badge-05.webp",
+   "w": 179,
+   "h": 175,
+   "anchor": {
+    "x": 89.5,
+    "y": 175.0
+   },
+   "cell": 4
+  },
+  {
+   "id": "badge-06",
+   "file": "badge-06.webp",
+   "w": 191,
+   "h": 175,
+   "anchor": {
+    "x": 95.5,
+    "y": 175.0
+   },
+   "cell": 5
+  },
+  {
+   "id": "badge-07",
+   "file": "badge-07.webp",
+   "w": 191,
+   "h": 175,
+   "anchor": {
+    "x": 95.5,
+    "y": 175.0
+   },
+   "cell": 6
+  },
+  {
+   "id": "badge-08",
+   "file": "badge-08.webp",
+   "w": 179,
+   "h": 174,
+   "anchor": {
+    "x": 89.5,
+    "y": 174.0
+   },
+   "cell": 7
+  }
+ ]
+}

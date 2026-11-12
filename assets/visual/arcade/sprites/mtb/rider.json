@@ -1,0 +1,139 @@
+{
+ "sheet": "K1-mtb-ciclista.png",
+ "mode": "grid",
+ "scale": 0.6,
+ "items": [
+  {
+   "id": "rider-01",
+   "file": "rider-01.webp",
+   "w": 230,
+   "h": 188,
+   "anchor": {
+    "x": 115.0,
+    "y": 188.0
+   },
+   "frame": 0
+  },
+  {
+   "id": "rider-02",
+   "file": "rider-02.webp",
+   "w": 230,
+   "h": 188,
+   "anchor": {
+    "x": 115.0,
+    "y": 188.0
+   },
+   "frame": 1
+  },
+  {
+   "id": "rider-03",
+   "file": "rider-03.webp",
+   "w": 230,
+   "h": 188,
+   "anchor": {
+    "x": 115.0,
+    "y": 188.0
+   },
+   "frame": 2
+  },
+  {
+   "id": "rider-04",
+   "file": "rider-04.webp",
+   "w": 230,
+   "h": 188,
+   "anchor": {
+    "x": 115.0,
+    "y": 188.0
+   },
+   "frame": 3
+  },
+  {
+   "id": "rider-05",
+   "file": "rider-05.webp",
+   "w": 230,
+   "h": 188,
+   "anchor": {
+    "x": 115.0,
+    "y": 188.0
+   },
+   "frame": 4
+  },
+  {
+   "id": "rider-06",
+   "file": "rider-06.webp",
+   "w": 230,
+   "h": 188,
+   "anchor": {
+    "x": 115.0,
+    "y": 188.0
+   },
+   "frame": 5
+  },
+  {
+   "id": "rider-07",
+   "file": "rider-07.webp",
+   "w": 230,
+   "h": 188,
+   "anchor": {
+    "x": 115.0,
+    "y": 188.0
+   },
+   "frame": 6
+  },
+  {
+   "id": "rider-08",
+   "file": "rider-08.webp",
+   "w": 230,
+   "h": 188,
+   "anchor": {
+    "x": 115.0,
+    "y": 188.0
+   },
+   "frame": 7
+  },
+  {
+   "id": "rider-09",
+   "file": "rider-09.webp",
+   "w": 230,
+   "h": 188,
+   "anchor": {
+    "x": 115.0,
+    "y": 188.0
+   },
+   "frame": 8
+  },
+  {
+   "id": "rider-10",
+   "file": "rider-10.webp",
+   "w": 230,
+   "h": 188,
+   "anchor": {
+    "x": 115.0,
+    "y": 188.0
+   },
+   "frame": 9
+  },
+  {
+   "id": "rider-11",
+   "file": "rider-11.webp",
+   "w": 230,
+   "h": 188,
+   "anchor": {
+    "x": 115.0,
+    "y": 188.0
+   },
+   "frame": 10
+  },
+  {
+   "id": "rider-12",
+   "file": "rider-12.webp",
+   "w": 230,
+   "h": 188,
+   "anchor": {
+    "x": 115.0,
+    "y": 188.0
+   },
+   "frame": 11
+  }
+ ]
+}

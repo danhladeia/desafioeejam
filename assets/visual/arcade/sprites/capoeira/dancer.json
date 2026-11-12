@@ -1,0 +1,139 @@
+{
+ "sheet": "O2-capoeira-movimentos.png",
+ "mode": "grid",
+ "scale": 0.6,
+ "items": [
+  {
+   "id": "dancer-01",
+   "file": "dancer-01.webp",
+   "w": 230,
+   "h": 205,
+   "anchor": {
+    "x": 115.0,
+    "y": 205.0
+   },
+   "frame": 0
+  },
+  {
+   "id": "dancer-02",
+   "file": "dancer-02.webp",
+   "w": 230,
+   "h": 205,
+   "anchor": {
+    "x": 115.0,
+    "y": 205.0
+   },
+   "frame": 1
+  },
+  {
+   "id": "dancer-03",
+   "file": "dancer-03.webp",
+   "w": 230,
+   "h": 205,
+   "anchor": {
+    "x": 115.0,
+    "y": 205.0
+   },
+   "frame": 2
+  },
+  {
+   "id": "dancer-04",
+   "file": "dancer-04.webp",
+   "w": 230,
+   "h": 205,
+   "anchor": {
+    "x": 115.0,
+    "y": 205.0
+   },
+   "frame": 3
+  },
+  {
+   "id": "dancer-05",
+   "file": "dancer-05.webp",
+   "w": 230,
+   "h": 205,
+   "anchor": {
+    "x": 115.0,
+    "y": 205.0
+   },
+   "frame": 4
+  },
+  {
+   "id": "dancer-06",
+   "file": "dancer-06.webp",
+   "w": 230,
+   "h": 205,
+   "anchor": {
+    "x": 115.0,
+    "y": 205.0
+   },
+   "frame": 5
+  },
+  {
+   "id": "dancer-07",
+   "file": "dancer-07.webp",
+   "w": 230,
+   "h": 205,
+   "anchor": {
+    "x": 115.0,
+    "y": 205.0
+   },
+   "frame": 6
+  },
+  {
+   "id": "dancer-08",
+   "file": "dancer-08.webp",
+   "w": 230,
+   "h": 205,
+   "anchor": {
+    "x": 115.0,
+    "y": 205.0
+   },
+   "frame": 7
+  },
+  {
+   "id": "dancer-09",
+   "file": "dancer-09.webp",
+   "w": 230,
+   "h": 205,
+   "anchor": {
+    "x": 115.0,
+    "y": 205.0
+   },
+   "frame": 8
+  },
+  {
+   "id": "dancer-10",
+   "file": "dancer-10.webp",
+   "w": 230,
+   "h": 205,
+   "anchor": {
+    "x": 115.0,
+    "y": 205.0
+   },
+   "frame": 9
+  },
+  {
+   "id": "dancer-11",
+   "file": "dancer-11.webp",
+   "w": 230,
+   "h": 205,
+   "anchor": {
+    "x": 115.0,
+    "y": 205.0
+   },
+   "frame": 10
+  },
+  {
+   "id": "dancer-12",
+   "file": "dancer-12.webp",
+   "w": 230,
+   "h": 205,
+   "anchor": {
+    "x": 115.0,
+    "y": 205.0
+   },
+   "frame": 11
+  }
+ ]
+}
