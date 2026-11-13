@@ -1,37 +1,4 @@
-/* Modo Duelo. Mesma escala em rem do menu: 1rem = 1% da largura. */
-main.duel{display:flex;flex-direction:column;padding:1rem 3rem 1.4rem;overflow:auto}
-.duel-head{display:flex;align-items:center;gap:1.4rem;margin-bottom:1.2rem}
-.duel-head h1{font-size:3.6rem;color:var(--paper)}
-.duel-sub{margin-left:auto;font-size:1.8rem;font-weight:700;color:var(--yellow)}
-.small{min-height:4.4rem;padding:.6rem 1.6rem;font-size:1.5rem;border-radius:1.3rem;box-shadow:0 .4rem 0 var(--ink)}
-.form-error{min-height:2rem;margin:.4rem 0 0;font-size:1.4rem;font-weight:700;color:#ffb3a6}
-
-/* Token e nomes */
-.token-input{height:6.4rem;font-size:3rem;letter-spacing:.4rem;text-align:center;border-width:.28rem}
-.token-input.shake{animation:nope .35s}
-dialog textarea{font-size:1.8rem;min-height:18rem;resize:none}
-@keyframes nope{20%{transform:translateX(-.8rem)}40%{transform:translateX(.8rem)}60%{transform:translateX(-.5rem)}80%{transform:translateX(.5rem)}}
-
-/* Configuração */
-.duel-setup{flex:1;min-height:0;display:grid;grid-template-columns:1.2fr 1fr;gap:2.4rem}
-.duel-classes{display:grid;grid-template-rows:repeat(3,1fr);gap:1.4rem}
-.class-card{display:flex;align-items:center;justify-content:space-between;gap:1.6rem;padding:1.2rem 2.2rem;border:.28rem solid var(--ink);border-radius:2rem;background:var(--c);color:var(--ink);box-shadow:0 .6rem 0 var(--ink);animation:seal-in .42s var(--pop) both;animation-delay:calc(var(--i)*90ms)}
-.class-card b{display:block;font-size:3.2rem;line-height:1.1}
-.class-card small{display:block;margin-top:.3rem;font-size:1.6rem;font-weight:700;opacity:.8}
-.duel-config{display:flex;flex-direction:column;gap:1.2rem;padding:2rem;background:#101b5ee6;border:.28rem solid #ffffff2e;border-radius:2rem;animation:rise .4s .15s var(--pop) both}
-.duel-config h2{font-size:2.6rem}
-.chips{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem}
-.chip{min-height:7.6rem;font-size:3.6rem;font-weight:700;border:.28rem solid var(--ink);border-radius:1.6rem;background:var(--paper);color:var(--ink);box-shadow:0 .5rem 0 var(--ink);transition:transform .08s,box-shadow .08s,background .15s}
-.chip.on{background:var(--yellow);transform:translateY(-.2rem) scale(1.05)}
-.chip:hover{transform:none}.chip.on:hover{transform:translateY(-.2rem) scale(1.05)}
-.chip:active{transform:translateY(.4rem);box-shadow:0 .1rem 0 var(--ink)}
-.duel-config .hint{font-size:1.5rem;color:#dbe4ff;min-height:4.4rem}
-.duel-config .primary{margin-top:auto}
-.duel-config .text-button{font-size:1.4rem;color:#c9d6ff}
-.resume{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:1rem 1.4rem;border-radius:1.4rem;background:#ffffff1c}
-.resume b{display:block;font-size:1.8rem}.resume small{font-size:1.4rem;color:#dbe4ff}
-
-/* Roletas */
+/* Sorteio animado do Modo Duelo: carretéis de jogo, equipe e participante. */
 .duel-draw{flex:1;min-height:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1rem}
 .dd-head{width:100%;display:flex;align-items:center;gap:2rem;min-height:4.4rem}
 .dd-round{font-size:2.4rem;font-weight:700;color:var(--paper);white-space:nowrap}
