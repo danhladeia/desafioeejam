@@ -52,9 +52,9 @@ export function newSeal(id){
  const index=['balanca','silabas','erro'].indexOf(id);
  return index<0?null:`<span class="new-game-seal" data-seal="${id}" style="--seal-index:${index}" aria-hidden="true"></span>`;
 }
-const arcadeIds=['slice','hoops','penalty','skate','rio','capoeira','pose','rally'];
+const arcadeIds=['slice','hoops','penalty','skate','rio','capoeira','pose'];
 const spriteSeals={bike:'assets/visual/arcade/sprites/mtb/rider-01.webp',archery:'assets/visual/arcade/sprites/archery/target-01.webp',volei2:'assets/visual/arcade/sprites/volei2/jogadora-03.webp',disco:'assets/visual/arcade/sprites/disco/peca-01.webp'};
-const covers=new Set('slice hoops penalty bike archery volei2 disco skate rio capoeira pose rally turbo memory puzzle secret scramble search rope forca balanca silabas erro'.split(' '));
+const covers=new Set('slice hoops penalty bike archery volei2 disco skate rio capoeira pose turbo memory puzzle secret scramble search rope forca balanca silabas erro'.split(' '));
 export function arcadeSeal(id){
  if(covers.has(id))return `<span class="arcade-sprite-seal game-cover" style="background-image:url('assets/visual/capas/${id}.webp')" aria-hidden="true"></span>`;
  if(spriteSeals[id])return `<span class="arcade-sprite-seal" style="background-image:url('${spriteSeals[id]}')" aria-hidden="true"></span>`;

@@ -1,4 +1,4 @@
-import { WORDS, WORD_HINTS, ACTIVITIES } from './content.js';
+import { WORDS, WORD_HINTS } from './content.js';
 import { setupJigsaw } from './jigsaw.js';
 import { setupSecretRace, setupSyllables, setupMistake } from './wordgames.js';
 import { setupBalance } from './mathgames.js';
@@ -11,13 +11,11 @@ import { createEdfTheme, edfWordArt } from './edf-theme.js';
 import { createHangman, hangmanLabel } from './forca-boneco.js';
 import { FORCA_WORDS } from './forca-words.js';
 import { setupSlice } from './arcade/slice.js';
-import { setupThrow } from './arcade/throw.js';
 import { setupRunner } from './arcade/runner.js';
 import { setupRhythm } from './arcade/rhythm.js';
 import { setupBike } from './arcade/mtb.js';
 import { setupHoops } from './arcade/hoops.js';
 import { setupFreekick } from './arcade/freekick.js';
-import { setupVolley } from './arcade/volley.js';
 import { setupVolley2 } from './arcade/volley2.js';
 import { setupDisco } from './arcade/disco.js';
 import { setupArchery } from './arcade/archery.js';
@@ -35,9 +33,7 @@ const ALL_GAMES = [
   { id: 'rio', title: 'Descida do Rio', subtitle: 'Desvie e aprenda na corredeira', icon: 'rocket', rule: 'Deslize para trocar de pista, pule troncos e abaixe sob galhos. Pegue as moedas e os itens de segurança.', duration: 60 },
   { id: 'capoeira', title: 'Roda de Capoeira', subtitle: 'Toque no ritmo da roda', icon: 'star', rule: 'Toque na coluna quando a marca chegar à linha.', duration: 60 },
   { id: 'pose', title: 'Pose por Pose', subtitle: 'Ritmo e ginástica', icon: 'star', rule: 'Cada coluna é uma pose de ginástica. Toque na pose no compasso.', duration: 60 },
-  { id: 'rally', title: 'Vôlei', subtitle: 'Corte a bola com o dedo', icon: 'star', rule: 'Deslize sobre a bola quando ela chegar perto. Rápido e reto é cortada, curto para cima é levantada e curvo dá efeito. Mire nas zonas coloridas para ganhar mais pontos.', duration: 60 },
   { id: 'turbo', title: 'Toque Turbo', subtitle: 'Atenção e precisão', icon: 'idea', rule: 'Toque com calma em ideias e livros. Evite as armadilhas vermelhas.', duration: 35 },
-  { id: 'rota', disabled: true, title: 'Rota do EMTI', subtitle: 'Aprender, criar e conviver', icon: 'hand', rule: 'Classifique cada atividade em Aprender, Criar projetos ou Conviver.', duration: 60 },
   { id: 'memory', title: 'Memória EEJAM', subtitle: 'Observe e encontre os pares', icon: 'book', rule: 'Vire duas cartas por vez. Encontre todos os pares para terminar.', duration: 60 },
   { id: 'puzzle', title: 'Monte a EEJAM', subtitle: 'Arraste e encaixe as peças', icon: 'hand', rule: 'Arraste cada peça até o quadro. Ela encaixa sozinha no lugar certo.', duration: 75 },
   { id: 'secret', title: 'Palavra Secreta', subtitle: 'Mesma palavra, quem acerta primeiro', icon: 'rocket', rule: 'Os dois jogam a mesma palavra com o alfabeto inteiro. Quem acertar primeiro leva o ponto. Vence quem chegar a 3.', duration: 60 },
@@ -49,7 +45,7 @@ const ALL_GAMES = [
   { id: 'silabas', title: 'Sílabas Soltas', subtitle: 'Monte a palavra', icon: 'book', rule: 'Arraste as sílabas para os espaços e forme a palavra da dica.', duration: 60 },
   { id: 'erro', title: 'Caça-Erro', subtitle: 'Ache a palavra errada', icon: 'error', rule: 'Leia a frase e toque na palavra escrita errada.', duration: 50 },
 ];
-/** Jogos visíveis no catálogo, no sorteio e nos campeonatos. O Rota do EMTI está desativado. */
+/** Jogos visíveis no catálogo, no sorteio e nos campeonatos. */
 export const GAMES = ALL_GAMES.filter(game => !game.disabled);
 
 const FALLBACK_WORDS = [
@@ -61,17 +57,6 @@ const FALLBACK_WORDS = [
   ['PROJETO', 'Plano com objetivo, etapas e resultado.'], ['PESQUISA', 'Busca organizada de informações.'],
   ['CAMPANHA', 'Conjunto de ações de comunicação com um objetivo.'],
 ].map(([word, hint]) => ({ word, hint }));
-const FALLBACK_ACTIVITIES = [
-  { text: 'Estudar como calcular uma porcentagem.', category: 0 },
-  { text: 'Pesquisar e comparar fontes para entender um tema.', category: 0 },
-  { text: 'Resolver exercícios e revisar o que ainda não entendi.', category: 0 },
-  { text: 'Planejar uma campanha com objetivo e etapas.', category: 1 },
-  { text: 'Construir e testar um protótipo de solução.', category: 1 },
-  { text: 'Organizar tarefas e apresentar o resultado de um projeto.', category: 1 },
-  { text: 'Ouvir colegas e combinar regras para o grupo.', category: 2 },
-  { text: 'Mediar um conflito com respeito entre colegas.', category: 2 },
-  { text: 'Acolher um novo integrante da turma.', category: 2 },
-];
 
 export function normalizeWord(value) {
   return String(value ?? '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toUpperCase().replace(/[^A-Z]/g, '');
@@ -395,43 +380,6 @@ export function createGame({ id, el, side = 'left', seed = 0, difficulty = 'norm
       progress.textContent = id === 'rope' ? `${correct} acertos · ${answered} respostas` : `${answered} desafios · ${correct} acertos`;
       // The host moves the rope using metadata.correctDelta, never weighted points.
       feedback(good, `${good ? 'Boa escolha!' : 'Vamos aprender:'} ${current.explanation}`, render, good ? (level === 1 ? 1500 : 1200) : 1800);
-    };
-    render();
-  }
-
-  function setupRota() {
-    const categories = theme ? theme.classification.categories : ['Aprender', 'Criar projetos', 'Conviver'];
-    function categoryIndex(value) {
-      if (typeof value === 'number' && value >= 0 && value < 3) return value;
-      const text = normalizeWord(value);
-      if (/APREND|ESTUD|CONHEC|FORMAC/.test(text)) return 0;
-      if (/CRIAR|PROJET|PRATIC|INOV/.test(text)) return 1;
-      if (/CONVIV|COLAB|SOCIAL|CIDAD/.test(text)) return 2;
-      return -1;
-    }
-    const adapted = rows(ACTIVITIES).map(item => ({ text: String(item?.text ?? item?.activity ?? item?.title ?? item?.name ?? ''), category: categoryIndex(item?.category ?? item?.type ?? item?.answer), explanation: item?.explanation })).filter(item => item.text && item.category >= 0);
-    const read = deckReader(theme ? theme.classification.activities : adapted.length ? adapted : FALLBACK_ACTIVITIES);
-    let current, total = 0;
-    function render() {
-      nextChallenge();
-      current = read();
-      prompt.textContent = current.text;
-      progress.textContent = `${total} atividades classificadas`;
-      stage.replaceChildren();
-      const answers = node('div', 'answers');
-      const options = categories.map((text, index) => ({ text, index }));
-      const scaffolds = ['estudar e compreender', 'planejar e produzir', 'ouvir e cooperar'];
-      (level === 3 ? shuffle(options, challengeRng) : options).forEach(({ text, index }) => answers.append(button(theme || level === 3 ? text : `${text} · ${scaffolds[index]}`, 'rota', index)));
-      stage.append(answers);
-      helper.textContent = level < 3 ? 'Use os exemplos das categorias e observe o propósito da atividade.' : 'Categorias mudam de posição. Identifique o objetivo principal sem as pistas.';
-    }
-    act = (action, value, target) => {
-      if (action !== 'rota') return;
-      const good = Number(value) === current.category;
-      total++;
-      score(good ? 10 : 0, good, target);
-      if (!active()) return;
-      feedback(good, `${good ? 'Isso!' : 'Categoria principal:'} ${categories[current.category]}. ${current.explanation ?? 'Observe o propósito central da atividade.'}`, render, good ? 900 : 1300);
     };
     render();
   }
@@ -808,12 +756,10 @@ export function createGame({ id, el, side = 'left', seed = 0, difficulty = 'norm
     case 'rio': setupRunner(ctx, 'rio'); break;
     case 'capoeira': setupRhythm(ctx, 'capoeira'); break;
     case 'pose': setupRhythm(ctx, 'pose'); break;
-    case 'rally': setupVolley(ctx); break;
     case 'edf': setupEdfCards(ctx, edfTopics, edfGrade); break;
     case 'ordem': setupSequence(ctx); break;
     case 'turbo': setupTurbo(); break;
     case 'rope': setupQuiz(); break;
-    case 'rota': setupRota(); break;
     case 'memory': setupMemory(); break;
     case 'puzzle': setupJigsaw(ctx); break;
     case 'secret': setupSecretRace(ctx); break;

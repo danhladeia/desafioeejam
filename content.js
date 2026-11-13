@@ -390,32 +390,3 @@ export const CAMPAIGNS = [
     explain: 'A mensagem propõe comportamentos observáveis de escuta e preserva o espaço para diferentes ideias.',
   },
 ];
-
-// 0 = Aprender; 1 = Criar projetos; 2 = Conviver.
-// Cada atividade destaca uma finalidade principal para evitar classificações ambíguas.
-export const ACTIVITIES = [
-  { text: 'Ler um texto sobre público-alvo e responder a perguntas de compreensão.', category: 0 },
-  { text: 'Resolver exercícios de porcentagem para compreender taxas de participação.', category: 0 },
-  { text: 'Estudar a diferença entre receita e custo em exemplos comentados.', category: 0 },
-  { text: 'Assistir a uma explicação sobre memória RAM e registrar o que aprendeu.', category: 0 },
-  { text: 'Identificar sinais de phishing em mensagens de um exercício.', category: 0 },
-  { text: 'Comparar definições de compostagem e rotação de culturas para compreendê-las.', category: 0 },
-  { text: 'Praticar fórmulas de soma em uma planilha de exercícios.', category: 0 },
-  { text: 'Revisar as funções das raízes usando um material de estudo.', category: 0 },
-  { text: 'Criar um cartaz para uma campanha de uso consciente de papel.', category: 1 },
-  { text: 'Montar um protótipo de organizador de mesa com materiais reaproveitados.', category: 1 },
-  { text: 'Elaborar o orçamento e o cronograma de uma feira fictícia.', category: 1 },
-  { text: 'Produzir um vídeo com legendas para apresentar uma ideia de campanha.', category: 1 },
-  { text: 'Construir uma planilha para controlar os materiais de um projeto.', category: 1 },
-  { text: 'Desenhar uma proposta de horta com canteiros e pontos de rega.', category: 1 },
-  { text: 'Programar um pequeno quiz para apresentar em uma mostra de projetos.', category: 1 },
-  { text: 'Desenvolver o modelo de uma embalagem e apresentá-lo como protótipo.', category: 1 },
-  { text: 'Ouvir um colega até o fim e confirmar se entendeu sua opinião.', category: 2 },
-  { text: 'Pedir desculpas por uma interrupção e devolver a palavra ao colega.', category: 2 },
-  { text: 'Combinar regras para que todos tenham vez de falar em uma conversa.', category: 2 },
-  { text: 'Acolher uma pessoa nova e apresentá-la aos colegas.', category: 2 },
-  { text: 'Resolver uma discordância com diálogo, sem insultos ou ameaças.', category: 2 },
-  { text: 'Respeitar a decisão de um colega que não quer compartilhar uma experiência pessoal.', category: 2 },
-  { text: 'Convidar uma pessoa que ficou de fora para participar da conversa.', category: 2 },
-  { text: 'Expressar um limite pessoal com respeito e ouvir a resposta da outra pessoa.', category: 2 },
-];
