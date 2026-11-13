@@ -4,9 +4,7 @@
 
 O botão **EDF** oferece catorze jogos para o ano escolhido (6º, 7º, 8º ou 9º): os doze do modo normal adaptados aos conteúdos do caderno, a Trilha de Cartas e o Ordene a Sequência. Forca, caça-palavras, memória, quebra-cabeças, sílabas, caça-erro, rota, cabo de guerra e os demais usam o conteúdo EDF do ano. Há partidas solo/livres e campeonato próprio com equipes, alunos, quantidade de rodadas, sorteio de cinco segundos, troca individual de aluno, ranking e final. Instruções, regras e referências estão em [MODO_EDF_7_ANO.md](MODO_EDF_7_ANO.md).
 
-## Atualização de campeonato e partidas
 
-**Começar campeonato** permite cadastrar de 2 a 64 equipes com nomes e listas de participantes, ou escolher o modo individual. O novo **Jogar solo** salva as melhores marcas por jogo e dificuldade. Veja as regras atuais e os detalhes da atualização em [ATUALIZACAO_JOGOS.md](ATUALIZACAO_JOGOS.md).
 
 ## Novas artes e Cabo de Guerra
 
@@ -34,13 +32,9 @@ O jogo usa arquivos locais e não exige instalação de dependências para jogar
 
 ## Operação
 
-- Campeonato: cadastre de 2 a 64 equipes e seus integrantes, ou selecione Individual e informe os apelidos. Confira os confrontos e escolha o jogo. A equipe avança como uma unidade no chaveamento; a lista de integrantes fica disponível para consulta.
 - Solo: escolha apelido, dificuldade e desafio. As melhores marcas ficam neste aparelho.
-- Partida livre: teste qualquer desafio sem alterar o campeonato.
+- Partida livre: teste qualquer desafio, sem salvar resultado.
 - Segure o botão de pausa por cerca de um segundo para abrir o modo apresentador. A tecla Esc também pausa.
-- Confirme cada resultado para gravá-lo e avançar o vencedor. O último resultado confirmado pode ser desfeito.
-- O campeonato é salvo em IndexedDB. Uma recarga recupera os resultados confirmados; uma partida interrompida precisa ser repetida.
-- Exporte backups pelo botão Backup. A importação e a limpeza estão em Teste de toque. A importação é validada e pede confirmação antes de substituir o campeonato.
 - Ajustes oferece nível Desafio (14–15 anos), Avançado e redução de animações. O som pode ser desligado.
 - A abertura não aparece se o sistema estiver com as animações desligadas. Para vê-la mesmo assim, abra Ajustes, desmarque "Reduzir animações e partículas" e salve.
 
@@ -51,7 +45,7 @@ O botão **Modo Duelo** da tela inicial abre direto a configuração, sem token.
 1. **Conteúdo do duelo:** *Normal* (os jogos do Duelo do Futuro) ou *Educação Física* (os mesmos jogos com o conteúdo dos cadernos). No EDF, escolhe também o **ano** (6º ao 9º) e as **unidades**.
 2. **Jogos que entram no sorteio:** caixas de seleção, com **Marcar todos** e **Desmarcar todos**. É preciso ao menos um.
 3. **Rodadas** (de 1 a 40, a última é a final) e **dificuldade inicial** (Fácil, Médio ou Difícil).
-4. **Equipes** (de 2 a 8), cada uma com nome e a lista de **participantes**, um por linha (até 60 por equipe, sem repetição na mesma equipe). **Usar equipes cadastradas** copia as do campeonato por chaveamento.
+4. **Equipes** (de 2 a 8), cada uma com nome e a lista de **participantes**, um por linha (até 60 por equipe, sem repetição na mesma equipe).
 
 Depois de **Criar duelo**, o fluxo é: sorteio animado de 5 segundos (equipes, participantes e jogo) → confronto, com **Sortear outro aluno** em um lado só → partida → resultado → ranking animado → próximo sorteio → final → equipe campeã. **Adicionar participantes** continua disponível durante o duelo.
 
@@ -59,7 +53,6 @@ Depois de **Criar duelo**, o fluxo é: sorteio animado de 5 segundos (equipes, p
 - A tabela ordena por aproveitamento (vitórias ÷ jogos), vitórias e pontos; empate absoluto vai pelo nome da equipe.
 - O duelo é salvo a cada rodada neste aparelho. Depois de recarregar, **Modo Duelo** mostra **Continuar**.
 - O duelo salvo antes desta mudança (sem o campo de modo) continua abrindo e vale como EDF.
-- O Rota do EMTI está desativado e não aparece no sorteio.
 
 Os arquivos do duelo antigo por turmas (`duel.js`, `duel-ui.js`, `roster.js`) continuam no projeto, mas não são mais usados pelo botão. Apagá-los fica como limpeza futura.
 
@@ -95,9 +88,9 @@ Os fundos de cada jogo existem como prancha de referência; nesta versão o camp
 
 ## Testes
 
-`npm test` executa testes do campeonato, persistência, conteúdo e geração de caça-palavras. Para testes no navegador: `npm install`, `npx playwright install chromium` e `npx playwright test`.
+`npm test` executa os testes de conteúdo, Modo Duelo, persistência e geração de caça-palavras. Para testes no navegador: `npm install`, `npx playwright install chromium` e `npx playwright test`.
 
-Arquivos principais: app.js (telas/motor/efeitos), games.js (minijogos), core.js (campeonato/persistência), content.js (banco revisável), style.css (estilos dos jogos), menu.css (palco, menu, abertura e escala para tablet), duel.js (regras e sorteio do Modo Duelo), duel-ui.js e duel.css (telas do Modo Duelo), roster.js (alunos do 9º A e B), sw.js (cache). Ao atualizar arquivos distribuídos, incremente a versão do cache em sw.js e app.js e revalide o offline antes do evento. edf-anos.js e edf-ano6.js a edf-ano9.js (conteúdo por ano), edf-sequencia.js (Ordene a Sequência) e forca-boneco.js (boneco da Forca).
+Arquivos principais: app.js (telas/motor/efeitos), games.js (minijogos), content.js (banco revisável), style.css (estilos dos jogos), menu.css (palco, menu, abertura e escala para tablet), duel.js (regras e sorteio do Modo Duelo), duel-ui.js e duel.css (telas do Modo Duelo), roster.js (alunos do 9º A e B), sw.js (cache). Ao atualizar arquivos distribuídos, incremente a versão do cache em sw.js e app.js e revalide o offline antes do evento. edf-anos.js e edf-ano6.js a edf-ano9.js (conteúdo por ano), edf-sequencia.js (Ordene a Sequência) e forca-boneco.js (boneco da Forca).
 # Arcade EDF
 
 O projeto inclui o primeiro desafio arcade, **Corte Certo**: dois alunos podem cortar itens simultaneamente em arenas independentes. Ele funciona no modo normal e no EDF, respeita pausa, pontuação por rapidez, multitoque por arena e o cache offline. Os demais desafios arcade descritos em `ARQUITETURA_ARCADE.md` seguem a mesma base de canvas.
