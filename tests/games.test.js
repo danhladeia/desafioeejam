@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import {GAMES,buildWordSearch,seededRandom,normalizeWord,searchPath,speedBonus} from '../games.js';
 import {QUESTIONS,CAMPAIGNS,WORDS,WORD_HINTS,ACTIVITIES} from '../content.js';
 test('catalog and educational content have usable, objective answers',()=>{
- assert.equal(GAMES.length,21);assert.equal(new Set(GAMES.map(g=>g.id)).size,21);assert.ok(GAMES.some(g=>g.id==='slice'));assert.ok(!GAMES.some(g=>['marketing','ideas'].includes(g.id)));
+ assert.equal(GAMES.length,23);assert.equal(new Set(GAMES.map(g=>g.id)).size,23);assert.ok(GAMES.some(g=>g.id==='slice'));assert.ok(!GAMES.some(g=>['marketing','ideas'].includes(g.id)));
  assert.ok(QUESTIONS.length>=40);assert.ok(CAMPAIGNS.length>=12);
  for(const q of [...QUESTIONS,...CAMPAIGNS]){assert.equal(q.options.length,4);assert.ok(Number.isInteger(q.answer)&&q.answer>=0&&q.answer<4);assert.equal(new Set(q.options).size,4);assert.ok(q.explain.length>10)}
  assert.ok(WORDS.length>=45);assert.ok(WORDS.every(word=>WORD_HINTS[word]?.length>15));assert.ok(ACTIVITIES.every(a=>[0,1,2].includes(a.category)));

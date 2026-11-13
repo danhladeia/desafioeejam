@@ -1,0 +1,139 @@
+{
+ "sheet": "V3-jogadora-volei-lateral.png",
+ "mode": "grid",
+ "scale": 0.6,
+ "items": [
+  {
+   "id": "jogadora-01",
+   "file": "jogadora-01.webp",
+   "w": 203,
+   "h": 198,
+   "anchor": {
+    "x": 101.5,
+    "y": 198.0
+   },
+   "frame": 0
+  },
+  {
+   "id": "jogadora-02",
+   "file": "jogadora-02.webp",
+   "w": 203,
+   "h": 198,
+   "anchor": {
+    "x": 101.5,
+    "y": 198.0
+   },
+   "frame": 1
+  },
+  {
+   "id": "jogadora-03",
+   "file": "jogadora-03.webp",
+   "w": 203,
+   "h": 198,
+   "anchor": {
+    "x": 101.5,
+    "y": 198.0
+   },
+   "frame": 2
+  },
+  {
+   "id": "jogadora-04",
+   "file": "jogadora-04.webp",
+   "w": 203,
+   "h": 198,
+   "anchor": {
+    "x": 101.5,
+    "y": 198.0
+   },
+   "frame": 3
+  },
+  {
+   "id": "jogadora-05",
+   "file": "jogadora-05.webp",
+   "w": 203,
+   "h": 198,
+   "anchor": {
+    "x": 101.5,
+    "y": 198.0
+   },
+   "frame": 4
+  },
+  {
+   "id": "jogadora-06",
+   "file": "jogadora-06.webp",
+   "w": 203,
+   "h": 198,
+   "anchor": {
+    "x": 101.5,
+    "y": 198.0
+   },
+   "frame": 5
+  },
+  {
+   "id": "jogadora-07",
+   "file": "jogadora-07.webp",
+   "w": 203,
+   "h": 198,
+   "anchor": {
+    "x": 101.5,
+    "y": 198.0
+   },
+   "frame": 6
+  },
+  {
+   "id": "jogadora-08",
+   "file": "jogadora-08.webp",
+   "w": 203,
+   "h": 198,
+   "anchor": {
+    "x": 101.5,
+    "y": 198.0
+   },
+   "frame": 7
+  },
+  {
+   "id": "jogadora-09",
+   "file": "jogadora-09.webp",
+   "w": 203,
+   "h": 198,
+   "anchor": {
+    "x": 101.5,
+    "y": 198.0
+   },
+   "frame": 8
+  },
+  {
+   "id": "jogadora-10",
+   "file": "jogadora-10.webp",
+   "w": 203,
+   "h": 198,
+   "anchor": {
+    "x": 101.5,
+    "y": 198.0
+   },
+   "frame": 9
+  },
+  {
+   "id": "jogadora-11",
+   "file": "jogadora-11.webp",
+   "w": 203,
+   "h": 198,
+   "anchor": {
+    "x": 101.5,
+    "y": 198.0
+   },
+   "frame": 10
+  },
+  {
+   "id": "jogadora-12",
+   "file": "jogadora-12.webp",
+   "w": 203,
+   "h": 198,
+   "anchor": {
+    "x": 101.5,
+    "y": 198.0
+   },
+   "frame": 11
+  }
+ ]
+}

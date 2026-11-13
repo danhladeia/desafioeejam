@@ -1,0 +1,95 @@
+{
+ "sheet": "V2-rede-e-elementos-lateral.png",
+ "mode": "cells",
+ "scale": 0.6,
+ "items": [
+  {
+   "id": "rede-01",
+   "file": "rede-01.webp",
+   "w": 205,
+   "h": 161,
+   "anchor": {
+    "x": 102.5,
+    "y": 161.0
+   },
+   "cell": 0
+  },
+  {
+   "id": "rede-02",
+   "file": "rede-02.webp",
+   "w": 206,
+   "h": 161,
+   "anchor": {
+    "x": 103.0,
+    "y": 161.0
+   },
+   "cell": 1
+  },
+  {
+   "id": "rede-03",
+   "file": "rede-03.webp",
+   "w": 205,
+   "h": 161,
+   "anchor": {
+    "x": 102.5,
+    "y": 161.0
+   },
+   "cell": 2
+  },
+  {
+   "id": "rede-04",
+   "file": "rede-04.webp",
+   "w": 206,
+   "h": 161,
+   "anchor": {
+    "x": 103.0,
+    "y": 161.0
+   },
+   "cell": 3
+  },
+  {
+   "id": "rede-05",
+   "file": "rede-05.webp",
+   "w": 208,
+   "h": 103,
+   "anchor": {
+    "x": 104.0,
+    "y": 103.0
+   },
+   "cell": 4
+  },
+  {
+   "id": "rede-06",
+   "file": "rede-06.webp",
+   "w": 208,
+   "h": 103,
+   "anchor": {
+    "x": 104.0,
+    "y": 103.0
+   },
+   "cell": 5
+  },
+  {
+   "id": "rede-07",
+   "file": "rede-07.webp",
+   "w": 206,
+   "h": 107,
+   "anchor": {
+    "x": 103.0,
+    "y": 107.0
+   },
+   "cell": 6
+  },
+  {
+   "id": "rede-08",
+   "file": "rede-08.webp",
+   "w": 55,
+   "h": 212,
+   "anchor": {
+    "x": 27.5,
+    "y": 212.0
+   },
+   "cell": 7
+  }
+ ]
+}

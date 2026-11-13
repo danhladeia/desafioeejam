@@ -1,0 +1,227 @@
+{
+ "sheet": "W2-futebol-disco-pecas-efeitos.png",
+ "mode": "components",
+ "scale": 0.6,
+ "items": [
+  {
+   "id": "peca-01",
+   "file": "peca-01.webp",
+   "w": 121,
+   "h": 128,
+   "anchor": {
+    "x": 60.5,
+    "y": 128.0
+   }
+  },
+  {
+   "id": "peca-02",
+   "file": "peca-02.webp",
+   "w": 122,
+   "h": 127,
+   "anchor": {
+    "x": 61.0,
+    "y": 127.0
+   }
+  },
+  {
+   "id": "peca-03",
+   "file": "peca-03.webp",
+   "w": 123,
+   "h": 130,
+   "anchor": {
+    "x": 61.5,
+    "y": 130.0
+   }
+  },
+  {
+   "id": "peca-04",
+   "file": "peca-04.webp",
+   "w": 122,
+   "h": 130,
+   "anchor": {
+    "x": 61.0,
+    "y": 130.0
+   }
+  },
+  {
+   "id": "peca-05",
+   "file": "peca-05.webp",
+   "w": 124,
+   "h": 130,
+   "anchor": {
+    "x": 62.0,
+    "y": 130.0
+   }
+  },
+  {
+   "id": "peca-06",
+   "file": "peca-06.webp",
+   "w": 260,
+   "h": 137,
+   "anchor": {
+    "x": 130.0,
+    "y": 137.0
+   }
+  },
+  {
+   "id": "peca-07",
+   "file": "peca-07.webp",
+   "w": 96,
+   "h": 96,
+   "anchor": {
+    "x": 48.0,
+    "y": 96.0
+   }
+  },
+  {
+   "id": "peca-08",
+   "file": "peca-08.webp",
+   "w": 127,
+   "h": 91,
+   "anchor": {
+    "x": 63.5,
+    "y": 91.0
+   }
+  },
+  {
+   "id": "peca-09",
+   "file": "peca-09.webp",
+   "w": 91,
+   "h": 91,
+   "anchor": {
+    "x": 45.5,
+    "y": 91.0
+   }
+  },
+  {
+   "id": "peca-10",
+   "file": "peca-10.webp",
+   "w": 92,
+   "h": 91,
+   "anchor": {
+    "x": 46.0,
+    "y": 91.0
+   }
+  },
+  {
+   "id": "peca-11",
+   "file": "peca-11.webp",
+   "w": 136,
+   "h": 88,
+   "anchor": {
+    "x": 68.0,
+    "y": 88.0
+   }
+  },
+  {
+   "id": "peca-12",
+   "file": "peca-12.webp",
+   "w": 133,
+   "h": 88,
+   "anchor": {
+    "x": 66.5,
+    "y": 88.0
+   }
+  },
+  {
+   "id": "peca-13",
+   "file": "peca-13.webp",
+   "w": 34,
+   "h": 35,
+   "anchor": {
+    "x": 17.0,
+    "y": 35.0
+   }
+  },
+  {
+   "id": "peca-14",
+   "file": "peca-14.webp",
+   "w": 100,
+   "h": 96,
+   "anchor": {
+    "x": 50.0,
+    "y": 96.0
+   }
+  },
+  {
+   "id": "peca-15",
+   "file": "peca-15.webp",
+   "w": 101,
+   "h": 96,
+   "anchor": {
+    "x": 50.5,
+    "y": 96.0
+   }
+  },
+  {
+   "id": "peca-16",
+   "file": "peca-16.webp",
+   "w": 80,
+   "h": 88,
+   "anchor": {
+    "x": 40.0,
+    "y": 88.0
+   }
+  },
+  {
+   "id": "peca-17",
+   "file": "peca-17.webp",
+   "w": 72,
+   "h": 91,
+   "anchor": {
+    "x": 36.0,
+    "y": 91.0
+   }
+  },
+  {
+   "id": "peca-18",
+   "file": "peca-18.webp",
+   "w": 50,
+   "h": 45,
+   "anchor": {
+    "x": 25.0,
+    "y": 45.0
+   }
+  },
+  {
+   "id": "peca-19",
+   "file": "peca-19.webp",
+   "w": 90,
+   "h": 95,
+   "anchor": {
+    "x": 45.0,
+    "y": 95.0
+   }
+  },
+  {
+   "id": "peca-20",
+   "file": "peca-20.webp",
+   "w": 96,
+   "h": 100,
+   "anchor": {
+    "x": 48.0,
+    "y": 100.0
+   }
+  },
+  {
+   "id": "peca-21",
+   "file": "peca-21.webp",
+   "w": 68,
+   "h": 73,
+   "anchor": {
+    "x": 34.0,
+    "y": 73.0
+   }
+  },
+  {
+   "id": "peca-22",
+   "file": "peca-22.webp",
+   "w": 47,
+   "h": 55,
+   "anchor": {
+    "x": 23.5,
+    "y": 55.0
+   }
+  }
+ ]
+}

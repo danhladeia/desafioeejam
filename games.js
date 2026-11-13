@@ -17,6 +17,8 @@ import { setupBike } from './arcade/mtb.js';
 import { setupHoops } from './arcade/hoops.js';
 import { setupFreekick } from './arcade/freekick.js';
 import { setupVolley } from './arcade/volley.js';
+import { setupVolley2 } from './arcade/volley2.js';
+import { setupDisco } from './arcade/disco.js';
 import { setupArchery } from './arcade/archery.js';
 
 /** Durations are suggestions in seconds; the host owns the match clock. */
@@ -26,6 +28,8 @@ const ALL_GAMES = [
   { id: 'penalty', title: 'Chute a Gol', subtitle: 'Chute livre com argolas de bônus', icon: 'star', rule: 'Arraste da bola até onde quer chutar e solte. As argolas no gol valem mais pontos e o goleiro tenta defender.', duration: 60 },
   { id: 'bike', title: 'Mountain Bike', subtitle: 'Acelere e salte', icon: 'rocket', rule: 'Segure o lado direito da tela para acelerar e toque no esquerdo para saltar. Rampas lançam mais alto quando você está rápido. Pegue moedas e itens de segurança.', duration: 60 },
   { id: 'archery', title: 'Arco e Flecha', subtitle: 'Mire, segure e solte', icon: 'star', rule: 'Toque e segure para mirar: segurar um pouco firma a mira. Solte para atirar. O vento empurra a flecha e os alvos se movem.', duration: 60 },
+  { id: 'volei2', shared: true, twoPlayers: true, title: 'Vôlei Duplo', subtitle: 'Dois alunos, uma bola', icon: 'star', rule: 'Os dois alunos usam a mesma bola. Corte a bola com o dedo quando ela estiver do seu lado. A bola começa lenta e acelera a cada rebatida. Primeiro a 7 pontos vence.', duration: 90 },
+  { id: 'disco', shared: true, twoPlayers: true, title: 'Futebol de Disco', subtitle: 'Estilo disco bol', icon: 'star', rule: 'Arraste o seu disco na sua metade e empurre a bola para o gol do adversário. A bola quica nas paredes. Primeiro a 5 gols vence.', duration: 90 },
   { id: 'skate', title: 'Corrida Urbana', subtitle: 'Skate em três pistas', icon: 'rocket', rule: 'Deslize para trocar de pista, pule os obstáculos baixos e abaixe sob os altos. Pegue as moedas e os itens de segurança.', duration: 60 },
   { id: 'rio', title: 'Descida do Rio', subtitle: 'Desvie e aprenda na corredeira', icon: 'rocket', rule: 'Deslize para trocar de pista, pule troncos e abaixe sob galhos. Pegue as moedas e os itens de segurança.', duration: 60 },
   { id: 'capoeira', title: 'Roda de Capoeira', subtitle: 'Toque no ritmo da roda', icon: 'star', rule: 'Toque na coluna quando a marca chegar à linha.', duration: 60 },
@@ -283,13 +287,13 @@ export function createGame({ id, el, side = 'left', seed = 0, difficulty = 'norm
     root.addEventListener(type, listener);
     listeners.push([type, listener]);
   }
-  function emitScore(_legacyBase, good, target, correctDelta, startedAt = challengeStartedAt, withSpeed = true) {
+  function emitScore(_legacyBase, good, target, correctDelta, startedAt = challengeStartedAt, withSpeed = true, side) {
     if (!active()) return;
     const elapsedMs = Math.max(0, Math.round(solveTime() - startedAt));
     const base = correctDelta === 1 ? 1000 : 0;
     const bonus = good && correctDelta === 1 && withSpeed ? speedBonus(elapsedMs) : 0;
     const delta = base + bonus;
-    const metadata = { correct: good, correctDelta, base, bonus, elapsedMs };
+    const metadata = { correct: good, correctDelta, base, bonus, elapsedMs, ...(side === undefined ? {} : { side }) };
     completed += correctDelta;
     updateProgression();
     if (!good) wrong++;
@@ -305,13 +309,15 @@ export function createGame({ id, el, side = 'left', seed = 0, difficulty = 'norm
     return emitScore(base, true, target, 1, startedAt, !['secret', 'puzzle'].includes(id));
   }
   function awardWrong(base = 0, target = root) { return emitScore(base, false, target, 0); }
+  // Jogos de arena compartilhada (dois alunos no mesmo campo): credita o acerto ou o erro ao lado 0 (azul) ou 1 (laranja).
+  function awardSide(side, good = true, target = root) { return emitScore(0, good, target, good ? 1 : 0, challengeStartedAt, false, side); }
   // Compatibility for legacy adapters: historical point values are ignored.
   // Each fitted piece already emitted an objective; completion adds zero.
   function score(base, good = base > 0, target = root) {
     if (id === 'puzzle' && good && base === 25) return emitScore(base, true, target, 0, challengeStartedAt, false);
     return good ? awardSolved(base, target) : awardWrong(base, target);
   }
-  function finish() {
+  function finish(winner) {
     if (!active()) return;
     elapsed = gameTime();
     finished = true;
@@ -319,7 +325,7 @@ export function createGame({ id, el, side = 'left', seed = 0, difficulty = 'norm
     stopTimers();
     root.dataset.state = 'finished';
     helper.textContent = 'Missão concluída! Aguarde o resultado da partida.';
-    onFinish();
+    onFinish(winner);
   }
   function feedback(good, text, next, delay = good ? 800 : 1000) {
     locked = true;
@@ -774,7 +780,7 @@ export function createGame({ id, el, side = 'left', seed = 0, difficulty = 'norm
 
   const ctx = {
     id, side, seed, solo, theme, get level() { return level; }, doc, view, root, stage, prompt, progress, helper, node, button, listen, active, later, score, finish, feedback,
-    awardSolved, awardWrong, nextChallenge, blockChallenge, unblockChallenge, solveTime,
+    awardSolved, awardWrong, awardSide, nextChallenge, blockChallenge, unblockChallenge, solveTime,
     challengeRng, layoutRng, shuffle, seededRandom, normalizeWord, wordBank:wordsForGame,
     setAct: fn => { act = fn; }, setCancel: fn => { cancelSelection = fn; }, onDestroy: fn => { destroyHooks.push(fn); },
   };
@@ -785,6 +791,8 @@ export function createGame({ id, el, side = 'left', seed = 0, difficulty = 'norm
     case 'penalty': setupFreekick(ctx); break;
     case 'bike': setupBike(ctx); break;
     case 'archery': setupArchery(ctx); break;
+    case 'volei2': setupVolley2(ctx); break;
+    case 'disco': setupDisco(ctx); break;
     case 'skate': setupRunner(ctx, 'skate'); break;
     case 'rio': setupRunner(ctx, 'rio'); break;
     case 'capoeira': setupRhythm(ctx, 'capoeira'); break;

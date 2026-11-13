@@ -7,7 +7,8 @@ import { loadSprites, drawSprite } from './sprites.js';
  * precisão; fraco demais é fácil de defender). Argolas especiais no gol valem mais pontos. O goleiro tenta defender.
  */
 const W = 1000, H = 700, BALL = { x: 412, y: 678 };
-const GOAL = { x0: 70, x1: 930, y0: 168, y1: 392 };
+const GOAL = { x0: 130, x1: 870, y0: 70, y1: 392 };
+const GOAL_W = 800, KEEPER_H = 300, KEEPER_Y = 462;   // o goleiro fica EM CAMPO, à frente do gol (pés abaixo da linha do gol), e não dentro da rede
 const RINGS = [
   { id: 'target-02', mult: 2, label: 'azul' }, { id: 'target-09', mult: 2, label: 'vermelha' },
   { id: 'target-17', mult: 2, label: 'roxa' }, { id: 'target-04', mult: 3, label: 'dourada' },
@@ -22,7 +23,7 @@ export function setupFreekick(ctx) {
   let shot = null, targets = [], goals = 0, shots = 0, streak = 0, wait = 0, banner = null, puffs = [], clock = 0, facts = 0;
 
   function placeTargets() {
-    const spots = [[160, 210], [840, 210], [160, 335], [840, 335], [500, 205], [330, 275], [670, 275]];
+    const spots = [[200, 130], [800, 130], [200, 300], [800, 300], [500, 120], [350, 220], [650, 220]];
     const pool = [...spots].sort(() => rng() - .5);
     const count = Math.min(3, 1 + Math.floor(goals / 2) + (ctx.level > 1 ? 1 : 0));
     const gold = goals > 0 && goals % 3 === 0;
@@ -73,9 +74,9 @@ export function setupFreekick(ctx) {
     },
     draw(g) {
       const sky = g.createLinearGradient(0, 0, 0, H); sky.addColorStop(0, '#8fd6ff'); sky.addColorStop(.42, '#dff4ff'); sky.addColorStop(.42, '#5fb84a'); sky.addColorStop(1, '#3f8f35'); g.fillStyle = sky; g.fillRect(0, 0, W, H);
-      drawSprite(g, art, 'el-02', 500, 400, { w: 930 });
+      drawSprite(g, art, 'el-02', 500, 400, { w: GOAL_W });
       const holdBall = !(ball.flying || (shot && !shot.resolved));
-      drawSprite(g, art, keeper.t > 0 ? keeper.id : 'keeper-01', keeper.t > 0 ? keeper.x : 500, keeper.t > 0 ? keeper.y + 40 : 385, { h: keeper.t > 0 ? 150 : 175 });
+      drawSprite(g, art, keeper.t > 0 ? keeper.id : 'keeper-01', keeper.t > 0 ? keeper.x : 500, KEEPER_Y, { h: KEEPER_H });
       for (const t of targets) { g.globalAlpha = .92; if (!drawSprite(fxCtx(g), fx, t.id, t.x, t.y, { h: t.r * 2.4, center: true })) { g.strokeStyle = '#ffd23b'; g.lineWidth = 8; g.beginPath(); g.arc(t.x, t.y, t.r, 0, 7); g.stroke(); } g.globalAlpha = 1; }
       drawSprite(g, art, kicker.t > 0 ? kicker.id : 'kicker-07', 330, 725, { h: 330 });
       if (!holdBall || drag) {

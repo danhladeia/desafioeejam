@@ -9,8 +9,8 @@ import { loadSprites, drawSprite, loadImage, spriteFile } from './sprites.js';
  */
 const KINDS = {
   skate: {
-    dir: 'skate-iso', heroDir: 'skate-back', sceneDir: 'skate', scene: 'cenario.webp', sky: '#9fdcff', lane: '#8d8a9c', hero: '#ff7a2f', heroH: 270,
-    proj: { farY: 330, farScale: .3, off: [-335, 0, 335], heroX: 1.34 },
+    dir: 'skate-iso', heroDir: 'skate-alto', sceneDir: 'skate-alto', scene: 'cenario.webp', sky: '#9fdcff', lane: '#8d8a9c', hero: '#ff7a2f', heroH: 235,
+    proj: { vx: 514, farY: 70, farScale: .17, off: [-282, 0, 282], heroX: 1.13 },
     help: 'Deslize para os lados, pule os baixos e abaixe sob os arcos. Pegue os itens de segurança.',
     hit: 'Cuidado! Equipamento e atenção evitam acidentes.',
     good: { 'Capacete': 'obj-15', 'Joelheira': 'obj-16', 'Luvas': 'obj-18' }, coin: 'obj-13',
@@ -18,8 +18,8 @@ const KINDS = {
     heights: { low: 125, block: 165, high: 235, good: 105, coin: 78 },
   },
   rio: {
-    dir: 'rio', heroDir: 'rio-back', sceneDir: 'rio', scene: 'cenario.webp', sky: '#1f6f9c', lane: '#2c8fc1', hero: '#ffb02f', heroH: 250,
-    proj: { farY: 215, farScale: .42, off: [-300, 0, 300], heroX: 1.2 },
+    dir: 'rio', heroDir: 'rio-alto', sceneDir: 'rio-alto', scene: 'cenario.webp', sky: '#1f6f9c', lane: '#2c8fc1', hero: '#ffb02f', heroH: 225,
+    proj: { vx: 497, farY: 50, farScale: .2, off: [-300, 0, 300], heroX: 1.2 },
     help: 'Deslize para os lados, pule os troncos e abaixe sob as pontes. Pegue os itens do rio.',
     hit: 'Rio exige atenção: colete, capacete e cuidado com o ambiente.',
     good: { 'Colete': 'obj-12', 'Capacete': 'obj-24', 'Água': 'obj-06' }, coin: 'obj-12',
@@ -29,18 +29,18 @@ const KINDS = {
 };
 const FALLBACK = [{ question: 'O que ajuda a prevenir acidentes?', options: ['Usar proteção adequada', 'Ignorar os avisos', 'Correr sem olhar'], answer: 0, explanation: 'Proteção e atenção reduzem riscos.' }];
 const LANES = [250, 500, 750];
-const ROW = 300;
+const ROW = 430;
 const PLAYER_Y = 590;
 // Câmera atrás e um pouco acima do personagem (estilo Subway Surfers): o ponto mais distante (SPAWN) já tem uma escala
 // mínima e fica na altura farY da tela; os objetos crescem até o jogador.
-const VX = 500, SPAWN = -780;
+const VX = 500, SPAWN = -620;
 
 export function setupRunner(ctx, kind = 'skate') {
   const w = 1000, h = 700, K = KINDS[kind] ?? KINDS.skate;
   let canvas, lane = 1, targetX = LANES[1], x = LANES[1], vertical = 0, vtime = 0, lives = 3, hits = 0, distance = 0, speed = 420, clock = 0, nextRow = 0, invuln = 0;
   let objects = [], picked = 0, coinCount = 0, combo = 0, down = null, flash = 0, fallen = false;
-  const P = K.proj, LANE_OFFSET = P.off, FAR_Y = P.farY, FAR_SCALE = P.farScale;
-  const proj = g => { const t = Math.max(0, (g - SPAWN) / (PLAYER_Y - SPAWN)); const sc = FAR_SCALE + (1 - FAR_SCALE) * Math.min(t, 1.25); return { sc, y: FAR_Y + (PLAYER_Y - FAR_Y) * t }; };
+  const P = K.proj, LANE_OFFSET = P.off, FAR_Y = P.farY, FAR_SCALE = P.farScale, VX = P.vx ?? 500;
+  const proj = g => { const t = Math.max(0, (g - SPAWN) / (PLAYER_Y - SPAWN)); const sc = FAR_SCALE + (1 - FAR_SCALE) * Math.min(t, 1.12); return { sc, y: FAR_Y + (PLAYER_Y - FAR_Y) * t }; };
   const art = loadSprites(K.heroDir, [kind === 'rio' ? 'boat' : 'skater'], ctx.view);
   const artObj = loadSprites(K.dir, ['obj'], ctx.view);
   const scene = loadImage(spriteFile(K.sceneDir ?? K.dir, K.scene), ctx.view);
@@ -50,18 +50,20 @@ export function setupRunner(ctx, kind = 'skate') {
   const goodLabels = Object.keys(K.good);
 
   function spawnRow(index) {
-    const r = rowRng(index);
-    // dificuldade gradual: no começo sobram pistas livres; depois a pista fica mais cheia
-    const density = Math.min(.9, .3 + ctx.level * .06 + index * .011);
-    if (index % 4 === 3) { const l = Math.floor(r() * 3); for (let k = 0; k < 5; k++) objects.push({ type: 'coin', lane: l, y: SPAWN - k * 62, art: K.coin, done: false }); return; }
-    const free = Math.floor(r() * 3);
-    for (let i = 0; i < 3; i++) {
-      if (i === free && r() > 0.35) { const label = goodLabels[Math.floor(r() * goodLabels.length)]; objects.push({ type: 'good', lane: i, y: SPAWN, label, art: K.good[label], done: false }); continue; }
-      if (i === free) continue;
-      if (r() > density) continue;
-      const roll = r();
-      const type = roll < 0.36 ? 'low' : roll < 0.62 ? 'high' : 'block';
-      const list = K[type]; objects.push({ type, lane: i, y: SPAWN, art: list[Math.floor(r() * list.length)], done: false });
+    // Ritmo da pista: cada linha tem poucos objetos e sempre uma pista livre. A cada 6 linhas há moedas, e depois
+    // um respiro. Duas barreiras na mesma linha só aparecem depois de um tempo e no nível mais difícil.
+    const r = rowRng(index), phase = index % 6;
+    if (index < 2) return;
+    if (phase === 5) { const l = Math.floor(r() * 3); for (let k = 0; k < 4; k++) objects.push({ type: 'coin', lane: l, y: SPAWN - k * 70, art: K.coin, done: false }); return; }
+    if (phase === 2) {
+      if (r() < .55) { const label = goodLabels[Math.floor(r() * goodLabels.length)]; objects.push({ type: 'good', lane: Math.floor(r() * 3), y: SPAWN, label, art: K.good[label], done: false }); }
+      return;
+    }
+    const two = r() < Math.min(.5, (ctx.level - 1) * .15 + Math.max(0, index - 8) * .012);
+    const lanes = [0, 1, 2].sort(() => r() - .5).slice(0, two ? 2 : 1);
+    for (const lane of lanes) {
+      const roll = r(), type = roll < .4 ? 'low' : roll < .65 ? 'high' : 'block', list = K[type];
+      objects.push({ type, lane, y: SPAWN, art: list[Math.floor(r() * list.length)], done: false });
     }
   }
   function hurt(text) {
@@ -112,7 +114,7 @@ export function setupRunner(ctx, kind = 'skate') {
       g.textAlign = 'center'; g.font = 'bold 22px Fredoka,sans-serif';
       for (const o of objects) {
         const p = proj(o.y); if (o.y < SPAWN - 1) continue;
-        const cx = VX + LANE_OFFSET[o.lane] * p.sc, cy = p.y, hh = K.heights[o.type] * p.sc * 1.25;
+        const cx = VX + LANE_OFFSET[o.lane] * p.sc, cy = p.y, hh = K.heights[o.type] * p.sc * .72;   // objetos menores: a pista fica legível e sobra espaço entre eles
         g.globalAlpha = o.done ? .25 : 1;
         // sombra sob o objeto: ajuda a ler em que pista ele está
         g.fillStyle = 'rgba(0,0,0,.22)'; g.beginPath(); g.ellipse(cx, cy + 4, 60 * p.sc, 12 * p.sc, 0, 0, 7); g.fill();
@@ -125,10 +127,19 @@ export function setupRunner(ctx, kind = 'skate') {
       const hx = VX + (x - VX) * P.heroX, hy = PLAYER_Y + 36, lift = vertical === 1 ? 80 : 0, blink = invuln > 0 && Math.floor(clock / 90) % 2;
       g.fillStyle = 'rgba(0,0,0,.28)'; g.beginPath(); g.ellipse(hx, hy, 62, 14, 0, 0, 7); g.fill();
       g.globalAlpha = blink ? .5 : 1;
-      const pre = kind === 'rio' ? 'boat' : 'skater', rot = 0, squash = 1;
-      let frame = `${pre}-${String(1 + Math.floor(clock / (kind === 'rio' ? 150 : 130)) % 4).padStart(2, '0')}`;
-      if (fallen) frame = kind === 'rio' ? `${pre}-10` : `${pre}-11`; else if (invuln > 700) frame = `${pre}-10`; else if (vertical === 1) frame = `${pre}-08`;
-      else if (vertical === -1) frame = `${pre}-07`; else if (Math.abs(targetX - x) > 30) frame = targetX < x ? `${pre}-05` : `${pre}-06`;
+      const pre = kind === 'rio' ? 'boat' : 'skater', squash = 1, move = targetX - x;
+      let frame, rot = 0;
+      if (kind === 'skate') {
+        // Skatista parado sobre a prancha: os pés não se mexem. Só o corpo inclina de leve para o lado da curva,
+        // com um balanço bem pequeno para dar vida. Os outros quadros (pular, agachar, tropeçar) continuam.
+        frame = 'skater-03';
+        rot = Math.max(-.14, Math.min(.14, move / 650)) + Math.sin(clock / 420) * .02;
+        if (fallen) frame = 'skater-11'; else if (invuln > 700) frame = 'skater-10'; else if (vertical === 1) frame = 'skater-08'; else if (vertical === -1) frame = 'skater-07';
+      } else {
+        frame = `${pre}-${String(1 + Math.floor(clock / 150) % 4).padStart(2, '0')}`;
+        if (fallen) frame = `${pre}-10`; else if (invuln > 700) frame = `${pre}-10`; else if (vertical === 1) frame = `${pre}-08`;
+        else if (vertical === -1) frame = `${pre}-07`; else if (Math.abs(move) > 30) frame = move < 0 ? `${pre}-05` : `${pre}-06`;
+      }
       g.save(); g.translate(hx, hy - lift); g.scale(1, squash);
       if (!drawSprite(g, art, frame, 0, 0, { h: K.heroH, rot })) { g.fillStyle = K.hero; g.fillRect(-28, -130, 56, 100); g.fillStyle = '#ffe0bd'; g.beginPath(); g.arc(0, -150, 24, 0, 7); g.fill(); }
       g.restore(); g.globalAlpha = 1;
@@ -144,6 +155,6 @@ export function setupRunner(ctx, kind = 'skate') {
       else if (dy < 0) { vertical = 1; vtime = 650; } else { vertical = -1; vtime = 650; }
     },
   };
-  const arena = createArena(ctx, game, { w, h }); canvas = arena.canvas; canvas.classList.add('runner-arena');
+  const arena = createArena(ctx, game, { w, h }); canvas = arena.canvas; canvas.classList.add('runner-arena'); canvas.state = () => ({ objects, lane, lives, distance });
   ctx.nextChallenge(); ctx.prompt.textContent = kind === 'rio' ? 'Desça o rio com segurança' : 'Corra pelo parque com segurança'; ctx.helper.textContent = K.help;
 }

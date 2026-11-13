@@ -1,6 +1,7 @@
 import {normalizeEdfTopics} from './edf-content.js';
 import {isGrade,DEFAULT_GRADE} from './edf-anos.js';
 import {EDF_VARIANTS} from './edf-theme.js';
+import {GAMES} from './games.js';
 export const EDF_DUEL_KEY='eejam-edf-competition-v1';
 const norm=s=>s.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase();
 const clone=value=>structuredClone(value);
@@ -15,16 +16,17 @@ function namesOf(names){
  if(new Set(result.map(norm)).size!==result.length)fail('Há alunos repetidos na mesma equipe. Diferencie os homônimos com uma inicial.');
  return result;
 }
-export function createEdfDuel({teams,rounds,games,topics,difficulty='normal',grade=DEFAULT_GRADE}){
+export function createEdfDuel({teams,rounds,games,topics,difficulty='medium',grade=DEFAULT_GRADE,mode='edf'}){
+ if(!['normal','edf'].includes(mode))fail('Escolha o conteúdo do duelo: Normal ou EDF.');
  if(!Number.isInteger(rounds)||rounds<1||rounds>40)fail('Escolha de 1 a 40 rodadas, incluindo a final.');
  if(!Array.isArray(teams)||teams.length<2||teams.length>8)fail('Cadastre de 2 a 8 equipes.');
  const clean=teams.map((t,i)=>({id:'edf-team-'+i,name:typeof t.name==='string'?t.name.trim():'',students:namesOf(t.students)}));
  if(clean.length>2&&rounds<Math.ceil(clean.length/2)+1)fail(`Para ${clean.length} equipes, escolha ao menos ${Math.ceil(clean.length/2)+1} rodadas para que todas joguem antes da final.`);
  if(clean.some(t=>!t.name||t.name.length>40)||new Set(clean.map(t=>norm(t.name))).size!==clean.length)fail('Dê nomes diferentes às equipes, com até 40 caracteres.');
- if(!Array.isArray(games)||!games.length||games.some(id=>!Object.hasOwn(EDF_VARIANTS,id))||new Set(games).size!==games.length)fail('Selecione ao menos um jogo EDF válido, sem repetições.');
- if(!['normal','hard'].includes(difficulty))fail('Dificuldade inválida.');
+ if(!Array.isArray(games)||!games.length||games.some(id=>!(mode==='normal'?GAMES.some(g=>g.id===id):Object.hasOwn(EDF_VARIANTS,id)))||new Set(games).size!==games.length)fail('Selecione ao menos um jogo válido, sem repetições.');
+ if(!['easy','medium','normal','hard'].includes(difficulty))fail('Dificuldade inválida.');
  if(!isGrade(grade))fail('Ano inválido.');
- return{version:1,createdAt:Date.now(),teams:clean,rounds,games:[...games],topics:normalizeEdfTopics(topics,Number(grade)),difficulty,done:0,current:null,history:[],usedGames:[],lastGame:null,lastPair:null,champion:null,used:Object.fromEntries(clean.map(t=>[t.id,[]])),stats:Object.fromEntries(clean.map(t=>[t.id,{played:0,wins:0,points:0}])),grade:Number(grade)};
+ return{version:1,createdAt:Date.now(),teams:clean,rounds,games:[...games],topics:mode==='normal'?[]:normalizeEdfTopics(topics,Number(grade)),difficulty,done:0,current:null,history:[],usedGames:[],lastGame:null,lastPair:null,champion:null,used:Object.fromEntries(clean.map(t=>[t.id,[]])),stats:Object.fromEntries(clean.map(t=>[t.id,{played:0,wins:0,points:0}])),grade:Number(grade),mode};
 }
 const compare=(a,b)=>(b.played?b.wins/b.played:0)-(a.played?a.wins/a.played:0)||b.wins-a.wins||b.points-a.points||a.name.localeCompare(b.name,'pt-BR');
 export function edfStandings(state){
@@ -43,7 +45,7 @@ function pairs(state){
 function gamePool(state){let pool=state.games.filter(id=>!state.usedGames.includes(id));if(!pool.length)pool=[...state.games];const other=pool.filter(id=>id!==state.lastGame);return other.length?other:pool}
 function student(state,id,rng,refused=[]){const team=state.teams.find(t=>t.id===id),pool=team.students.filter(n=>!state.used[id].includes(n)&&!refused.includes(n));if(!pool.length)fail(`${team.name}: não há alunos inéditos disponíveis. Adicione alunos à equipe; ninguém que já jogou será repetido.`);return pick(pool,rng)}
 export function drawEdfTurn(state,rng=Math.random){
- if(state.done>=state.rounds)fail('O campeonato EDF já terminou.');if(state.current)return state.current;
+ if(state.done>=state.rounds)fail('O duelo já terminou.');if(state.current)return state.current;
  const isFinal=state.done===state.rounds-1;let pair=isFinal?edfStandings(state).slice(0,2).map(t=>t.id):pick(pairs(state),rng);if(rng()<.5)pair=[...pair].reverse();
  const sides=pair.map(teamId=>({teamId,student:student(state,teamId,rng)})),gameId=pick(gamePool(state),rng);
  state.current={turn:state.done+1,isFinal,gameId,sides,refused:[[],[]]};return state.current;
@@ -52,6 +54,11 @@ export function redrawEdfStudent(state,side,rng=Math.random){
  if(!state.current||![0,1].includes(side))fail('Não há aluno sorteado nesse lado.');
  const current=state.current,refused=[...current.refused[side],current.sides[side].student],next=student(state,current.sides[side].teamId,rng,refused);
  current.refused[side]=refused;current.sides[side]={...current.sides[side],student:next};return current;
+}
+export function redrawEdfGame(state,rng=Math.random){
+ if(!state.current)fail('Não há jogo sorteado.');
+ const pool=gamePool(state).filter(id=>id!==state.current.gameId);if(!pool.length)fail('Não há outro jogo disponível para sortear.');
+ state.current.gameId=pick(pool,rng);return state.current;
 }
 function checkTurn(state,current){
  if(!current||current.turn!==state.done+1||current.isFinal!==(state.done===state.rounds-1)||!gamePool(state).includes(current.gameId)||!Array.isArray(current.sides)||current.sides.length!==2)fail('Rodada EDF salva inválida.');
@@ -71,8 +78,11 @@ export function addEdfStudents(state,id,names){const team=state.teams.find(t=>t.
 export function validateEdfDuel(value){
  if(!value||value.version!==1||!Array.isArray(value.history)||value.history.length>40)fail('Campeonato EDF salvo inválido.');
  if(value.grade===undefined)value={...value,grade:DEFAULT_GRADE};
- const rebuilt=createEdfDuel({teams:value.teams,rounds:value.rounds,games:value.games,topics:value.topics,difficulty:value.difficulty,grade:value.grade});
+ if(value.mode===undefined)value={...value,mode:'edf'};
+ const rebuilt=createEdfDuel({teams:value.teams,rounds:value.rounds,games:value.games,topics:value.topics,difficulty:value.difficulty,grade:value.grade,mode:value.mode});
  if(!same(rebuilt.teams,value.teams)||!Number.isFinite(value.createdAt))fail('Cadastro EDF salvo inválido.');rebuilt.createdAt=value.createdAt;
+ // salvamentos antigos não tinham `grade`/`mode`: a ordem dos campos precisa seguir a do estado reconstruído
+ if(Object.keys(value).length===Object.keys(rebuilt).length&&Object.keys(rebuilt).every(k=>k in value))value=Object.fromEntries(Object.keys(rebuilt).map(k=>[k,value[k]]));
  for(const round of value.history){rebuilt.current=clone(round);delete rebuilt.current.scores;delete rebuilt.current.winnerSide;commitEdfTurn(rebuilt,round)}
  if(value.current){checkTurn(rebuilt,value.current);rebuilt.current=clone(value.current)}
  if(!same(rebuilt,value))fail('Dados do campeonato EDF estão inconsistentes. O arquivo original foi preservado.');return clone(rebuilt);

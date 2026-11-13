@@ -7,7 +7,7 @@ export function createPlaySession({g,demo,duel,solo,match,names,prefs,esc,shell,
  const seed=crypto.getRandomValues(new Uint32Array(1))[0];
  const s={g,demo,duel,solo,match,names,seed,scores:[0,0],correctCounts:[0,0],speedBonuses:[0,0],rawScores:[0,0],games:[],paused:false,ended:false,started:false,left:(g.duration||60)*1000,tie:false,winner:null,guard:[[],[]],lock:[0,0],countLeft:2550,last:performance.now(),notices:[]};
  const $=selector=>document.querySelector(selector);
- shell(`<div class="game-top"><div><h2>${esc(g.title)}${solo?'<small>Treino solo • supere sua melhor marca</small>':duel?`<small class="round-tag">${duel.isFinal?'GRANDE FINAL':`Rodada ${duel.turn} de ${duel.total}`}</small>`:''}</h2></div><div class="timer" id="clock">${g.duration||60}</div><button id="presenter" class="secondary">Segure para pausar ${uiIcon('pause')}</button></div><div class="arenas">${names.map((name,i)=>`<section class="arena ${i?'orange':'blue'}" data-side="${i}"><div class="scoreboard"><div><small>${solo?'MODO SOLO':duel?esc(duel.labels[i]):bot?(i?`ROBÔ • NÍVEL ${bot.level}`:'VOCÊ'):`JOGADOR ${i+1} • ${i?'LARANJA':'AZUL'}`}</small><h2>${esc(name)}</h2><span class="accuracy" id="accuracy-${i}">0 acertos • bônus de velocidade: 0</span></div><div><div class="points-title">PONTOS</div><strong id="score-${i}">0</strong></div></div><div class="guard-message" id="guard-${i}" role="status"></div><div id="board-${i}" class="board"></div></section>`).join('')}</div><div class="play-footer"><span>${uiIcon('hand')} Um dedo, toque leve.</span><span>Acertos primeiro • velocidade desempata</span><span id="play-state">Prepare-se</span></div><div class="countdown" id="countdown">3</div>`,solo?'play solo-play':'play');
+ shell(`<div class="game-top"><div><h2>${esc(g.title)}${solo?'<small>Treino solo • supere sua melhor marca</small>':duel?`<small class="round-tag">${duel.isFinal?'GRANDE FINAL':`Rodada ${duel.turn} de ${duel.total}`}</small>`:''}</h2></div><div class="timer" id="clock">${g.duration||60}</div><button id="presenter" class="secondary">Segure para pausar ${uiIcon('pause')}</button></div><div class="arenas${g.shared?' shared':''}">${names.map((name,i)=>`<section class="arena ${i?'orange':'blue'}" data-side="${i}"><div class="scoreboard"><div><small>${solo?'MODO SOLO':duel?esc(duel.labels[i]):bot?(i?`ROBÔ • NÍVEL ${bot.level}`:'VOCÊ'):`JOGADOR ${i+1} • ${i?'LARANJA':'AZUL'}`}</small><h2>${esc(name)}</h2><span class="accuracy" id="accuracy-${i}">0 acertos • bônus de velocidade: 0</span></div><div><div class="points-title">PONTOS</div><strong id="score-${i}">0</strong></div></div><div class="guard-message" id="guard-${i}" role="status"></div><div id="board-${i}" class="board"></div></section>`).join('')}${g.shared?'<section class="arena shared-board" data-side="shared"><div id="board-shared" class="board"></div></section>':''}</div><div class="play-footer"><span>${uiIcon('hand')} Um dedo, toque leve.</span><span>Acertos primeiro • velocidade desempata</span><span id="play-state">Prepare-se</span></div><div class="countdown" id="countdown">3</div>`,solo?'play solo-play':'play');
  function notify(i,good,points,bonus=0){
   const arena=$(`[data-side="${i}"]`);if(!arena)return;
   arena.classList.remove('feedback-good','feedback-bad');void arena.offsetWidth;arena.classList.add(good?'feedback-good':'feedback-bad');
@@ -34,6 +34,7 @@ export function createPlaySession({g,demo,duel,solo,match,names,prefs,esc,shell,
   if(finishedSide!==undefined)return complete(finishedSide,'conclusão');
   if(s.correctCounts[0]!==s.correctCounts[1])return complete(s.correctCounts[0]>s.correctCounts[1]?0:1);
   if(s.scores[0]!==s.scores[1])return complete(s.scores[0]>s.scores[1]?0:1);
+  if(g.shared){if(!s.overtime){s.overtime=true;s.left=20000;const st=$('#play-state');if(st)st.textContent='Prorrogação: o próximo ponto decide';return}return complete(Math.random()<.5?0:1,'sorteio')}
   tieBreak();
  }
  // Robô: oponente simulado. Ele marca pontos ao longo da partida, com chance e ritmo que dependem do nível.
@@ -48,6 +49,7 @@ export function createPlaySession({g,demo,duel,solo,match,names,prefs,esc,shell,
   if(botRng()<cfg.hit){const bonus=Math.round(botRng()*(bot.level*4));s.correctCounts[1]++;s.speedBonuses[1]=Math.min(999,s.speedBonuses[1]+bonus);s.scores[1]=s.correctCounts[1]*1000+s.speedBonuses[1];$('#score-1').textContent=s.scores[1];$('#accuracy-1').textContent=`${s.correctCounts[1]} acertos • bônus de velocidade: ${s.speedBonuses[1]}`;botPose('bot-04');notify(1,true,1000+bonus,bonus)}
   else{botPose('bot-07');notify(1,false,0)}
  }
+ const handlers=[];
  for(let i=0;i<names.length;i++){
   const arena=$(`[data-side="${i}"]`);
   arena.addEventListener('pointerdown',e=>{
@@ -55,7 +57,7 @@ export function createPlaySession({g,demo,duel,solo,match,names,prefs,esc,shell,
    if(now<s.lock[i]){e.stopImmediatePropagation();$('#guard-'+i).innerHTML=uiIcon('hand')+' Toque leve. Aguarde um instante.';s.notices.push(setTimeout(()=>{if(!s.ended&&$('#guard-'+i))$('#guard-'+i).textContent=''},1100))}
   },true);
   if(bot&&i===1){mountBot();continue}
-  s.games.push(createGame({id:g.id,el:$('#board-'+i),side:i,seed,solo,subject:g.subject,edfTopics:g.edfTopics,edfGrade:g.edfGrade,difficulty:prefs.difficulty,onScore:(delta,meta={})=>{
+  const opts={id:g.id,el:$('#board-'+i),side:i,seed,solo,subject:g.subject,edfTopics:g.edfTopics,edfGrade:g.edfGrade,difficulty:prefs.difficulty,onScore:(delta,meta={})=>{
    if(s.ended||s.paused||!s.started)return;
    const correct=meta.correct??delta>0,count=Number.isFinite(meta.correctDelta)?meta.correctDelta:correct?1:0,bonus=correct?Math.max(0,Math.min(20,Math.round(meta.bonus||0))):0;
    s.rawScores[i]=Math.max(0,s.rawScores[i]+delta);s.correctCounts[i]+=count;s.speedBonuses[i]=Math.min(999,s.speedBonuses[i]+bonus);s.scores[i]=s.correctCounts[i]*1000+s.speedBonuses[i];
@@ -65,8 +67,10 @@ export function createPlaySession({g,demo,duel,solo,match,names,prefs,esc,shell,
     if(solo&&s.correctCounts[0]>=6)return complete(0,'missão solo');
     if(!solo&&Math.abs(tug[0]-tug[1])>=60)return complete(tug[0]>tug[1]?0:1,'corda');
    }
-  },onEffect:()=>{},onFinish:()=>{if(!s.ended&&s.started)end(i)}}));
+  },onEffect:()=>{},onFinish:()=>{if(!s.ended&&s.started)end(i)}};
+  handlers[i]=opts.onScore;if(!g.shared)s.games.push(createGame(opts));
  }
+ if(g.shared)s.games.push(createGame({id:g.id,el:$('#board-shared'),side:0,seed,solo:false,subject:g.subject,edfTopics:g.edfTopics,edfGrade:g.edfGrade,difficulty:prefs.difficulty,onScore:(delta,meta={})=>{handlers[meta.side===1?1:0](delta,meta);if(s.overtime&&s.correctCounts[0]!==s.correctCounts[1])end()},onEffect:()=>{},onFinish:side=>{if(!s.ended&&s.started)(side===0||side===1)?end(side):end()}}));
  if(g.id==='rope'&&!solo)s.rope=createRopeScene($('.arenas'));
  let held;const presenter=$('#presenter');presenter.onpointerdown=e=>{try{presenter.setPointerCapture(e.pointerId)}catch{}held=setTimeout(onPause,650)};presenter.onpointerup=presenter.onpointercancel=()=>clearTimeout(held);
  s.timer=setInterval(()=>{

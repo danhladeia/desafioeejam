@@ -1,0 +1,139 @@
+{
+ "sheet": "X4-caiaque-camera-alta.png",
+ "mode": "grid",
+ "scale": 0.6,
+ "items": [
+  {
+   "id": "boat-01",
+   "file": "boat-01.webp",
+   "w": 173,
+   "h": 195,
+   "anchor": {
+    "x": 86.5,
+    "y": 195.0
+   },
+   "frame": 0
+  },
+  {
+   "id": "boat-02",
+   "file": "boat-02.webp",
+   "w": 173,
+   "h": 195,
+   "anchor": {
+    "x": 86.5,
+    "y": 195.0
+   },
+   "frame": 1
+  },
+  {
+   "id": "boat-03",
+   "file": "boat-03.webp",
+   "w": 173,
+   "h": 195,
+   "anchor": {
+    "x": 86.5,
+    "y": 195.0
+   },
+   "frame": 2
+  },
+  {
+   "id": "boat-04",
+   "file": "boat-04.webp",
+   "w": 173,
+   "h": 195,
+   "anchor": {
+    "x": 86.5,
+    "y": 195.0
+   },
+   "frame": 3
+  },
+  {
+   "id": "boat-05",
+   "file": "boat-05.webp",
+   "w": 173,
+   "h": 195,
+   "anchor": {
+    "x": 86.5,
+    "y": 195.0
+   },
+   "frame": 4
+  },
+  {
+   "id": "boat-06",
+   "file": "boat-06.webp",
+   "w": 173,
+   "h": 195,
+   "anchor": {
+    "x": 86.5,
+    "y": 195.0
+   },
+   "frame": 5
+  },
+  {
+   "id": "boat-07",
+   "file": "boat-07.webp",
+   "w": 173,
+   "h": 195,
+   "anchor": {
+    "x": 86.5,
+    "y": 195.0
+   },
+   "frame": 6
+  },
+  {
+   "id": "boat-08",
+   "file": "boat-08.webp",
+   "w": 173,
+   "h": 195,
+   "anchor": {
+    "x": 86.5,
+    "y": 195.0
+   },
+   "frame": 7
+  },
+  {
+   "id": "boat-09",
+   "file": "boat-09.webp",
+   "w": 173,
+   "h": 195,
+   "anchor": {
+    "x": 86.5,
+    "y": 195.0
+   },
+   "frame": 8
+  },
+  {
+   "id": "boat-10",
+   "file": "boat-10.webp",
+   "w": 173,
+   "h": 195,
+   "anchor": {
+    "x": 86.5,
+    "y": 195.0
+   },
+   "frame": 9
+  },
+  {
+   "id": "boat-11",
+   "file": "boat-11.webp",
+   "w": 173,
+   "h": 195,
+   "anchor": {
+    "x": 86.5,
+    "y": 195.0
+   },
+   "frame": 10
+  },
+  {
+   "id": "boat-12",
+   "file": "boat-12.webp",
+   "w": 173,
+   "h": 195,
+   "anchor": {
+    "x": 86.5,
+    "y": 195.0
+   },
+   "frame": 11
+  }
+ ]
+}

@@ -38,3 +38,13 @@
 /* Ícones arcade recortados da prancha PNG transparente. */
 .edf-game-choices .arcade-game-seal{display:block;width:4.7rem;height:4.7rem;background-image:url('./assets/visual/arcade/arcade-game-icons-transparent-v1.png');background-repeat:no-repeat;background-size:400% 200%;background-position:var(--arcade-x) var(--arcade-y)}
 .edf-game-choices .arcade-sprite-seal{display:block;width:4.7rem;height:4.7rem;background-repeat:no-repeat;background-position:center;background-size:contain}
+/* Modo Duelo: escolha do conteúdo (Normal ou EDF) */
+.duelo-modos{border:0;margin:0 0 1.2rem;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem}
+.duelo-modos legend{font-size:1.8rem;font-weight:700;margin-bottom:1rem}
+.duelo-modo{display:flex;align-items:center;gap:1rem;background:#17265d;border:.2rem solid #6784b0;border-radius:1.2rem;padding:1.3rem;cursor:pointer;margin:0}
+.duelo-modo:has(:checked){border-color:#ffe35b;box-shadow:inset 0 0 0 .15rem #ffe35b}
+.duelo-modo input{flex:none;width:1.8rem;height:1.8rem;accent-color:#ffd73f;margin:0}
+.duelo-modo b{font-size:1.7rem;display:block}.duelo-modo small{font-size:1.2rem;display:block;color:#c8d7f3;margin-top:.3rem;font-weight:400;line-height:1.35}
+.duelo-count{font-size:1.3rem;font-weight:400;color:#c8d7f3}
+.edf-game-options .actions{margin:.2rem 0 .6rem}
+.rounds-pick{display:grid;gap:.5rem;font-weight:700}.rounds-ctl{display:flex;gap:.6rem;align-items:center}.rounds-ctl button{width:4rem;height:4rem;font-size:2.4rem;line-height:1;padding:0}.rounds-ctl input{width:7rem;text-align:center;font-size:2.2rem}.rounds-presets{display:flex;gap:.5rem}

@@ -44,20 +44,32 @@ O jogo usa arquivos locais e não exige instalação de dependências para jogar
 - Ajustes oferece nível Desafio (14–15 anos), Avançado e redução de animações. O som pode ser desligado.
 - A abertura não aparece se o sistema estiver com as animações desligadas. Para vê-la mesmo assim, abra Ajustes, desmarque "Reduzir animações e partículas" e salve.
 
-## Modo Duelo (três turmas)
+## Modo Duelo (equipes, participantes e jogos à sua escolha)
 
-No menu, **Modo Duelo** pede o token do professor. O token não fica escrito no código, só o seu resumo (hash). Isso afasta curiosos, mas não é segurança de verdade: quem souber mexer no código do navegador consegue contornar.
+O botão **Modo Duelo** da tela inicial abre direto a configuração, sem token. Ali o professor escolhe:
 
-Turmas: 9º A EEJAM e 9º B EEJAM, com os alunos de `roster.js`, e 9º M. Braga, cujos nomes o professor digita em **Adicionar nomes** (um por linha, só o primeiro nome; nomes iguais precisam da inicial do sobrenome). Esses nomes ficam salvos só neste aparelho.
+1. **Conteúdo do duelo:** *Normal* (os jogos do Duelo do Futuro) ou *Educação Física* (os mesmos jogos com o conteúdo dos cadernos). No EDF, escolhe também o **ano** (6º ao 9º) e as **unidades**.
+2. **Jogos que entram no sorteio:** caixas de seleção, com **Marcar todos** e **Desmarcar todos**. É preciso ao menos um.
+3. **Rodadas** (de 1 a 40, a última é a final) e **dificuldade inicial** (Fácil, Médio ou Difícil).
+4. **Equipes** (de 2 a 8), cada uma com nome e a lista de **participantes**, um por linha (até 60 por equipe, sem repetição na mesma equipe). **Usar equipes cadastradas** copia as do campeonato por chaveamento.
 
-- O professor escolhe 5, 10, 15 ou 20 rodadas.
-- Depois do token, selecione os jogos válidos. A roleta dura cinco segundos, desacelera e revela o versus com as turmas e os alunos. É possível trocar o aluno de cada lado sem alterar o outro lado, o jogo ou as turmas.
-- Os jogos válidos percorrem ciclos sem repetição até esgotar a seleção. Com apenas um jogo escolhido, ele se repete.
-- As classificatórias mantêm a diferença de participações das turmas em no máximo uma partida. A última rodada do total escolhido é a final entre as duas melhores classificadas.
-- Um aluno que já jogou não será sorteado novamente, inclusive na final. Se os alunos inéditos acabarem, o sistema avisa para ajustar a lista ou iniciar outra bateria.
-- Cada vitória vale uma vitória na tabela. As classificatórias ordenam por aproveitamento (vitórias ÷ jogos), vitórias e pontos; persistindo empate absoluto, o nome da turma define a ordem. A campeã é a vencedora da final. O ranking aparece com suspense após cada resultado confirmado.
-- O duelo fica salvo a cada rodada. Depois de recarregar a página, **Modo Duelo**, o token e **Continuar** retomam no sorteio em que parou. Uma partida interrompida precisa ser repetida.
-- **Apagar dados do duelo** remove o duelo e os nomes do M. Braga do aparelho. Os nomes dos 9º A e B são só primeiros nomes, tirados da lista da escola; confirme com a direção se podem ficar no código antes de publicar o jogo na internet.
+Depois de **Criar duelo**, o fluxo é: sorteio animado de 5 segundos (equipes, participantes e jogo) → confronto, com **Sortear outro aluno** em um lado só → partida → resultado → ranking animado → próximo sorteio → final → equipe campeã. **Adicionar participantes** continua disponível durante o duelo.
+
+- Classificatórias mantêm a diferença de participações entre as equipes em no máximo uma partida. A última rodada é a final entre as duas melhores. Quem já jogou não é sorteado de novo, inclusive na final.
+- A tabela ordena por aproveitamento (vitórias ÷ jogos), vitórias e pontos; empate absoluto vai pelo nome da equipe.
+- O duelo é salvo a cada rodada neste aparelho. Depois de recarregar, **Modo Duelo** mostra **Continuar**.
+- O duelo salvo antes desta mudança (sem o campo de modo) continua abrindo e vale como EDF.
+- O Rota do EMTI está desativado e não aparece no sorteio.
+
+Os arquivos do duelo antigo por turmas (`duel.js`, `duel-ui.js`, `roster.js`) continuam no projeto, mas não são mais usados pelo botão. Apagá-los fica como limpeza futura.
+
+## Jogos de dois jogadores no mesmo campo
+
+**Vôlei Duplo** e **Futebol de Disco** usam uma arena compartilhada: os dois alunos jogam no mesmo campo, cada um na sua metade, com placares separados no topo. Eles aparecem no Modo Duelo e em **Jogar uma partida**, mas não no solo nem contra o robô.
+
+- **Vôlei Duplo:** quadra lateral e uma única bola. Corte a bola com o dedo quando ela estiver do seu lado; a bola começa lenta e acelera a cada rebatida. Vence quem chegar a 7 pontos.
+- **Futebol de Disco:** campo visto de cima, estilo disco bol. Arraste o seu disco na sua metade e empurre a bola para o gol do adversário. Vence quem chegar a 5 gols.
+- Se o tempo acabar empatado, há uma prorrogação de 20 segundos em que o próximo ponto decide; persistindo o empate, o vencedor é sorteado.
 
 ## Jogos e dificuldade
 

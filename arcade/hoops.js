@@ -11,6 +11,7 @@ const FACTS = ['Treino de arremesso melhora a coordenação entre olhos e mãos.
 
 export function setupHoops(ctx) {
   const art = loadSprites('hoops2', ['el', 'fx'], ctx.view);
+  const spinArt = loadSprites('bolas', ['giro'], ctx.view);
   const bg = loadImage(spriteFile('hoops2', 'cenario.webp'), ctx.view);
   const rng = ctx.layoutRng;
   let canvas, hoop, ball = { ...START, vx: 0, vy: 0, flying: false, r: 30, spin: 0 }, drag = null, hits = 0, shots = 0, streak = 0, burst = [], rimFlash = 0, wait = 0, facts = 0, clock = 0;
@@ -35,7 +36,7 @@ export function setupHoops(ctx) {
       if (hoop.vx) { hoop.x += hoop.vx * dt / 1000; if (hoop.x < 160) { hoop.x = 160; hoop.vx = Math.abs(hoop.vx); } else if (hoop.x > 840) { hoop.x = 840; hoop.vx = -Math.abs(hoop.vx); } }
       burst.forEach(b => b.age += dt); burst = burst.filter(b => b.age < 700);
       if (ball.flying) {
-        const py = ball.y; ball.vy += G * dt / 1000; ball.x += ball.vx * dt / 1000; ball.y += ball.vy * dt / 1000; ball.spin += ball.vx * dt / 4000;
+        const py = ball.y; ball.vy += G * dt / 1000; ball.x += ball.vx * dt / 1000; ball.y += ball.vy * dt / 1000; ball.spin += (ball.vx >= 0 ? 1 : -1) * (7 + Math.abs(ball.vx) / 110) * dt / 1000;
         const r = rim();
         // acerto: a bola desce atravessando a linha do aro, dentro da boca do aro
         if (ball.vy > 0 && py < r.y && ball.y >= r.y && Math.abs(ball.x - r.x) < r.half) {
@@ -62,7 +63,8 @@ export function setupHoops(ctx) {
         g.fillStyle = 'rgba(255,255,255,.8)';
         for (let t = .08; t < .95; t += .09) { const px = ball.x + dx * k * t, py = ball.y + dy * k * t + .5 * G * t * t; if (py > H) break; g.beginPath(); g.arc(px, py, 5 - t * 3, 0, 7); g.fill(); }
       }
-      if (!drawSprite(g, art, flaming ? 'el-06' : 'el-05', ball.x, ball.y, { h: 72, center: true, rot: ball.spin })) { g.fillStyle = '#ef8d2b'; g.beginPath(); g.arc(ball.x, ball.y, 30, 0, 7); g.fill(); }
+      const frame = `basq-0${1 + (((Math.floor(ball.spin / (Math.PI / 4)) % 8) + 8) % 8)}`;
+      if (!(!flaming && drawSprite(g, spinArt, frame, ball.x, ball.y, { h: 72, center: true })) && !drawSprite(g, art, flaming ? 'el-06' : 'el-05', ball.x, ball.y, { h: 72, center: true, rot: ball.spin })) { g.fillStyle = '#ef8d2b'; g.beginPath(); g.arc(ball.x, ball.y, 30, 0, 7); g.fill(); }
     },
     onPointer(e) {
       if (ball.flying || wait > 0) return;

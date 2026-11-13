@@ -130,3 +130,14 @@ body.reduced .hangman-part{transition:none}
  .game-memory .memory-grid{max-width:37rem}
  .game-search .word-slots .letter{font-size:1.2rem;padding:.2rem .6rem}
 }
+/* Catálogo com muitos jogos: 8 colunas e ícones menores, para caber 22 cartões em 3 fileiras sem rolagem */
+.catalog{padding-top:1rem}
+.catalog .game-grid{grid-template-columns:repeat(8,1fr);gap:.8rem .5rem}
+.catalog .game-card img,.catalog .surprise img,.catalog .arcade-game-seal,.catalog .arcade-sprite-seal{height:8.4rem}
+.catalog .game-card .sub,.catalog .surprise .sub{font-size:1.05rem;min-height:2.3rem}
+.catalog .game-card b,.catalog .surprise b{font-size:1.25rem}
+/* Arena compartilhada: os dois placares no topo e um único campo embaixo, para os dois alunos */
+.arenas.shared{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:auto minmax(0,1fr);gap:.8rem}
+.arenas.shared .arena:not(.shared-board) .board,.arenas.shared .arena:not(.shared-board) .guard-message{display:none}
+.arenas.shared .shared-board{grid-column:1/-1;display:flex;min-height:0;padding:0}
+.arenas.shared .shared-board .board{flex:1;min-height:0;width:100%}

@@ -19,7 +19,7 @@ export const EDF_WORDS=edfWordsOf(DEFAULT_GRADE);
 export const EDF_MISTAKES=edfMistakesOf(DEFAULT_GRADE);
 
 export const EDF_VARIANTS={
- slice:{title:'Corte Certo EDF',rule:'Corte somente os itens ligados aos temas de Educação Física escolhidos. Evite descuidos e perigos.'},
+ volei2:{title:'Vôlei Duplo EDF',rule:'Os dois alunos disputam a mesma bola de vôlei. Rebata com o dedo, mire e vença a troca.'},disco:{title:'Futebol de Disco EDF',rule:'Empurre a bola para o gol do adversário com o seu disco. Primeiro a cinco gols vence.'},bike:{title:'Mountain Bike EDF',rule:'Acelere, salte e pegue itens de segurança e saúde durante o percurso.'},archery:{title:'Arco e Flecha EDF',rule:'Mire com calma, considere o vento e acerte o centro dos alvos.'},slice:{title:'Corte Certo EDF',rule:'Corte somente os itens ligados aos temas de Educação Física escolhidos. Evite descuidos e perigos.'},
  hoops:{title:'Cesta do Saber EDF',rule:'Arremesse a bola na cesta da alternativa correta sobre Educação Física.'},
  penalty:{title:'Chute a Gol EDF',rule:'Chute para o gol que traz a alternativa correta sobre Educação Física.'},
  skate:{title:'Corrida Urbana EDF',rule:'Desvie, pule, abaixe e pegue itens de segurança ligados aos temas selecionados.'},

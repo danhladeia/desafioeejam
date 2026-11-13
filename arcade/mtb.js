@@ -8,16 +8,16 @@ import { loadSprites, drawSprite, loadImage, spriteFile } from './sprites.js';
  * lama atrapalha; moedas, água e capacete dão pontos; o raio dá um turbo.
  * A pista é gerada por trecho com semente: os dois lados correm no mesmo percurso.
  */
-const W = 1000, H = 700, GROUND = 585, RIDER_X = 250, SEG = 520;
+const W = 1000, H = 700, GROUND = 585, RIDER_X = 190, SEG = 580;
 const TYPES = {
   ramp: { ids: ['obj-01', 'obj-02', 'obj-03'], h: 120, w: 170 },
   rock: { ids: ['obj-05'], h: 80, w: 130 },
   log: { ids: ['obj-06'], h: 62, w: 170 },
   cone: { ids: ['obj-10'], h: 80, w: 60 },
   barrier: { ids: ['obj-11', 'obj-12'], h: 82, w: 150 },
-  roots: { ids: ['obj-07'], h: 24, w: 150 },
-  mud: { ids: ['obj-08'], h: 12, w: 190 },
-  hole: { ids: ['obj-09'], h: 6, w: 170 },
+  roots: { ids: ['obj-07'], h: 24, w: 150, dh: 46 },
+  mud: { ids: ['obj-08'], h: 12, w: 190, dh: 50 },
+  hole: { ids: ['obj-09'], h: 6, w: 170, dh: 52 },
   coin: { ids: ['obj-19'], h: 62, w: 46 },
   bottle: { ids: ['obj-17'], h: 82, w: 50 },
   helmet: { ids: ['obj-18'], h: 78, w: 70 },
@@ -69,7 +69,7 @@ export function setupBike(ctx) {
     update(dt) {
       if (done) return;
       const s = dt / 1000; clock += dt; crash = Math.max(0, crash - dt); invuln = Math.max(0, invuln - dt); boost = Math.max(0, boost - dt); jumpBuffer = Math.max(0, jumpBuffer - dt);
-      const vmax = (640 + ctx.level * 90) + (boost > 0 ? 260 : 0) + Math.min(220, dist / 120);
+      const vmax = (470 + ctx.level * 60) + (boost > 0 ? 220 : 0) + Math.min(160, dist / 160);   // mais tempo para reagir
       if (crash > 0) v = Math.max(80, v - 900 * s);
       else if (accel) v = Math.min(vmax, v + (h > 4 ? 120 : 520) * s);
       else v = Math.max(170, v - 260 * s);
@@ -78,10 +78,11 @@ export function setupBike(ctx) {
       if (h > 0 || vy > 0) { vy -= 2300 * s; h += vy * s; air += dt; if (h <= 0) { if (air > 450 && lastJumpAir) { ctx.awardSolved(3, canvas); } h = 0; vy = 0; air = 0; lastJumpAir = 0; puff(RIDER_X + 40, GROUND - 6, 'fx-01'); } }
       if (h === 0 && jumpBuffer > 0 && crash <= 0) { vy = 820 + v * 0.18; h = 0.01; jumpBuffer = 0; lastJumpAir = 1; air = 0; }
       // objetos
-      const rx0 = dist + RIDER_X - 40, rx1 = dist + RIDER_X + 44;
+      const rx0 = dist + RIDER_X - 40, rx1 = dist + RIDER_X + 26;
       for (const o of items) {
         if (o.done) continue;
-        const def = TYPES[o.type], ox0 = o.x - def.w / 2, ox1 = o.x + def.w / 2;
+        const def = TYPES[o.type], dh = def.dh ?? def.h * 1.25, spr = art.get(o.art), drawW = spr ? dh * spr.w / spr.h : def.w;
+        const half = drawW * (o.type === 'ramp' ? .3 : .4), ox0 = o.x - half, ox1 = o.x + half;
         if (ox1 < rx0 - 40) { o.done = true; continue; }
         if (ox0 > rx1 || ox1 < rx0) continue;
         const lift = o.lift ?? 0;
@@ -91,7 +92,7 @@ export function setupBike(ctx) {
         else if (o.type === 'ramp') { if (h < 8 && crash <= 0) { o.done = true; vy = 560 + v * 0.62; h = 0.01; air = 0; lastJumpAir = 1; puff(RIDER_X, GROUND - 20, 'fx-01'); ctx.helper.textContent = 'Rampa! Quanto mais rápido, mais alto você voa.'; } }
         else if (o.type === 'mud') { if (h < 10) { o.done = true; v *= 0.62; puff(RIDER_X + 50, GROUND - 20, 'fx-07'); ctx.helper.textContent = 'Lama! Salte para não perder velocidade.'; } }
         else if (o.type === 'hole') { if (h < 14) { o.done = true; hurt('Buraco! Salte antes de chegar nele.'); } }
-        else if (h < def.h - 8) { o.done = true; hurt('Obstáculo! Salte no tempo certo.'); }
+        else if (h < def.h * 0.72 - 6) { o.done = true; hurt('Obstáculo! Salte no tempo certo.'); }
       }
       items = items.filter(o => !o.done || o.x > dist - 400);
       puffs.forEach(p => p.age += dt); puffs = puffs.filter(p => p.age < 520);
@@ -113,7 +114,7 @@ export function setupBike(ctx) {
         const sx = RIDER_X + (o.x - dist); if (sx < -200 || sx > W + 200) continue;
         const def = TYPES[o.type], y = GROUND + 8 - (o.lift ?? 0);
         g.globalAlpha = o.done ? .25 : 1;
-        if (!drawSprite(g, art, o.art, sx, y, { h: def.h * 1.25 })) { g.fillStyle = o.type === 'coin' ? '#ffd23b' : '#7a4a2a'; g.fillRect(sx - def.w / 2, y - def.h, def.w, def.h); }
+        if (!drawSprite(g, art, o.art, sx, y, { h: def.dh ?? def.h * 1.25 })) { g.fillStyle = o.type === 'coin' ? '#ffd23b' : '#7a4a2a'; g.fillRect(sx - def.w / 2, y - def.h, def.w, def.h); }
         g.globalAlpha = 1;
       }
       // ciclista
@@ -134,7 +135,7 @@ export function setupBike(ctx) {
     },
     onPointer(e) {
       if (done) return;
-      if (e.type === 'down') { if (e.x < 430) jumpBuffer = 160; else { down.set(e.id, true); accel = true; } return; }
+      if (e.type === 'down') { if (e.x < 430) jumpBuffer = 260; else { down.set(e.id, true); accel = true; } return; }
       if (e.type === 'up' || e.type === 'cancel') { down.delete(e.id); accel = down.size > 0; }
     },
   };

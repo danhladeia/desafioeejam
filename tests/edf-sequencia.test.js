@@ -8,7 +8,7 @@ import {createEdfDuel} from '../edf-duel.js';
 test('Ordene a Sequência é um jogo EDF com ícone existente, 90 segundos e regra própria',()=>{
  assert.equal(EDF_ORDEM_GAME.id,'ordem');assert.equal(EDF_ORDEM_GAME.duration,90);assert.ok(UI_ICON_NAMES.includes(EDF_ORDEM_GAME.icon));
  assert.ok(EDF_VARIANTS.ordem);assert.equal(EDF_VARIANTS.ordem.title,'Ordene a Sequência');assert.match(EDF_VARIANTS.ordem.rule,/Conferir/);
- assert.equal(Object.keys(EDF_VARIANTS).length,22);
+ assert.equal(Object.keys(EDF_VARIANTS).length,26);
 });
 
 test('a partida identifica o ano e guarda o recorde do Ordene a Sequência por ano e unidades',()=>{
