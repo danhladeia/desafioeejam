@@ -17,3 +17,19 @@
 .play .play-footer{display:none}
 .play .arena{padding-bottom:0}
 .play .board{padding-bottom:.3rem}
+
+/* Modo foco (lousa grande): sem molduras, o jogo ocupa a tela. A cor do aluno vira só uma linha fina. */
+.play{padding:.2rem .4rem .2rem}
+.play .game-top{margin:0 0 .15rem;padding:0 .6rem}
+.play .game-top h2{font-size:1.5rem}
+.play .game-top .timer{padding:.1rem 1.2rem;font-size:2.2rem}
+.play .arenas{gap:.5rem}
+.play .arena{border:0;background:none;box-shadow:none;border-radius:0;padding:0}
+.play .arena .board{background:none;border:0;box-shadow:none;border-radius:0;padding:0 0 .2rem}
+.play .scoreboard{background:none;border:0;box-shadow:none;border-radius:0;padding:.05rem .5rem .15rem;display:flex;align-items:baseline;justify-content:space-between;border-bottom:.22rem solid #4d8dff}
+.play .arena.orange .scoreboard{border-bottom-color:#ff8a3d}
+.play .scoreboard h2{font-size:1.5rem}
+.play .scoreboard strong{font-size:2.2rem}
+.play .game .prompt{background:none;border:0;box-shadow:none;font-size:1.4rem;padding:.1rem .5rem;margin:.1rem 0}
+.play .arcade-canvas,.play .game canvas{border-width:.15rem;border-radius:1rem}
+.play .arenas.shared{gap:.3rem}
