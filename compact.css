@@ -1,0 +1,19 @@
+/* Lousa digital: tela de jogo mais alta e com menos texto, para dar o máximo de espaço à arena. */
+.play{padding:.35rem 1rem .4rem}
+.play .game-top{display:flex;align-items:center;gap:1rem;margin-bottom:.3rem;min-height:0}
+.play .game-top h2{font-size:1.8rem;margin:0}
+.play .game-top .timer{min-width:0;width:auto;height:auto;padding:.2rem 1.6rem;font-size:2.6rem;line-height:1.1;border-radius:1.2rem}
+.play .game-top button{min-height:0;height:auto;padding:.35rem 1.2rem;font-size:1.3rem}
+.play .game-top button .ui-image-icon{width:1.8rem;height:1.8rem}
+.play .scoreboard{padding:.25rem .9rem;min-height:0}
+.play .scoreboard small,.play .scoreboard .accuracy,.play .scoreboard .points-title{display:none}
+.play .scoreboard h2{font-size:1.7rem;margin:0}
+.play .scoreboard strong{font-size:2.6rem;line-height:1}
+.play .board{height:auto}
+.play .game .game-progression,.play .game .game-progress{display:none}
+.play .game .prompt{font-size:1.6rem;line-height:1.25;padding:.35rem .7rem;margin:.2rem 0;min-height:0}
+.play .game:has(canvas) .helper{display:none}
+.play .game .helper{font-size:1.1rem;margin:.15rem 0}
+.play .play-footer{display:none}
+.play .arena{padding-bottom:0}
+.play .board{padding-bottom:.3rem}
