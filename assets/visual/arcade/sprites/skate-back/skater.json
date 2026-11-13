@@ -1,0 +1,139 @@
+{
+ "sheet": "U1-skatista-de-costas.png",
+ "mode": "grid",
+ "scale": 0.6,
+ "items": [
+  {
+   "id": "skater-01",
+   "file": "skater-01.webp",
+   "w": 167,
+   "h": 190,
+   "anchor": {
+    "x": 83.5,
+    "y": 190.0
+   },
+   "frame": 0
+  },
+  {
+   "id": "skater-02",
+   "file": "skater-02.webp",
+   "w": 167,
+   "h": 190,
+   "anchor": {
+    "x": 83.5,
+    "y": 190.0
+   },
+   "frame": 1
+  },
+  {
+   "id": "skater-03",
+   "file": "skater-03.webp",
+   "w": 167,
+   "h": 190,
+   "anchor": {
+    "x": 83.5,
+    "y": 190.0
+   },
+   "frame": 2
+  },
+  {
+   "id": "skater-04",
+   "file": "skater-04.webp",
+   "w": 167,
+   "h": 190,
+   "anchor": {
+    "x": 83.5,
+    "y": 190.0
+   },
+   "frame": 3
+  },
+  {
+   "id": "skater-05",
+   "file": "skater-05.webp",
+   "w": 167,
+   "h": 190,
+   "anchor": {
+    "x": 83.5,
+    "y": 190.0
+   },
+   "frame": 4
+  },
+  {
+   "id": "skater-06",
+   "file": "skater-06.webp",
+   "w": 167,
+   "h": 190,
+   "anchor": {
+    "x": 83.5,
+    "y": 190.0
+   },
+   "frame": 5
+  },
+  {
+   "id": "skater-07",
+   "file": "skater-07.webp",
+   "w": 167,
+   "h": 190,
+   "anchor": {
+    "x": 83.5,
+    "y": 190.0
+   },
+   "frame": 6
+  },
+  {
+   "id": "skater-08",
+   "file": "skater-08.webp",
+   "w": 167,
+   "h": 190,
+   "anchor": {
+    "x": 83.5,
+    "y": 190.0
+   },
+   "frame": 7
+  },
+  {
+   "id": "skater-09",
+   "file": "skater-09.webp",
+   "w": 167,
+   "h": 190,
+   "anchor": {
+    "x": 83.5,
+    "y": 190.0
+   },
+   "frame": 8
+  },
+  {
+   "id": "skater-10",
+   "file": "skater-10.webp",
+   "w": 167,
+   "h": 190,
+   "anchor": {
+    "x": 83.5,
+    "y": 190.0
+   },
+   "frame": 9
+  },
+  {
+   "id": "skater-11",
+   "file": "skater-11.webp",
+   "w": 167,
+   "h": 190,
+   "anchor": {
+    "x": 83.5,
+    "y": 190.0
+   },
+   "frame": 10
+  },
+  {
+   "id": "skater-12",
+   "file": "skater-12.webp",
+   "w": 167,
+   "h": 190,
+   "anchor": {
+    "x": 83.5,
+    "y": 190.0
+   },
+   "frame": 11
+  }
+ ]
+}
