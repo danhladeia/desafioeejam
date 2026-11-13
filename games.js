@@ -9,6 +9,7 @@ import { setupEdfCards } from './edf-game.js';
 import { setupSequence } from './edf-sequencia.js';
 import { createEdfTheme, edfWordArt } from './edf-theme.js';
 import { createHangman, hangmanLabel } from './forca-boneco.js';
+import { FORCA_WORDS } from './forca-words.js';
 import { setupSlice } from './arcade/slice.js';
 import { setupThrow } from './arcade/throw.js';
 import { setupRunner } from './arcade/runner.js';
@@ -560,7 +561,7 @@ export function createGame({ id, el, side = 'left', seed = 0, difficulty = 'norm
   }
 
   function pairedWordReader() {
-    const bank = wordsForGame();
+    const bank = id === 'forca' && !theme ? FORCA_WORDS : wordsForGame();
     const filtered = bank.filter(({ word }) => level === 1 ? word.length <= 5 : level === 3 ? word.length >= 6 && word.length <= 9 : word.length >= 4 && word.length <= 7);
     // Dedicated stream: choosing a different solution must not alter later challenges.
     const wordRng = seededRandom(`${seed}:${id}:paired-words:${level}`);
@@ -610,13 +611,23 @@ export function createGame({ id, el, side = 'left', seed = 0, difficulty = 'norm
       figure = createHangman(doc); slots = node('div', 'word-slots'); mistakesLabel = node('div', 'helper');
       slots.style.display = 'flex'; slots.style.flexWrap = 'wrap'; slots.style.justifyContent = 'center';
       const row = node('div', 'hangman-row'); row.append(figure.el, slots);
-      const keyboard = node('div', 'answers');
-      Object.assign(keyboard.style, { display: 'grid', gridTemplateColumns: 'repeat(4, minmax(0, 1fr))' });
-      const letters = [...new Set(current.word)];
-      const alphabet = shuffle([... 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'].filter(letter => !letters.includes(letter)), challengeRng);
-      const keyCount = level === 1 ? 12 : level === 3 ? 16 : 14;
-      letters.push(...alphabet.slice(0, keyCount - letters.length));
-      shuffle(letters, layoutRng).forEach(letter => keyboard.append(button(letter, 'guess', letter, 'letter')));
+      let keyboard;
+      if (id === 'forca') {   // teclado completo, no formato QWERTY
+        keyboard = node('div', 'qwerty');
+        for (const line of ['QWERTYUIOP', 'ASDFGHJKL', 'ZXCVBNM']) {
+          const rowEl = node('div', 'qrow');
+          [...line].forEach(letter => rowEl.append(button(letter, 'guess', letter, 'letter')));
+          keyboard.append(rowEl);
+        }
+      } else {
+        keyboard = node('div', 'answers');
+        Object.assign(keyboard.style, { display: 'grid', gridTemplateColumns: 'repeat(4, minmax(0, 1fr))' });
+        const letters = [...new Set(current.word)];
+        const alphabet = shuffle([... 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'].filter(letter => !letters.includes(letter)), challengeRng);
+        const keyCount = level === 1 ? 12 : level === 3 ? 16 : 14;
+        letters.push(...alphabet.slice(0, keyCount - letters.length));
+        shuffle(letters, layoutRng).forEach(letter => keyboard.append(button(letter, 'guess', letter, 'letter')));
+      }
       stage.append(mistakesLabel, row, keyboard); paint();
     }
     act = (action, value, target) => {
